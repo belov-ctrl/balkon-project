@@ -1,0 +1,93 @@
+{
+  "kind": "singleType",
+  "collectionName": "main_pages",
+  "info": {
+    "singularName": "main-page",
+    "pluralName": "main-pages",
+    "displayName": "MainPage"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "heroBadge": {
+      "type": "string"
+    },
+    "heroTitle": {
+      "type": "string"
+    },
+    "heroTitleHighlight": {
+      "type": "string"
+    },
+    "heroDesc": {
+      "type": "text"
+    },
+    "heroBackground": {
+      "type": "media",
+      "multiple": true,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "seo_title": {
+      "type": "string"
+    },
+    "seo_description": {
+      "type": "text"
+    },
+    "topCard1Title": {
+      "type": "string"
+    },
+    "topCard1Subtitle": {
+      "type": "string"
+    },
+    "topCard1Price": {
+      "type": "string"
+    },
+    "topCard2Title": {
+      "type": "string"
+    },
+    "topCard2Desc": {
+      "type": "string"
+    },
+    "topCard2Price": {
+      "type": "string"
+    },
+    "aboutBadge": {
+      "type": "string"
+    },
+    "aboutTitle": {
+      "type": "string"
+    },
+    "aboutDesc": {
+      "type": "text"
+    },
+    "aboutImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "seoText": {
+      "type": "blocks"
+    },
+    "glazingCard": {
+      "type": "component",
+      "component": "blocks.glazing-card",
+      "repeatable": true
+    },
+    "StructureTab": {
+      "type": "component",
+      "component": "blocks.structure-tab",
+      "repeatable": true
+    }
+  }
+}

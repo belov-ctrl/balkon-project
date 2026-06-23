@@ -1,0 +1,32 @@
+{
+  "collectionName": "components_blocks_glazing_cards",
+  "info": {
+    "displayName": "GlazingCard"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "price": {
+      "type": "string"
+    },
+    "desc": {
+      "type": "text"
+    },
+    "badge": {
+      "type": "string"
+    },
+    "img": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    }
+  },
+  "config": {}
+}
