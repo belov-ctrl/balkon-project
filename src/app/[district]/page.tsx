@@ -126,9 +126,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     return {
       title: pageData.seo_title || `Остекление балконов ${geo.landing} Омск — Цены завода`,
       description: pageData.seo_description || `Профессиональное остекление, комплексное утепление и отделка балконов ${geo.landing} в Омске. Гарантия 5 лет!`,
-      // ИСПРАВЛЕНО: Добавлен канонический адрес для устранения дублей на страницах районов
       alternates: {
         canonical: `https://balkonreshenie.ru/${district}`,
+      },
+      // 🌟 ЗАЩИТА ОТ ИНДЕКСАЦИИ: Закрываем районы от поисковиков
+      robots: {
+        index: false,
+        follow: false,
       }
     };
   } catch (error) {
@@ -137,6 +141,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: `Профессиональное остекление и отделка балконов ${geo.landing} в Омске.`,
       alternates: {
         canonical: `https://balkonreshenie.ru/${district}`,
+      },
+      // 🌟 ЗАЩИТА ОТ ИНДЕКСАЦИИ (для фоллбека)
+      robots: {
+        index: false,
+        follow: false,
       }
     };
   }

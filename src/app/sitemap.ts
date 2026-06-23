@@ -3,7 +3,7 @@ import { MetadataRoute } from 'next';
 // 1. Указываем реальный боевой домен компании для индексации в Яндексе и Google
 const BASE_URL = 'https://balkonreshenie.ru'; 
 
-// 2. Наш чётко синхронизированный список 64 районов Омска (без 404 ошибок)
+// 2. Наш список районов (оставляем тут, чтобы не потерять, но в карту пока не отдаем)
 const districtsSlugs = [
   'bolshaya-ostrovka', '11-j-mikrorajon', 'amurskij', 'pribrezhnyj', 'kosmos', 
   '3-j-mikrorajon', 'amurskij-2', 'pervokirpichnyj', 'gorodok-neftyanikov', 'port-artur', 
@@ -44,20 +44,22 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 1.0,
     },
     {
-      url: `${BASE_URL}/blog`,
+      url: `${BASE_URL}/blog`, // ИСПРАВЛЕНО: привели регистр BASE_URL к общему стандарту
       lastModified: new Date(),
       changeFrequency: 'daily' as const,
       priority: 0.9,
     }
   ];
 
-  // Страницы 64 гео-локаций Омска
+  // ВРЕМЕННО ОТКЛЮЧЕНО: Генерацию страниц локаций пропускаем, чтобы роботы их не сканировали
+  /*
   const districtRoutes = districtsSlugs.map((slug) => ({
     url: `${BASE_URL}/${slug}`,
     lastModified: new Date(),
     changeFrequency: 'weekly' as const,
     priority: 0.8,
   }));
+  */
 
   // Динамические страницы статей блога
   const blogSlugs = await getBlogSlugs();
@@ -68,6 +70,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
-  // Объединяем всё в финальную карту сайта
-  return [...mainRoutes, ...districtRoutes, ...blogRoutes];
+  // 🌟 ИСПРАВЛЕНО: Исключили districtRoutes из финального экспорта карты сайта
+  return [...mainRoutes, ...blogRoutes];
 }
