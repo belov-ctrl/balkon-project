@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin", "cyrillic"] });
+const inter = Inter({ subsets: ["latin", "cyrillic"], display: "swap" });
 
 // ГЛАВНЫЙ БЛОК ДЛЯ SEO ОМСКА
 export const metadata: Metadata = {
