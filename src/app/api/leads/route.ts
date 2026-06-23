@@ -10,7 +10,7 @@ export async function POST(request: Request) {
     // =========================================================================
     try {
       // По правилам Strapi v5 данные отправляются в объекте { data: { ... } }
-      await fetch('http://83.222.18.44:1337/api/leads', {
+      await fetch('https://balkonreshenie.ru/api/leads', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

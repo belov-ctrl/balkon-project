@@ -11,7 +11,7 @@ import BlogClientWrapper from '@/components/BlogClientWrapper';
 // Функция получения конкретной статьи из Strapi по её СЕО-ссылке (slug)
 async function getArticle(slug: string) {
   try {
-    const res = await fetch(`http://83.222.18.44:1337/api/articles?filters[slug][$eq]=${slug}&populate=*`, {
+    const res = await fetch(`https://balkonreshenie.ru/api/articles?filters[slug][$eq]=${slug}&populate=*`, {
       cache: 'no-store'
     });
     if (!res.ok) return null;
@@ -55,7 +55,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
   const coverAttributes = cover?.data?.attributes || cover?.data || cover;
   if (coverAttributes?.url) {
     const url = coverAttributes.url;
-    coverUrl = url.startsWith('http') ? url : `http://83.222.18.44:1337${url}`;
+    coverUrl = url.startsWith('http') ? url : `https://balkonreshenie.ru${url}`;
   }
 
   // Форматируем дату в красивый русский формат

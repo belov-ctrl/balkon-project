@@ -8,7 +8,7 @@ async function getMainPageData() {
   try {
     // Используем официальный плоский точечный синтаксис Strapi v5.
     // Никаких '*' и вложенных скобок, что полностью решает проблему с ошибкой "heroBackground.related"
-    const url = 'http://83.222.18.44:1337/api/main-page?populate[0]=heroBackground&populate[1]=aboutImage&populate[2]=glazingCard.img&populate[3]=StructureTab.img';
+    const url = 'https://balkonreshenie.ru/api/main-page?populate[0]=heroBackground&populate[1]=aboutImage&populate[2]=glazingCard.img&populate[3]=StructureTab.img';
     
     const res = await fetch(url, { cache: 'no-store' });
     
@@ -30,7 +30,7 @@ async function getMainPageData() {
 async function getArticlesData() {
   try {
     // Тянем статьи, сортируем их по дате публикации (свежие выше) и подгружаем медиа-обложку (cover)
-    const url = 'http://83.222.18.44:1337/api/articles?populate[0]=cover&sort[0]=publishedAt:desc';
+    const url = 'https://balkonreshenie.ru/api/articles?populate[0]=cover&sort[0]=publishedAt:desc';
     
     const res = await fetch(url, { cache: 'no-store' });
     

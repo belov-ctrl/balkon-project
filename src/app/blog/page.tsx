@@ -8,7 +8,7 @@ import BlogClientWrapper from '@/components/BlogClientWrapper';
 // Функция получения всех статей из Strapi
 async function getAllArticles() {
   try {
-    const res = await fetch('http://83.222.18.44:1337/api/articles?populate[0]=cover&sort[0]=publishedAt:desc', {
+    const res = await fetch('https://balkonreshenie.ru/api/articles?populate[0]=cover&sort[0]=publishedAt:desc', {
       cache: 'no-store'
     });
     if (!res.ok) return [];
@@ -94,7 +94,7 @@ export default async function BlogPage() {
               const coverAttributes = cover?.data?.attributes || cover?.data || cover;
               if (coverAttributes?.url) {
                 const rawUrl = coverAttributes.url;
-                imgUrl = rawUrl.startsWith('http') ? rawUrl : `http://83.222.18.44:1337${rawUrl}`;
+                imgUrl = rawUrl.startsWith('http') ? rawUrl : `https://balkonreshenie.ru${rawUrl}`;
               }
 
               // Форматирование даты

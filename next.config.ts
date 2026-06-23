@@ -7,9 +7,8 @@ const nextConfig: NextConfig = {
     unoptimized: true,
     remotePatterns: [
       {
-        protocol: 'http',
-        hostname: '83.222.18.44',
-        port: '1337',
+        protocol: 'https',
+        hostname: 'balkonreshenie.ru',
         pathname: '/uploads/**',
       },
     ],

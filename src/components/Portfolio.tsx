@@ -7,7 +7,7 @@ const portfolioProjects = [
     title: 'Ремонт балкона с крышей на последнем этаже «Хрущевки»', 
     location: 'Омск, Советский АО (Нефтяники)', 
     desc: 'Монтаж независимой прочной крыши из стального профлиста с подложкой, укрепление старого металлического парапетного каркаса и установка раздвижной алюминиевой системы.', 
-    img: 'http://83.222.18.44:1337/uploads/thumbnail_Remont_balkona_s_krishei_na_poslednem_etazhe_Khrushchevki_a5d3d1b90a.jpg?updatedAt=2026-06-18T23%3A24%3A35.875Z', 
+    img: 'https://balkonreshenie.ru/uploads/thumbnail_Remont_balkona_s_krishei_na_poslednem_etazhe_Khrushchevki_a5d3d1b90a.jpg?updatedAt=2026-06-18T23%3A24%3A35.875Z', 
     totalPrice: '61 013', 
     breakdown: [{ name: 'Подготовка парапета к остеклению', cost: '1 610 ₽' }, { name: 'Проектирование и установка крыши', cost: '11 475 ₽' }, { name: 'Алюминиевый раздвижной профиль', cost: '27 590 ₽' }, { name: 'Внутренняя отделка влагостойким ПВХ', cost: '20 338 ₽' }] 
   },
@@ -15,7 +15,7 @@ const portfolioProjects = [
     title: 'Теплое остекление лоджии 3 метра пластиковым профилем', 
     location: 'Омск, Кировский АО (Левый берег)', 
     desc: 'Капитальное утепление лоджии. Установили проверенный 5-камерный ПВХ профиль Veka Euroline с энергосберегающими стеклопакетами. Финишная обшивка стен ламинатом.', 
-    img: 'http://83.222.18.44:1337/uploads/thumbnail_Teploe_osteklenie_lodzhii_3_metra_plastikovim_profilem_61af819026.jpg?updatedAt=2026-06-18T23%3A24%3A54.559Z', 
+    img: 'https://balkonreshenie.ru/uploads/thumbnail_Teploe_osteklenie_lodzhii_3_metra_plastikovim_profilem_61af819026.jpg?updatedAt=2026-06-18T23%3A24%3A54.559Z', 
     totalPrice: '53 412', 
     breakdown: [{ name: 'Подготовка и усиление парапета', cost: '8 360 ₽' }, { name: 'Пластиковые окна Veka Euroline', cost: '27 248 ₽' }, { name: 'Утепление Пеноплэксом 50 мм', cost: '11 504 ₽' }, { name: 'Вывод точечной электрики', cost: '6 300 ₽' }] 
   },
@@ -23,7 +23,7 @@ const portfolioProjects = [
     title: 'Панорамный французский балкон от пола до потолка KBE', 
     location: 'Омск, Центральный АО (ул. Масленникова)', 
     desc: 'Полный демонтаж старого ограждения. Установка масштабной французской витражной конструкции на базе теплого ПВХ профиля KBE Master 70 мм с тонировкой.', 
-    img: 'http://83.222.18.44:1337/uploads/thumbnail_Panoramnii_frantsuzskii_balkon_ot_pola_do_potolka_KBE_3b5a591f2c.jpg?updatedAt=2026-06-18T23%3A25%3A19.358Z', 
+    img: 'https://balkonreshenie.ru/uploads/thumbnail_Panoramnii_frantsuzskii_balkon_ot_pola_do_potolka_KBE_3b5a591f2c.jpg?updatedAt=2026-06-18T23%3A25%3A19.358Z', 
     totalPrice: '77 433', 
     breakdown: [{ name: 'Безопасный демонтаж старого парапета', cost: '6 440 ₽' }, { name: 'Витражная ПВХ система KBE Master', cost: '51 622 ₽' }, { name: 'Мультифункциональные стеклопакеты', cost: '14 371 ₽' }, { name: 'Герметизация наружных швов', cost: '5 000 ₽' }] 
   },
@@ -31,7 +31,7 @@ const portfolioProjects = [
     title: 'Остекление балкона сибирским морозостойким профилем Exprof', 
     location: 'Омск, Октябрьский АО (Чкаловский)', 
     desc: 'Остекление балкона с использованием адаптированного под наши морозы профиля Exprof Externa. Выполнена внутренняя обшивка сосновой евровагонкой.', 
-    img: 'http://83.222.18.44:1337/uploads/thumbnail_Osteklenie_balkona_sibirskim_morozostoikim_profilem_Exprof_e226c4da67.jpg?updatedAt=2026-06-18T23%3A25%3A32.975Z', 
+    img: 'https://balkonreshenie.ru/uploads/thumbnail_Osteklenie_balkona_sibirskim_morozostoikim_profilem_Exprof_e226c4da67.jpg?updatedAt=2026-06-18T23%3A25%3A32.975Z', 
     totalPrice: '57 704', 
     breakdown: [{ name: 'Парапетные работы и герметизация', cost: '3 200 ₽' }, { name: 'Окна Exprof Externa с установкой', cost: '38 469 ₽' }, { name: 'Внутренняя обшивка евровагонкой', cost: '16 035 ₽' }] 
   },
@@ -39,7 +39,7 @@ const portfolioProjects = [
     title: 'Расширение пространства балкона наружу (Вынос на 30 см)', 
     location: 'Омск, Ленинский АО (Московка)', 
     desc: 'Сварочные работы по созданию прочного стального выносного каркаса по линии подоконника. Установили раздвижное остекление из алюминия.', 
-    img: 'http://83.222.18.44:1337/uploads/thumbnail_Rasshirenie_prostranstva_balkona_s_vinosom_naruzhu_1db4d28e4b.jpg?updatedAt=2026-06-18T23%3A25%3A43.799Z', 
+    img: 'https://balkonreshenie.ru/uploads/thumbnail_Rasshirenie_prostranstva_balkona_s_vinosom_naruzhu_1db4d28e4b.jpg?updatedAt=2026-06-18T23%3A25%3A43.799Z', 
     totalPrice: '63 654', 
     breakdown: [{ name: 'Сварочные работы (вынос каркаса)', cost: '8 500 ₽' }, { name: 'Внешняя финишная отделка сайдингом', cost: '1 680 ₽' }, { name: 'Монтаж раздвижной алюминиевой рамы', cost: '32 256 ₽' }, { name: 'Подоконники Crystallit и отливы', cost: '21 218 ₽' }] 
   },
@@ -47,7 +47,7 @@ const portfolioProjects = [
     title: 'Благоустройство большой 6-метровой лоджии под ключ', 
     location: 'Омск, Кировский АО (ул. Конева)', 
     desc: 'Масштабная работа на длинной лоджии в новостройке. Установка теплой оконной системы Rehau, монтаж теплого пола, обшивка МДФ-панелями и сборка шкафа.', 
-    img: 'http://83.222.18.44:1337/uploads/thumbnail_Blagoustroistvo_bolshoi_6_metrovoi_lodzhii_pod_klyuch_9d873ddd6e.jpg?updatedAt=2026-06-18T23%3A25%3A58.483Z', 
+    img: 'https://balkonreshenie.ru/uploads/thumbnail_Blagoustroistvo_bolshoi_6_metrovoi_lodzhii_pod_klyuch_9d873ddd6e.jpg?updatedAt=2026-06-18T23%3A25%3A58.483Z', 
     totalPrice: '186 345', 
     breakdown: [{ name: 'Пятикамерное остекление Rehau', cost: '54 870 ₽' }, { name: 'Утепление пола, стен и потолка', cost: '32 000 ₽' }, { name: 'Отделка МДФ панелями и ламинатом', cost: '68 515 ₽' }, { name: 'Инфракрасный теплый пол и шкаф', cost: '30 960 ₽' }] 
   }
