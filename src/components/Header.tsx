@@ -4,9 +4,9 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
-// Список районов (зафиксирован)
+// Список районов (зафиксирован и проверен)
 const districtsList = [ 
-  { name: 'Большая Островка', slug: 'bolshaya-ostrovka' }, { name: 'Куйбышевский', slug: 'kuybyshevskij' }, { name: 'Городок Водников', slug: 'gorodok-vodnikov' }, { name: 'Рыбачий', slug: 'rybachij' }, { name: '11-й микрорайон', slug: '11-j-mikrorajon' }, { name: 'Тополиный', slug: 'topolinyj' }, { name: '12-й микрорайон', slug: '12-j-mikrorajon' }, { name: 'Омский Кристалл', slug: 'omskij-kristall' }, { name: 'Амурский', slug: 'amurskij' }, { name: '5-й микрорайон', slug: '5-th-mikrorajon' }, { name: 'Полёт', slug: 'polyot' }, { name: 'Биофабрика', slug: 'biofabrika' }, { name: 'Прибрежный', slug: 'pribrezhnyj' }, { name: 'Левобережье', slug: 'levoberezhye' }, { name: '6-й микрорайон', slug: '6-th-mikrorajon' }, { name: 'Авиагородок', slug: 'aviagorodok' }, { name: 'Космос', slug: 'kosmos' }, { name: 'Привокзальный', slug: 'privokzalnyj' }, { name: 'Кировск', slug: 'kirovsk' }, { name: 'Кордный', slug: 'kordnyj' }, { name: '3-й микрорайон', slug: '3-j-mikrorajon' }, { name: 'Комсомольский городок', slug: 'komsomolskij-gorodok' }, { name: 'Ленинск', slug: 'leninsk' }, { name: '1-й микрорайон', slug: '1-j-mikrorajon' }, { name: 'Амурский-2', slug: 'amurskij-2' }, { name: '4-й микрорайон', slug: '4-th-mikrorajon' }, { name: 'Чкаловский', slug: 'chkalovskij' }, { name: 'Чукреевка', slug: 'chukreevka' }, { name: 'Первокирпичный', slug: 'pervokirpichnyj' }, { name: 'Парковый микрорайон', slug: 'parkovyj-mikrorajon' }, { name: '2-й микрорайон', slug: '2-j-mikrorajon' }, { name: 'Восточный', slug: 'vostochnyj' }, { name: 'Городок Нефтяников', slug: 'gorodok-neftyanikov' }, { name: 'Заозёрный', slug: 'zaozyornyj' }, { name: 'Старый Кировск', slug: 'staryj-kirovsk' }, { name: 'Чредовый', slug: 'cheredovyj' }, { name: 'Порт-Артур', slug: 'port-artur' }, { name: 'Захламино', slug: 'zahlamino' }, { name: 'Большие Поля', slug: 'bolshie-polya' }, { name: 'Степной', slug: 'stepnoj' }, { name: 'Солнечный', slug: 'solnechnyj' }, { name: 'Московка', slug: 'moskovka' }, { name: 'Юбилейный', slug: 'yubilejnyj' }, { name: 'Дальний', slug: 'dalnij' }, { name: 'Рябиновка', slug: 'ryabinovka' }, { name: 'Волжский', slug: 'volzhskij' }, { name: 'Булатово', slug: 'bulatovo' }, { name: 'Армейский', slug: 'armejskij' }, { name: 'Линейный', slug: 'linejnyj' }, { name: 'Карьер', slug: 'karyer' }, { name: 'Загородный', slug: 'zagorodnyj' }, { name: 'Осташково', slug: 'ostashkovo' }, { name: 'Зелёная долина', slug: 'zelyonaya-dolina' }, { name: 'Ясная Поляна', slug: 'yasnaya-polyana' }, { name: 'микрорайон Входной', slug: 'vhodnoj' }, { name: 'Светлый', slug: 'svetlyj' }, { name: 'Николаевка', slug: 'nikolaevka' }, { name: 'Северный', slug: 'severnyj' }, { name: 'Черёмушки', slug: 'cheryomushki' }, { name: 'Черёмуховское', slug: 'cheryomuhovskoe' }, { name: 'Новая Станица', slug: 'novaya-stanica' }, { name: 'Александровская усадьба', slug: 'aleksandrovskaya-usadba' }, { name: 'Береговой', slug: 'beregovoj' }, { name: 'Крутая Горка', slug: 'krutaya-gorka' }
+  { name: 'Большая Островка', slug: 'bolshaya-ostrovka' }, { name: 'Куйбышевский', slug: 'kuybyshevskij' }, { name: 'Городок Водников', slug: 'gorodok-vodnikov' }, { name: 'Рыбачий', slug: 'rybachij' }, { name: '11-й микрорайон', slug: '11-j-mikrorajon' }, { name: 'Тополиный', slug: 'topolinyj' }, { name: '12-й микрорайон', slug: '12-j-mikrorajon' }, { name: 'Омский Кристалл', slug: 'omskij-kristall' }, { name: 'Амурский', slug: 'amurskij' }, { name: '5-й микрорайон', slug: '5-th-mikrorajon' }, { name: 'Полёт', slug: 'polyot' }, { name: 'Биофабрика', slug: 'biofabrika' }, { name: 'Прибрежный', slug: 'pribrezhnyj' }, { name: 'Левобережье', slug: 'levoberezhye' }, { name: '6-й микрорайон', slug: '6-th-mikrorajon' }, { name: 'Авиагородок', slug: 'aviagorodok' }, { name: 'Космос', slug: 'kosmos' }, { name: 'Привокзальный', slug: 'privokzalnyj' }, { name: 'Кировск', slug: 'kirovsk' }, { name: 'Кордный', slug: 'kordnyj' }, { name: '3-й микрорайон', slug: '3-j-mikrorajon' }, { name: 'Комсомольский городок', slug: 'komsomolskij-gorodok' }, { name: 'Ленинск', slug: 'leninsk' }, { name: '1-й микрорайон', slug: '1-j-mikrorajon' }, { name: 'Амурский-2', slug: 'amurskij-2' }, { name: '4-й микрорайон', slug: '4-th-mikrorajon' }, { name: 'Чкаловский', slug: 'chkalovskij' }, { name: 'Чукреевка', slug: 'chukreevka' }, { name: 'Первокирпичный', slug: 'pervokirpichnyj' }, { name: 'Парковый микрорайон', slug: 'parkovyj-mikrorajon' }, { name: '2-й микрорайон', slug: '2-j-mikrorajon' }, { name: 'Восточный', slug: 'vostochnyj' }, { name: 'Городок Нефтяников', slug: 'gorodok-neftyanikov' }, { name: 'Заозёрный', slug: 'zaozyornyj' }, { name: 'Старый Кировск', slug: 'staryj-kirovsk' }, { name: 'Чередовый', slug: 'cheredovyj' }, { name: 'Порт-Артур', slug: 'port-artur' }, { name: 'Захламино', slug: 'zahlamino' }, { name: 'Большие Поля', slug: 'bolshie-polya' }, { name: 'Степной', slug: 'stepnoj' }, { name: 'Солнечный', slug: 'solnechnyj' }, { name: 'Московка', slug: 'moskovka' }, { name: 'Юбилейный', slug: 'yubilejnyj' }, { name: 'Дальний', slug: 'dalnij' }, { name: 'Рябиновка', slug: 'ryabinovka' }, { name: 'Волжский', slug: 'volzhskij' }, { name: 'Булатово', slug: 'bulatovo' }, { name: 'Армейский', slug: 'armejskij' }, { name: 'Линейный', slug: 'linejnyj' }, { name: 'Карьер', slug: 'karyer' }, { name: 'Загородный', slug: 'zagorodnyj' }, { name: 'Осташково', slug: 'ostashkovo' }, { name: 'Зелёная долина', slug: 'zelyonaya-dolina' }, { name: 'Ясная Поляна', slug: 'yasnaya-polyana' }, { name: 'микрорайон Входной', slug: 'vhodnoj' }, { name: 'Светлый', slug: 'svetlyj' }, { name: 'Николаевка', slug: 'nikolaevka' }, { name: 'Северный', slug: 'severnyj' }, { name: 'Черёмушки', slug: 'cheryomushki' }, { name: 'Черёмуховское', slug: 'cheryomuhovskoe' }, { name: 'Новая Станица', slug: 'novaya-stanica' }, { name: 'Александровская усадьба', slug: 'aleksandrovskaya-usadba' }, { name: 'Береговой', slug: 'beregovoj' }, { name: 'Крутая Горка', slug: 'krutaya-gorka' }
 ];
 
 // Полная SEO-структура меню под многостраничник
@@ -55,11 +55,9 @@ export default function Header() {
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let input = e.target.value.replace(/\D/g, '');
     
-    // Если вводят 8 или 7 в начале — срезаем, мы жестко подставим +7
     if (input.startsWith('7') || input.startsWith('8')) {
       input = input.substring(1);
     }
-    // Ограничиваем длину строго 10 цифрами самого мобильного номера
     input = input.substring(0, 10);
 
     let formatted = '';
@@ -144,8 +142,9 @@ export default function Header() {
           <div style={{ color: '#1e293b', fontWeight: '600', padding: '6px 12px', border: '1px solid #e2e8f0', borderRadius: '6px' }}>12 замерщиков на выезде</div>
           
           <div style={{ textAlign: 'right' }}>
-            <a href="tel:83812280230" style={{ fontSize: '20px', fontWeight: '700', color: '#1e293b', textDecoration: 'none', transition: 'color 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.color = '#2563eb'} onMouseLeave={(e) => e.currentTarget.style.color = '#1e293b'}>
-              8 (3812) 28-02-30
+            {/* ИСПРАВЛЕНО: Синхронизирован рабочий телефон компании */}
+            <a href="tel:+73812288230" style={{ fontSize: '20px', fontWeight: '700', color: '#1e293b', textDecoration: 'none', transition: 'color 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.color = '#2563eb'} onMouseLeave={(e) => e.currentTarget.style.color = '#1e293b'}>
+              +7 (3812) 28-82-30
             </a>
             <div style={{ fontSize: '10px', color: '#22c55e', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '4px', marginTop: '2px' }}>
               <span className="status-light"></span> ОНЛАЙН
@@ -160,7 +159,8 @@ export default function Header() {
 
         {/* Бургер и телефон (ПОКАЗЫВАЕТСЯ ТОЛЬКО НА МОБИЛКАХ) */}
         <div className="hamburger-container" style={{ alignItems: 'center', gap: '16px' }}>
-          <a href="tel:83812280230" style={{ fontSize: '15px', fontWeight: '700', color: '#1e3a8a', textDecoration: 'none' }}>8 (3812) 28-02-30</a>
+          {/* ИСПРАВЛЕНО: Синхронизирован рабочий телефон компании */}
+          <a href="tel:+73812288230" style={{ fontSize: '15px', fontWeight: '700', color: '#1e3a8a', textDecoration: 'none' }}>+7 (3812) 28-82-30</a>
           <button 
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '4px', display: 'flex', flexDirection: 'column', gap: '5px', zIndex: 101010 }}
@@ -352,12 +352,10 @@ export default function Header() {
             >
               <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
                 <div>
-                  {/* ИСПРАВЛЕНО: Добавлен атрибут htmlFor и id для связки */}
                   <label htmlFor="header-client-name" style={{ fontSize: '12px', fontWeight: '600', color: '#475569', display: 'block', marginBottom: '6px' }}>Ваше имя</label>
                   <input id="header-client-name" type="text" placeholder="Иван" required style={{ width: '100%', padding: '12px 14px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '14px', outline: 'none', backgroundColor: '#fff', color: '#0f172a' }} />
                 </div>
                 <div>
-                  {/* ИСПРАВЛЕНО: Добавлен атрибут htmlFor и id для связки */}
                   <label htmlFor="header-client-phone" style={{ fontSize: '12px', fontWeight: '600', color: '#475569', display: 'block', marginBottom: '6px' }}>Номер телефона</label>
                   <input 
                     id="header-client-phone"

@@ -109,6 +109,7 @@ export default async function BlogPage() {
                       fill
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       style={{ objectFit: 'cover' }}
+                      unoptimized // 🌟 ИСПРАВЛЕНО: отключили онлайн-сжатие картинок для разгрузки процессора 1 CPU
                     />
                     <span style={{ position: 'absolute', top: '16px', left: '16px', backgroundColor: '#eff6ff', color: '#2563eb', padding: '6px 12px', borderRadius: '8px', fontSize: '11px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.05em', zIndex: 1 }}>
                       Полезное

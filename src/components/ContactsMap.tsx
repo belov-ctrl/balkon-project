@@ -146,7 +146,7 @@ export default function ContactsMap() {
           style={{ border: 0 }}
           allowFullScreen={true}
           loading="lazy" // Включили жесткую ленивую загрузку iframe для PageSpeed 🚀
-          title="Интерактивная карта Яндекс с адресом компании Балконные Решения" // 👈 ИСПРАВЛЕНО: Добавлен заголовок фрейма
+          title="Интерактивная карта Яндекс с адресом компании Балконные Решения" 
         ></iframe>
       </div>
       
@@ -218,16 +218,18 @@ export default function ContactsMap() {
 
         {/* ПЛАШКА С КОНТАКТАМИ */}
         <div className="map-info-block">
+          {/* ИСПРАВЛЕНО: Убрана опечатка BABКОННЫЕ */}
           <div style={{ fontWeight: '700', fontSize: '18px', color: '#1e3a8a', letterSpacing: '-0.02em', marginBottom: '8px', lineHeight: '1.2' }}>
-            BABКОННЫЕ РЕШЕНИЯ <span style={{ color: '#2563eb', display: 'block', fontSize: '14px', fontWeight: '800' }}>ОМСК</span>
+            БАЛКОННЫЕ РЕШЕНИЯ <span style={{ color: '#2563eb', display: 'block', fontSize: '14px', fontWeight: '800' }}>ОМСК</span>
           </div>
           
           <p style={{ fontSize: '14px', color: '#475569', lineHeight: '1.5', margin: '8px 0 16px 0', maxWidth: '240px' }}>
-            Oстекление балконов и лоджий в Омске <br />
+            Остекление балконов и лоджий в Омске <br />
             <strong>ул. Гусарова, д. 26</strong>
           </p>
 
-          <a href="tel:83812280230" style={{ fontWeight: '700', color: '#0f172a', textDecoration: 'none', fontSize: '19px', marginBottom: '4px', display: 'block' }}>+7 (3812) 28-82-30</a>
+          {/* ИСПРАВЛЕНО: Синхронизирован номер телефона в ссылке и на экране для исключения ложных вызовов */}
+          <a href="tel:+73812288230" style={{ fontWeight: '700', color: '#0f172a', textDecoration: 'none', fontSize: '19px', marginBottom: '4px', display: 'block' }}>+7 (3812) 28-82-30</a>
           <p style={{ fontSize: '13px', color: '#64748b', margin: '0 0 24px 0', padding: 0 }}>Ведущий менеджер</p>
         </div>
 

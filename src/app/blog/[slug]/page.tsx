@@ -2,7 +2,7 @@ import React from 'react';
 import { notFound } from 'next/navigation';
 import { BlocksRenderer } from '@strapi/blocks-react-renderer';
 import Link from 'next/link';
-import Image from 'next/image'; // ИСПРАВЛЕНО: Подключили компонент высокопроизводительных изображений
+import Image from 'next/image';
 
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -34,7 +34,6 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return {
     title: `${article.title || 'Статья'} | Балконные Решения Омск`,
     description: article.description || '',
-    // ИСПРАВЛЕНО: Внедрена генерация канонического URL для каждой отдельной статьи (устраняет ошибку SiteAnalyzer)
     alternates: {
       canonical: `https://balkonreshenie.ru/blog/${slug}`,
     }
@@ -91,13 +90,13 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
           
           {/* Обложка и заголовок */}
           <div style={{ height: '400px', width: '100%', position: 'relative' }}>
-            {/* ИСПРАВЛЕНО: Заменили img на Image с флагом priority для мгновенной отрисовки LCP */}
             <Image 
               src={coverUrl} 
               alt={`Обложка статьи: ${title}`} 
               fill 
               priority={true} 
               style={{ objectFit: 'cover' }} 
+              unoptimized // 🌟 ИСПРАВЛЕНО: убираем пиковую нагрузку на 1 CPU при генерации тяжелых обложек статей
             />
             <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(15,23,42,0.9) 0%, rgba(15,23,42,0.3) 60%, transparent 100%)', zIndex: 1 }}></div>
             <div style={{ position: 'absolute', bottom: '40px', left: '40px', right: '40px', color: '#fff', zIndex: 2 }}>

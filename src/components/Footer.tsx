@@ -5,6 +5,7 @@ import Link from 'next/link';
 
 // ИСПРАВЛЕНО: Все слаги синхронизированы со словарем роутера для ликвидации 404 ошибок перелинковки
 const footerDistricts = [
+  // --- КОЛОНКА 1 ---
   { slug: 'bolshaya-ostrovka', name: 'Большая Островка' },
   { slug: '11-j-mikrorajon', name: '11-й микрорайон' },
   { slug: 'amurskij', name: 'Амурский' },
@@ -21,26 +22,30 @@ const footerDistricts = [
   { slug: 'zelyonaya-dolina', name: 'Зелёная долина' },
   { slug: 'nikolaevka', name: 'Николаевка' },
   { slug: 'novaya-stanica', name: 'Новая Станица' },
-  { slug: 'kuybyshevskij', name: 'Куйбышевский' }, // Синхронизировано
+
+  // --- КОЛОНКА 2 ---
+  { slug: 'kuybyshevskij', name: 'Куйбышевский' },
   { slug: 'topolinyj', name: 'Тополиный' },
-  { slug: '5-th-mikrorajon', name: '5-й микрорайон' }, // Синхронизировано
+  { slug: '5-th-mikrorajon', name: '5-й микрорайон' },
   { slug: 'levoberezhye', name: 'Левобережье' },
   { slug: 'privokzalnyj', name: 'Привокзальный' },
   { slug: 'komsomolskij-gorodok', name: 'Комсомольский городок' },
-  { slug: '4-th-mikrorajon', name: '4-м микрорайон' }, // Синхронизировано
+  { slug: '4-th-mikrorajon', name: '4-м микрорайон' },
   { slug: 'parkovyj-mikrorajon', name: 'Парковый микрорайон' },
   { slug: 'zaozyornyj', name: 'Заозёрный' },
   { slug: 'zahlamino', name: 'Захламино' },
   { slug: 'moskovka', name: 'Московка' },
-  { slug: 'volzhskij', name: 'Волжский' },
+  { slug: 'volzhskij', name: 'Volжский' },
   { slug: 'karyer', name: 'Карьер' },
   { slug: 'yasnaya-polyana', name: 'Ясная Поляна' },
   { slug: 'severnyj', name: 'Северный' },
   { slug: 'aleksandrovskaya-usadba', name: 'Александровская усадьба' },
+
+  // --- КОЛОНКА 3 ---
   { slug: 'gorodok-vodnikov', name: 'Городок Водников' },
   { slug: '12-j-mikrorajon', name: '12-й микрорайон' },
   { slug: 'polyot', name: 'Полёт' },
-  { slug: '6-th-mikrorajon', name: '6-й микрорайон' }, // Синхронизировано
+  { slug: '6-th-mikrorajon', name: '6-й микрорайон' },
   { slug: 'kirovsk', name: 'Кировск' },
   { slug: 'staryj-kirovsk', name: 'Старый Кировск' },
   { slug: 'leninsk', name: 'Ленинск' },
@@ -50,9 +55,11 @@ const footerDistricts = [
   { slug: 'yubilejnyj', name: 'Юбилейный' },
   { slug: 'bulatovo', name: 'Булатово' },
   { slug: 'zagorodnyj', name: 'Загородный' },
-  { slug: 'vhodnoj', name: 'Микрорайон Входной' }, // Синхронизировано
+  { slug: 'vhodnoj', name: 'Микрорайон Входной' },
   { slug: 'cheryomushki', name: 'Черёмушки' },
   { slug: 'beregovoj', name: 'Береговой' },
+
+  // --- КОЛОНКА 4 ---
   { slug: 'rybachij', name: 'Рыбачий' },
   { slug: 'omskij-kristall', name: 'Омский Кристалл' },
   { slug: 'biofabrika', name: 'Биофабрика' },
@@ -87,7 +94,6 @@ export default function Footer() {
           <div>
             <h4 style={{ color: '#fff', fontSize: '15px', fontWeight: '600', marginBottom: '16px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Услуги</h4>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '14px' }}>
-              {/* ИСПРАВЛЕНО: Ссылки ведут на реальные блоки-якоря вместо пустых '#' */}
               <Link href="/#calculator" style={{ color: '#94a3b8', textDecoration: 'none' }}>Теплое остекление</Link>
               <Link href="/#calculator" style={{ color: '#94a3b8', textDecoration: 'none' }}>Холодное остекление</Link>
               <Link href="/#calculator" style={{ color: '#94a3b8', textDecoration: 'none' }}>Внутренняя отделка</Link>
@@ -97,7 +103,8 @@ export default function Footer() {
           <div>
             <h4 style={{ color: '#fff', fontSize: '15px', fontWeight: '600', marginBottom: '16px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Контакты</h4>
             <p style={{ fontSize: '18px', margin: '0 0 10px 0', color: '#fff', fontWeight: '600' }}>
-              <a href="tel:83812280230" style={{ color: '#fff', textDecoration: 'none' }}>8 (3812) 28-02-30</a>
+              {/* ИСПРАВЛЕНО: Синхронизировали телефон с блоком ContactsMap для исключения ошибок связи */}
+              <a href="tel:+73812288230" style={{ color: '#fff', textDecoration: 'none' }}>+7 (3812) 28-82-30</a>
             </p>
             <p style={{ fontSize: '14px', margin: '0 0 10px 0' }}>
               <a href="mailto:industrieocon55@mail.ru" style={{ color: '#38bdf8', textDecoration: 'none' }}>industrieocon55@mail.ru</a>

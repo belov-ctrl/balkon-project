@@ -58,7 +58,6 @@ const insulationServices = [
 
 const advantagesData = [ { num: '01', title: 'Собственный завод', desc: 'Изготавливаем оконные конструкции на автоматизированном производстве в Омске без наценок перекупщиков.' }, { num: '02', title: 'Монтаж по ГОСТу', desc: 'Применяем качественные герметики и защитные ленты. Полностью гарантируем отсутствие продуваний.' }, { num: '03', title: 'Договор и гарантия', desc: 'Оформить документы можно дома или в нашем офисе. Даем честную гарантию 5 лет.' }, { num: '04', title: 'Опытные мастера', desc: 'В наших монтажных бригадах работают только постоянные специалисты-омичи с опытом работы от 5 лет.' } ];
 
-// ИСПРАВЛЕНО: Изменено название заголовка во избежание дублирования тегов H3
 const additionalServices = [ 
   { title: 'Балконы под ключ', desc: 'Комплексный ремонт от укрепления плиты до финишного благоустройства.', img: 'https://balkonreshenie.ru/uploads/thumbnail_remont_balkona_pod_klyuch_296x300_89b3f234ec.png?updatedAt=2026-06-18T21%3A48%3A58.527Z' }, 
   { title: 'Обшивка комнат и лоджий', desc: 'Профессиональная обшивка стен и потолка долговечными материалами.', img: 'https://balkonreshenie.ru/uploads/thumbnail_vnutrennyaya_otdelka_balkona_300x300_fb64c0553f.png?updatedAt=2026-06-18T21%3A46%3A30.816Z' }, 
@@ -67,7 +66,7 @@ const additionalServices = [
   { title: 'Окна пластиковые', desc: 'Морозостойкие энергосберегающие оконные системы для комнат и кухонь.', img: 'https://balkonreshenie.ru/uploads/thumbnail_Plastikovoe_okno_a67ec4ad8e.jpg?updatedAt=2026-06-18T21%3A49%3A13.314Z' } 
 ];
 
-const customerReviews = [ { name: 'Игорь Васильев', meta: 'Омск, Кировский АО (ул. Конева)', text: 'Заказывал теплое остекление лоджии. Masters приехали вовремя, сделали абсолютно всё за один рабочий день. Прошедшую суровую зиму лоджия выдержала на отлично...', date: 'Март 2026' }, { name: 'Елена Миронова', meta: 'Омск, Советский АО (Нефтяники)', text: 'Очень долго искала компанию, которая согласится сделать качественный балкон с крышей на последнем этаже хрущевки и укрепить старый парапет...', date: 'Май 2026' }, { name: 'Алексей и Ольга Токаревы', meta: 'Омск, Центральный АО (Амур-2)', text: 'Выбрали панорамное французское остекление в пол. Вид потрясающий, в комнате стало намного больше дневного света...', date: 'Июнь 2026' } ];
+const customerReviews = [ { name: 'Игорь Васильев', meta: 'Омск, Кировский АО (ул. Конева)', text: 'Заказывал теплое остекление лоджии. Мастера приехали вовремя, сделали абсолютно всё за один рабочий день. Прошедшую суровую зиму лоджия выдержала на отлично...', date: 'Март 2026' }, { name: 'Елена Миронова', meta: 'Омск, Советский АО (Нефтяники)', text: 'Очень долго искала компанию, которая согласится сделать качественный балкон с крышей на последнем этаже хрущевки и укрепить старый парапет...', date: 'Май 2026' }, { name: 'Алексей и Ольга Токаревы', meta: 'Омск, Центральный АО (Амур-2)', text: 'Выбрали панорамное французское остекление в пол. Вид потрясающий, в комнате стало намного больше дневного света...', date: 'Июнь 2026' } ];
 
 interface HomeClientPageProps {
   initialData: any;
@@ -190,7 +189,7 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
 
         @media (max-width: 991px) {
           .section-padding { padding: 40px 0 !important; }
-          .responsive-grid-2 { grid-template-columns: 1fr !important; gap: 32px !important; }
+          .responsive-grid-2 { display: grid; grid-template-columns: 1fr !important; gap: 32px !important; }
           .hero-title { font-size: 32px !important; }
           .hero-section { padding-bottom: 40px !important; min-height: auto !important; padding-top: 40px !important; }
           .hero-desc { font-size: 16px !important; margin-bottom: 24px !important; }
@@ -218,6 +217,7 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
             alt="Основной фоновый баннер фабрики Балконные Решения Омск"
             fill
             priority={true}
+            unoptimized // 🌟 ИСПРАВЛЕНО: Убрали нагрузку на CPU при первом рендере фона
             style={{ objectFit: 'cover' }}
           />
           <div style={{ position: 'absolute', inset: 0, backgroundColor: 'rgba(255,255,255,0.75)', zIndex: 1 }}></div>
@@ -247,7 +247,8 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
               <div style={{ flexShrink: 0 }}><RulerIcon /></div>
               <div style={{ textAlign: 'left' }}>
                 <h4 style={{ fontSize: '16px', fontWeight: '600', color: '#475569', margin: 0 }}>{content.topCard1Title || 'Отделка 3-метрового балкона'}</h4>
-                <p style={{ fontSize: '14px', color: '#64748b', margin: '4px 0 10px 0' }}>{content.topCard1Subtitle || 'в panelных домах Омска'}</p>
+                {/* ИСПРАВЛЕНО: Смешанный текст panelных */}
+                <p style={{ fontSize: '14px', color: '#64748b', margin: '4px 0 10px 0' }}>{content.topCard1Subtitle || 'в панельных домах Омска'}</p>
                 <p style={{ fontSize: '28px', fontWeight: '700', color: '#1e3a8a', margin: 0, letterSpacing: '-0.02em' }}>{content.topCard1Price || '30 000 руб'}</p>
               </div>
             </div>
@@ -288,6 +289,7 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
                 alt={content.aboutTitle || "Заводское производство оконных систем и монтажные бригады в Омске"} 
                 fill
                 sizes="(max-width: 991px) 100vw, 50vw"
+                unoptimized // 🌟 ИСПРАВЛЕНО: Исключаем нагрузку на процессор
                 style={{ objectFit: 'cover', borderRadius: '20px' }}
               />
             </div>
@@ -325,6 +327,7 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
                       alt={card.title || "Вид остекления балкона в Омске"} 
                       fill
                       sizes="(max-width: 768px) 100vw, 25vw"
+                      unoptimized // 🌟 ИСПРАВЛЕНО: Разгружаем сервер при сканировании
                       style={{ objectFit: 'cover' }}
                     />
                     {card.badge && <span style={{ position: 'absolute', top: '14px', left: '14px', backgroundColor: '#1e3a8a', color: '#fff', padding: '4px 10px', borderRadius: '6px', fontSize: '12px', fontWeight: '500', zIndex: 1 }}>{card.badge}</span>}
@@ -414,7 +417,8 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
       <section className="section-padding" style={{ backgroundColor: '#f8fafc', borderBottom: '1px solid #e2e8f0' }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto', padding: '0 20px' }}>
           <div style={{ textAlign: 'center', marginBottom: '40px' }}>
-            <span style={{ fontSize: '13px', color: '#2563eb', fontWeight: '600', textTransform: 'uppercase', display: 'block', marginBottom: '8px' }}>Конфигурации balconies</span>
+            {/* ИСПРАВЛЕНО: Смешанный текст balconies */}
+            <span style={{ fontSize: '13px', color: '#2563eb', fontWeight: '600', textTransform: 'uppercase', display: 'block', marginBottom: '8px' }}>Конфигурации балконов</span>
             <h2 className="section-title" style={{ fontSize: '34px', fontWeight: '700', color: '#1e3a8a' }}>Решения под планировку вашей квартиры</h2>
           </div>
           
@@ -453,6 +457,7 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
                 alt={currentTab.title || "Конструкция и форма остекления балкона"} 
                 fill
                 sizes="(max-width: 991px) 100vw, 50vw"
+                unoptimized // 🌟 ИСПРАВЛЕНО: Изображение отдаётся напрямую
                 style={{ objectFit: 'contain', borderRadius: '8px' }} 
               />
             </div>
@@ -483,6 +488,7 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
                     alt={service.title || "Отделочные работы на балконе"} 
                     fill
                     sizes="(max-width: 768px) 100vw, 33vw"
+                    unoptimized // 🌟 ИСПРАВЛЕНО: Убрали пиковую нагрузку на 1 CPU
                     style={{ objectFit: 'cover' }} 
                   />
                 </div>
@@ -520,7 +526,8 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
       <section className="section-padding" style={{ backgroundColor: '#fff', borderTop: '1px solid #e2e8f0', borderBottom: '1px solid #e2e8f0' }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto', padding: '0 20px' }}>
           <div style={{ textAlign: 'left', marginBottom: '50px' }}>
-            <span style={{ fontSize: '13px', color: '#2563eb', fontWeight: '600', textTransform: 'uppercase', display: 'block', marginBottom: '6px' }}>Why us</span>
+            {/* ИСПРАВЛЕНО: Англицизм Why us */}
+            <span style={{ fontSize: '13px', color: '#2563eb', fontWeight: '600', textTransform: 'uppercase', display: 'block', marginBottom: '6px' }}>Почему мы</span>
             <h2 className="section-title" style={{ fontSize: '34px', fontWeight: '700', color: '#1e3a8a' }}>Честный подход к работе</h2>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '40px' }}>
@@ -547,6 +554,7 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
                   width={280}
                   height={280}
                   priority={false} 
+                  unoptimized // 🌟 ИСПРАВЛЕНО: Убрали тяжелую генерацию круглой миниатюры
                   style={{ objectFit: 'cover', borderRadius: '50%', border: '6px solid #eff6ff', boxShadow: '0 10px 25px -5px rgba(0,0,0,0.05)' }} 
                 />
               </div>
@@ -554,6 +562,7 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
               <p style={{ fontSize: '13px', color: '#64748b', margin: '0 0 24px 0', padding: 0 }}>Ведущий менеджер</p>
             </div>
             <div style={{ textAlign: 'left' }}>
+              {/* ИСПРАВЛЕНО: Смешанный текст in других компаниях */}
               <h2 className="section-title" style={{ fontSize: '36px', fontWeight: '700', color: '#1e3a8a', lineHeight: '1.2', marginBottom: '16px' }}>Уже сделали расчет в других компаниях?</h2>
               <p style={{ fontSize: '16px', color: '#475569', marginBottom: '36px' }}>Пришлите нам готовую смету, и мы гарантированно сделаем цену ниже напрямую от завода!</p>
               
@@ -621,8 +630,9 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
             <h2 className="section-title" style={{ fontSize: '32px', fontWeight: '700', color: '#1e3a8a' }}>Полезные статьи про остекление и ремонт балконов</h2>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '30px' }}>
+            {/* ИСПРАВЛЕНО: Опечатка гайт -> гайд */}
             {(articlesData && articlesData.length > 0 ? articlesData : [
-              { title: 'Как подготовить балкон к сибирской зиме: пошаговый гайт', description: 'Разбираем, какой оконный профиль выдержит сильные морозы до -40°C и какую толщину утеплителя выбрать для лоджии.', img: 'https://balkonreshenie.ru/uploads/thumbnail_Kak_podgotovit_balkon_k_zime_7f6dc23ee6.png?updatedAt=2026-06-18T21%3A48%3A23.194Z', slug: '', isFallback: true },
+              { title: 'Как подготовить балкон к сибирской зиме: пошаговый гайд', description: 'Разбираем, какой оконный профиль выдержит сильные морозы до -40°C и какую толщину утеплителя выбрать для лоджии.', img: 'https://balkonreshenie.ru/uploads/thumbnail_Kak_podgotovit_balkon_k_zime_7f6dc23ee6.png?updatedAt=2026-06-18T21%3A48%3A23.194Z', slug: '', isFallback: true },
               { title: 'Панорамное остекление в хрущевках: мифы и реальность', description: 'Выдержит ли старая бетонная плита вес современных французских окон в пол? Тщательно анализируем технические нюансы.', img: 'https://balkonreshenie.ru/uploads/thumbnail_Panoramnoe_osteklenie_v_khrushchevkakh_2e69037ad7.png?updatedAt=2026-06-18T21%3A47%3A40.835Z', slug: '', isFallback: true },
               { title: 'Чем лучше обшить балкон внутри: евровагонка или ламинат', description: 'Сравниваем популярные отделочные материалы по цене, практичности и общей долговечности для омского климата.', img: 'https://balkonreshenie.ru/uploads/thumbnail_Gemini_Generated_Image_ilo4r7ilo4r7ilo4_e7d1e32b45.png?updatedAt=2026-06-18T21%3A47%3A55.875Z', slug: '', isFallback: true }
             ]).map((item: any, idx: number) => {
@@ -647,6 +657,7 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
                       alt={title || "Полезная статья о ремонте балконов"} 
                       fill
                       sizes="(max-width: 768px) 100vw, 33vw"
+                      unoptimized // 🌟 ИСПРАВЛЕНО: Убираем пиковые таймауты
                       style={{ objectFit: 'cover' }} 
                     />
                   </div>
@@ -686,6 +697,7 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
                     alt={service.title || "Дополнительные строительные услуги нашей фабрики в Омске"} 
                     fill
                     sizes="(max-width: 768px) 50vw, 20vw"
+                    unoptimized // 🌟 ИСПРАВЛЕНО: Разгружаем Node.js кэш
                     style={{ objectFit: 'contain', padding: '16px' }} 
                   />
                 </div>
@@ -756,7 +768,8 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
                   <input id="modal-name" type="text" placeholder="Ваше имя" required style={{ width: '100%', padding: '14px 16px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '14px', outline: 'none' }} />
                 </div>
                 <div>
-                  <label htmlFor="modal-phone" style={{ fontSize: '12px', fontWeight: '600', color: '#475569', display: 'block', marginBottom: '6px' }}>Telephone для связи</label>
+                  {/* ИСПРАВЛЕНО: Англицизм Telephone */}
+                  <label htmlFor="modal-phone" style={{ fontSize: '12px', fontWeight: '600', color: '#475569', display: 'block', marginBottom: '6px' }}>Телефон для связи</label>
                   <input 
                     id="modal-phone"
                     type="tel" 

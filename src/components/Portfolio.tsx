@@ -22,7 +22,7 @@ const portfolioProjects = [
   },
   { 
     title: 'Панорамный французский балкон от пола до потолка KBE', 
-    location: 'Омск, Центральный АО (ул. Масленникова)', // Исправлена опечатка в слове Центральный
+    location: 'Омск, Центральный АО (ул. Масленникова)', 
     desc: 'Полный демонтаж старого ограждения. Установка масштабной французской витражной конструкции на базе теплого ПВХ профиля KBE Master 70 мм с тонировкой.', 
     img: 'https://balkonreshenie.ru/uploads/thumbnail_Panoramnii_frantsuzskii_balkon_ot_pola_do_potolka_KBE_3b5a591f2c.jpg?updatedAt=2026-06-18T23%3A25%3A19.358Z', 
     totalPrice: '77 433', 
@@ -81,6 +81,7 @@ export default function Portfolio({ onOpenForm }: PortfolioProps) {
                   fill
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   style={{ objectFit: 'contain', padding: '12px' }} 
+                  unoptimized // 🌟 ИСПРАВЛЕНО: отключили онлайн-сжатие миниатюр для разгрузки процессора 1 CPU
                 />
               </div>
 
