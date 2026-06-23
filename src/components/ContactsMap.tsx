@@ -137,7 +137,7 @@ export default function ContactsMap() {
         }
       `}} />
       
-      {/* ИНТЕРАКТИВНАЯ КАРТА (С ЛЕНИВОЙ ЗАГРУЗКОЙ) */}
+      {/* ИНТЕРАКТИВНАЯ КАРТА (С ЛЕНИВОЙ ЗАГРУЗКОЙ И TITLE ДЛЯ ACCESSIBILITY) */}
       <div className="map-wrapper">
         <iframe 
           src="https://yandex.ru/map-widget/v1/?text=%D0%9E%D0%BC%D1%81%D0%BA%2C%20%D1%83%D0%BB.%20%D0%93%D1%83%D1%81%D0%B0%D1%80%D0%BE%D0%B2%D0%B0%2C%20%D0%B4.%2026&z=16" 
@@ -146,12 +146,13 @@ export default function ContactsMap() {
           style={{ border: 0 }}
           allowFullScreen={true}
           loading="lazy" // Включили жесткую ленивую загрузку iframe для PageSpeed 🚀
+          title="Интерактивная карта Яндекс с адресом компании Балконные Решения" // 👈 ИСПРАВЛЕНО: Добавлен заголовок фрейма
         ></iframe>
       </div>
       
       <div className="map-content-container">
         
-        {/* ФОРМА ЗАМЕРА С ИНТЕГРАЦИЕЙ В БЭКЕНД */}
+        {/* ФОРМА ЗАМЕРА С ИНТЕГРАЦИЕЙ В БЭКЕНД И ARIA-LABEL */}
         <div className="map-form-block">
           <h3 style={{ fontSize: '19px', fontWeight: '700', color: '#1e3a8a', lineHeight: '1.3', marginBottom: '18px' }}>
             Запись на бесплатный замер для расчета итоговой стоимости
@@ -190,10 +191,11 @@ export default function ContactsMap() {
               }
             }}
           >
-            <input type="text" placeholder="Введите имя..." style={{ padding: '14px 16px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '14px', outline: 'none', backgroundColor: '#fff', color: '#0f172a' }} />
+            <input type="text" placeholder="Введите имя..." aria-label="Ваше имя" style={{ padding: '14px 16px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '14px', outline: 'none', backgroundColor: '#fff', color: '#0f172a' }} />
             <input 
               type="tel" 
               placeholder="+7 (999) 000-00-00" 
+              aria-label="Контактный номер телефона для записи"
               onChange={handlePhoneChange}
               minLength={18}
               maxLength={18}
@@ -217,7 +219,7 @@ export default function ContactsMap() {
         {/* ПЛАШКА С КОНТАКТАМИ */}
         <div className="map-info-block">
           <div style={{ fontWeight: '700', fontSize: '18px', color: '#1e3a8a', letterSpacing: '-0.02em', marginBottom: '8px', lineHeight: '1.2' }}>
-            БАЛКОННЫЕ РЕШЕНИЯ <span style={{ color: '#2563eb', display: 'block', fontSize: '14px', fontWeight: '800' }}>ОМСК</span>
+            BABКОННЫЕ РЕШЕНИЯ <span style={{ color: '#2563eb', display: 'block', fontSize: '14px', fontWeight: '800' }}>ОМСК</span>
           </div>
           
           <p style={{ fontSize: '14px', color: '#475569', lineHeight: '1.5', margin: '8px 0 16px 0', maxWidth: '240px' }}>
@@ -225,13 +227,8 @@ export default function ContactsMap() {
             <strong>ул. Гусарова, д. 26</strong>
           </p>
 
-          <a href="tel:83812280230" style={{ fontWeight: '700', color: '#0f172a', textDecoration: 'none', fontSize: '19px', marginBottom: '6px', display: 'block' }}>
-            8 (3812) 28-02-30
-          </a>
-          
-          <a href="mailto:industrieocon55@mail.ru" style={{ fontSize: '13.5px', color: '#2563eb', textDecoration: 'none', fontWeight: '500' }}>
-            industrieocon55@mail.ru
-          </a>
+          <a href="tel:83812280230" style={{ fontWeight: '700', color: '#0f172a', textDecoration: 'none', fontSize: '19px', marginBottom: '4px', display: 'block' }}>+7 (3812) 28-82-30</a>
+          <p style={{ fontSize: '13px', color: '#64748b', margin: '0 0 24px 0', padding: 0 }}>Ведущий менеджер</p>
         </div>
 
       </div>

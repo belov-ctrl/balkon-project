@@ -100,17 +100,17 @@ export default function Calculator({ isModal = false, onClose }: CalculatorProps
             <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', maxWidth: '640px', margin: '0 auto', backgroundColor: '#f8fafc', padding: '28px', borderRadius: '20px', border: '1px solid #e2e8f0' }}>
               <div style={{ textAlign: 'left' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px', alignItems: 'center' }}>
-                  <label style={{ fontSize: '14px', fontWeight: '600', color: '#334155' }}>Длина (ширина конструкции):</label>
+                  <label htmlFor="calc-width-range" style={{ fontSize: '14px', fontWeight: '600', color: '#334155' }}>Длина (ширина конструкции):</label>
                   <span style={{ fontSize: '15px', fontWeight: '700', color: '#2563eb', backgroundColor: '#fff', padding: '4px 12px', borderRadius: '8px', border: '1px solid #cbd5e1' }}>{calcWidth} см</span>
                 </div>
-                <input type="range" min="100" max="700" step="10" value={calcWidth} onChange={(e) => setCalcWidth(Number(e.target.value))} style={{ width: '100%', cursor: 'pointer', accentColor: '#2563eb' }} />
+                <input id="calc-width-range" type="range" min="100" max="700" step="10" value={calcWidth} onChange={(e) => setCalcWidth(Number(e.target.value))} style={{ width: '100%', cursor: 'pointer', accentColor: '#2563eb' }} aria-label="Ширина остекления балкона" />
               </div>
               <div style={{ textAlign: 'left' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px', alignItems: 'center' }}>
-                  <label style={{ fontSize: '14px', fontWeight: '600', color: '#334155' }}>Высота рамы остекления:</label>
+                  <label htmlFor="calc-height-range" style={{ fontSize: '14px', fontWeight: '600', color: '#334155' }}>Высота рамы остекления:</label>
                   <span style={{ fontSize: '15px', fontWeight: '700', color: '#2563eb', backgroundColor: '#fff', padding: '4px 12px', borderRadius: '8px', border: '1px solid #cbd5e1' }}>{calcHeight} см</span>
                 </div>
-                <input type="range" min="100" max="250" step="5" value={calcHeight} onChange={(e) => setCalcHeight(Number(e.target.value))} style={{ width: '100%', cursor: 'pointer', accentColor: '#2563eb' }} />
+                <input id="calc-height-range" type="range" min="100" max="250" step="5" value={calcHeight} onChange={(e) => setCalcHeight(Number(e.target.value))} style={{ width: '100%', cursor: 'pointer', accentColor: '#2563eb' }} aria-label="Высота оконной рамы" />
               </div>
             </div>
           </div>
@@ -202,8 +202,8 @@ export default function Calculator({ isModal = false, onClose }: CalculatorProps
                 setIsSubmitting(true);
 
                 const form = e.target as HTMLFormElement;
-                const phoneInput = form.querySelector('input[type="tel"]') as HTMLInputElement;
-                const selectedMessenger = (form.querySelector('input[name="messenger"]:checked') as HTMLInputElement)?.value || 'WhatsApp';
+                const phoneInput = form.querySelector('input[type=\"tel\"]') as HTMLInputElement;
+                const selectedMessenger = (form.querySelector('input[name=\"messenger\"]:checked') as HTMLInputElement)?.value || 'WhatsApp';
 
                 const leadBreakdown = `КВИЗ-КАЛЬКУЛЯТОР: Тип: ${calcType}, Размер: ${calcWidth}x${calcHeight}см, Остекление: ${calcGlazing}, Сварка/Крыша: ${calcWelding}, Отделка: ${calcFinish}, Утепление: ${calcInsulation}, Мебель: ${calcAdditional}. Способ связи: ${selectedMessenger}`;
 
@@ -226,7 +226,7 @@ export default function Calculator({ isModal = false, onClose }: CalculatorProps
                   } else {
                     alert('Ошибка при отправке.');
                   }
-                } catch (err) {
+                } catch {
                   alert('Ошибка подключения.');
                 } finally {
                   setIsSubmitting(false);
@@ -235,17 +235,17 @@ export default function Calculator({ isModal = false, onClose }: CalculatorProps
             >
               <div style={{ display: 'flex', justifyContent: 'center', gap: '24px', marginBottom: '4px' }}>
                 <label style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '14px', fontWeight: '600', color: '#475569', cursor: 'pointer' }}>
-                  <input type="radio" name="messenger" value="WhatsApp" defaultChecked style={{ width: '18px', height: '18px', accentColor: '#10b981' }} /> WhatsApp
+                  <input type=\"radio\" name=\"messenger\" value=\"WhatsApp\" defaultChecked style={{ width: '18px', height: '18px', accentColor: '#10b981' }} /> WhatsApp
                 </label>
                 <label style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '14px', fontWeight: '600', color: '#475569', cursor: 'pointer' }}>
-                  <input type="radio" name="messenger" value="Telegram" style={{ width: '18px', height: '18px', accentColor: '#2563eb' }} /> Telegram
+                  <input type=\"radio\" name=\"messenger\" value=\"Telegram\" style={{ width: '18px', height: '18px', accentColor: '#2563eb' }} /> Telegram
                 </label>
               </div>
 
-              {/* ДОБАВЛЕНА МАСКА ТЕЛЕФОНА И ФИЛЬТР НА 18 СИМВОЛОВ И КОНТРОЛЬ ВВОДА */}
               <input 
-                type="tel" 
-                placeholder="+7 (999) 000-00-00" 
+                type=\"tel\" 
+                placeholder=\"+7 (999) 000-00-00\" 
+                aria-label=\"Номер мобильного телефона для получения сметы квиза\"
                 onChange={handlePhoneChange}
                 minLength={18}
                 maxLength={18}
@@ -254,13 +254,13 @@ export default function Calculator({ isModal = false, onClose }: CalculatorProps
               />
 
               <div style={{ display: 'flex', alignItems: 'start', gap: '10px', textAlign: 'left' }}>
-                <input type="checkbox" id="calc_consent" required defaultChecked style={{ width: '16px', height: '16px', marginTop: '3px', flexShrink: 0 }} />
-                <label htmlFor="calc_consent" style={{ fontSize: '12px', color: '#64748b', lineHeight: '1.4' }}>
+                <input type=\"checkbox\" id=\"calc_consent\" required defaultChecked style={{ width: '16px', height: '16px', marginTop: '3px', flexShrink: 0 }} />
+                <label htmlFor=\"calc_consent\" style={{ fontSize: '12px', color: '#64748b', lineHeight: '1.4' }}>
                   Я даю согласие на обработку персональных данных и соглашаюсь с политикой конфиденциальности.
                 </label>
               </div>
 
-              <button type="submit" disabled={isSubmitting} style={{ backgroundColor: '#10b981', color: '#fff', border: 'none', padding: '16px 0', borderRadius: '12px', fontSize: '15px', fontWeight: '600', cursor: 'pointer', width: '100%', boxShadow: '0 4px 12px rgba(16, 185, 129, 0.2)' }}>
+              <button type=\"submit\" disabled={isSubmitting} style={{ backgroundColor: '#10b981', color: '#fff', border: 'none', padding: '16px 0', borderRadius: '12px', fontSize: '15px', fontWeight: '600', cursor: 'pointer', width: '100%', boxShadow: '0 4px 12px rgba(16, 185, 129, 0.2)' }}>
                 {isSubmitting ? 'Отправка...' : 'Получить точный расчет и скидку'}
               </button>
             </form>
@@ -324,7 +324,7 @@ export default function Calculator({ isModal = false, onClose }: CalculatorProps
         
         <div style={{ textAlign: 'center', marginBottom: '45px' }}>
           <span style={{ fontSize: '13px', color: '#2563eb', fontWeight: '600', textTransform: 'uppercase', display: 'block', marginBottom: '8px', letterSpacing: '0.03em' }}>Умный 3D-конфигуратор лоджий</span>
-          <h2 className="calc-title" style={{ fontSize: '34px', fontWeight: '700', color: '#1e3a8a', letterSpacing: '-0.02em' }}>Онлайн-расчет стоимости остекления</h2>
+          <h2 className="calc-title" style={{ fontSize: '34px', fontWeight: '700', color: '#1e3a8a', letterSpacing: '-0.02em' }}>Online-расчет стоимости остекления</h2>
           <p style={{ fontSize: '15px', color: '#64748b', marginTop: '8px' }}>Пройдите тест из 6 шагов, зафиксируйте за номером скидку 1 500 ₽ и получите смету</p>
         </div>
 

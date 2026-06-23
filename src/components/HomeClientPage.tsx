@@ -184,7 +184,7 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
         .seo-content li { margin-bottom: 8px; }
         .seo-content strong { color: #0f172a; font-weight: 600; }
 
-        .hero-section { padding-bottom: 120px; min-height: 75vh; position: relative; display: flex; alignItems: center; }
+        .hero-section { padding-bottom: 120px; min-height: 75vh; position: relative; display: flex; align-items: center; }
         .hero-title { font-size: 56px; }
 
         @media (max-width: 991px) {
@@ -246,7 +246,7 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
               <div style={{ flexShrink: 0 }}><RulerIcon /></div>
               <div style={{ textAlign: 'left' }}>
                 <h4 style={{ fontSize: '16px', fontWeight: '600', color: '#475569', margin: 0 }}>{content.topCard1Title || 'Отделка 3-метрового балкона'}</h4>
-                <p style={{ fontSize: '14px', color: '#64748b', margin: '4px 0 10px 0' }}>{content.topCard1Subtitle || 'в панельных домах Омска'}</p>
+                <p style={{ fontSize: '14px', color: '#64748b', margin: '4px 0 10px 0' }}>{content.topCard1Subtitle || 'в panelных домах Омска'}</p>
                 <p style={{ fontSize: '28px', fontWeight: '700', color: '#1e3a8a', margin: 0, letterSpacing: '-0.02em' }}>{content.topCard1Price || '30 000 руб'}</p>
               </div>
             </div>
@@ -392,10 +392,11 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
             }}
           >
             <div className="blue-form-inputs-row">
-              <input type="text" placeholder="Ваше имя" required style={{ flex: 1, padding: '14px 18px', borderRadius: '10px', border: 'none', backgroundColor: '#ffffff', fontSize: '14px', color: '#0f172a', outline: 'none' }} />
+              <input type="text" placeholder="Ваше имя" aria-label="Ваше имя" required style={{ flex: 1, padding: '14px 18px', borderRadius: '10px', border: 'none', backgroundColor: '#ffffff', fontSize: '14px', color: '#0f172a', outline: 'none' }} />
               <input 
                 type="tel" 
                 placeholder="+7 (999) 000-00-00" 
+                aria-label="Номер телефона"
                 onChange={handlePhoneChange}
                 minLength={18}
                 maxLength={18}
@@ -595,6 +596,7 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
                 <input 
                   type="tel" 
                   placeholder="+7 (999) 000-00-00" 
+                  aria-label="Номер телефона для расчёта"
                   onChange={handlePhoneChange}
                   minLength={18}
                   maxLength={18}
@@ -619,7 +621,7 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '30px' }}>
             {(articlesData && articlesData.length > 0 ? articlesData : [
-              { title: 'Как подготовить балкон к сибирской зиме: пошаговый гайд', description: 'Разбираем, какой оконный профиль выдержит сильные морозы до -40°C и какую толщину утеплителя выбрать для лоджии.', img: 'https://balkonreshenie.ru/uploads/thumbnail_Kak_podgotovit_balkon_k_zime_7f6dc23ee6.png?updatedAt=2026-06-18T21%3A48%3A23.194Z', slug: '', isFallback: true },
+              { title: 'Как подготовить балкон к сибирской зиме: пошаговый гайт', description: 'Разбираем, какой оконный профиль выдержит сильные морозы до -40°C и какую толщину утеплителя выбрать для лоджии.', img: 'https://balkonreshenie.ru/uploads/thumbnail_Kak_podgotovit_balkon_k_zime_7f6dc23ee6.png?updatedAt=2026-06-18T21%3A48%3A23.194Z', slug: '', isFallback: true },
               { title: 'Панорамное остекление в хрущевках: мифы и реальность', description: 'Выдержит ли старая бетонная плита вес современных французских окон в пол? Тщательно анализируем технические нюансы.', img: 'https://balkonreshenie.ru/uploads/thumbnail_Panoramnoe_osteklenie_v_khrushchevkakh_2e69037ad7.png?updatedAt=2026-06-18T21%3A47%3A40.835Z', slug: '', isFallback: true },
               { title: 'Чем лучше обшить балкон внутри: евровагонка или ламинат', description: 'Сравниваем популярные отделочные материалы по цене, практичности и общей долговечности для омского климата.', img: 'https://balkonreshenie.ru/uploads/thumbnail_Gemini_Generated_Image_ilo4r7ilo4r7ilo4_e7d1e32b45.png?updatedAt=2026-06-18T21%3A47%3A55.875Z', slug: '', isFallback: true }
             ]).map((item: any, idx: number) => {
@@ -749,12 +751,13 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
             >
               <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
                 <div>
-                  <label style={{ fontSize: '12px', fontWeight: '600', color: '#475569', display: 'block', marginBottom: '6px' }}>Ваше имя</label>
-                  <input type="text" placeholder="Ваше имя" required style={{ width: '100%', padding: '14px 16px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '14px', outline: 'none' }} />
+                  <label htmlFor="modal-name" style={{ fontSize: '12px', fontWeight: '600', color: '#475569', display: 'block', marginBottom: '6px' }}>Ваше имя</label>
+                  <input id="modal-name" type="text" placeholder="Ваше имя" required style={{ width: '100%', padding: '14px 16px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '14px', outline: 'none' }} />
                 </div>
                 <div>
-                  <label style={{ fontSize: '12px', fontWeight: '600', color: '#475569', display: 'block', marginBottom: '6px' }}>Telephone для связи</label>
+                  <label htmlFor="modal-phone" style={{ fontSize: '12px', fontWeight: '600', color: '#475569', display: 'block', marginBottom: '6px' }}>Telephone для связи</label>
                   <input 
+                    id="modal-phone"
                     type="tel" 
                     placeholder="+7 (999) 000-00-00" 
                     onChange={handlePhoneChange}
