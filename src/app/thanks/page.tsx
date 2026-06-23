@@ -1,11 +1,9 @@
-'use client';
-
 import React from 'react';
 import Link from 'next/link';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
-// ИСПРАВЛЕНО: Добавлен canonical URL для страницы успешной отправки формы
+// Теперь это Server Component, и metadata отработает идеально!
 export const metadata = {
   title: 'Заявка успешно принята | Балконные Решения Омск',
   description: 'Спасибо за обращение в нашу компанию! Инженер свяжется с вами в течение 5 минут.',
@@ -29,7 +27,6 @@ export default function ThanksPage() {
             </svg>
           </div>
 
-          {/* ИСПРАВЛЕНО: Восстановлен потерянный открывающий тег h1 для предотвращения краша сборки */}
           <h1 style={{ fontSize: '28px', fontWeight: '800', color: '#1e3a8a', marginBottom: '16px', letterSpacing: '-0.02em' }}>
             Заявка успешно принята!
           </h1>

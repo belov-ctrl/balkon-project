@@ -1,14 +1,11 @@
-'use client';
-
 import React from 'react';
 import Link from 'next/link';
-import Image from 'next/image'; // 1. Импортируем компонент высокопроизводительных изображений
+import Image from 'next/image';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ContactsMap from '@/components/ContactsMap';
 import BlogClientWrapper from '@/components/BlogClientWrapper';
 
-// Функция получения всех статей из Strapi
 async function getAllArticles() {
   try {
     const res = await fetch('https://balkonreshenie.ru/api/articles?populate[0]=cover&sort[0]=publishedAt:desc', {
@@ -23,7 +20,6 @@ async function getAllArticles() {
   }
 }
 
-// ИСПРАВЛЕНО: Добавлен canonical URL для ликвидации предупреждения SiteAnalyzer
 export const metadata = {
   title: 'Блог и полезные советы об остеклении балконов в Омске',
   description: 'Профессиональные статьи, обзоры материалов, инструкции по утеплению и идеи дизайна лоджий от компании Балконные Решения.',
@@ -39,7 +35,6 @@ export default async function BlogPage() {
     <div style={{ backgroundColor: '#f8fafc', minHeight: '100vh', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
       <Header />
 
-      {/* ЧИСТЫЙ И БЕЗОПАСНЫЙ СЕО-CSS ДЛЯ ЭФФЕКТА ХОВЕРА КАРТОЧЕК */}
       <style dangerouslySetInnerHTML={{ __html: `
         .blog-catalog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 30px; margin-bottom: 60px; }
         .blog-article-card { 
@@ -63,14 +58,12 @@ export default async function BlogPage() {
 
       <main style={{ padding: '60px 20px', maxWidth: '1240px', margin: '0 auto' }}>
         
-        {/* Навигационная цепочка */}
         <div style={{ marginBottom: '32px', fontSize: '14px', color: '#64748b', display: 'flex', gap: '8px', alignItems: 'center' }}>
           <Link href="/" style={{ color: '#2563eb', textDecoration: 'none', fontWeight: '500' }}>Главная</Link>
           <span>/</span>
           <span style={{ color: '#1e293b' }}>Блог и советы</span>
         </div>
 
-        {/* Заголовок раздела */}
         <div style={{ textAlign: 'left', marginBottom: '48px' }}>
           <span style={{ fontSize: '13px', color: '#2563eb', fontWeight: '700', textTransform: 'uppercase', display: 'block', marginBottom: '8px', letterSpacing: '0.05em' }}>
             База знаний компании
@@ -83,7 +76,6 @@ export default async function BlogPage() {
           </p>
         </div>
 
-        {/* Сетка статей */}
         {articles.length === 0 ? (
           <div style={{ textAlign: 'center', padding: '80px 20px', backgroundColor: '#fff', borderRadius: '24px', border: '1px solid #e2e8f0' }}>
             <span style={{ fontSize: '48px', display: 'block', marginBottom: '16px' }}>📝</span>
@@ -96,7 +88,6 @@ export default async function BlogPage() {
               const article = item.attributes || item;
               const { title, description, slug, cover, publishedAt } = article;
 
-              // Обработка обложки
               let imgUrl = 'https://images.unsplash.com/photo-1596464716127-f2a82984de30?q=80&w=600';
               const coverAttributes = cover?.data?.attributes || cover?.data || cover;
               if (coverAttributes?.url) {
@@ -104,7 +95,6 @@ export default async function BlogPage() {
                 imgUrl = rawUrl.startsWith('http') ? rawUrl : `https://balkonreshenie.ru${rawUrl}`;
               }
 
-              // Форматирование даты
               const dateObj = new Date(publishedAt || Date.now());
               const formattedDate = new Intl.DateTimeFormat('ru-RU', {
                 day: 'numeric', month: 'long', year: 'numeric'
@@ -112,7 +102,6 @@ export default async function BlogPage() {
 
               return (
                 <article key={item.id || idx} className="blog-article-card">
-                  {/* Изображение карточки */}
                   <div style={{ height: '220px', width: '100%', overflow: 'hidden', position: 'relative' }}>
                     <Image 
                       src={imgUrl} 
@@ -126,7 +115,6 @@ export default async function BlogPage() {
                     </span>
                   </div>
 
-                  {/* Контент карточки */}
                   <div style={{ padding: '30px', flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', textAlign: 'left' }}>
                     <div>
                       <div style={{ fontSize: '13px', color: '#64748b', marginBottom: '12px', fontWeight: '500' }}>

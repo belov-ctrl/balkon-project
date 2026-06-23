@@ -24,33 +24,22 @@ export default function Calculator({ isModal = false, onClose }: CalculatorProps
   const currentDiscount = (calcStep - 1) * 300 > 1500 ? 1500 : (calcStep - 1) * 300;
   const progressPercent = Math.round((calcStep / 7) * 100);
 
-  // УМНАЯ ФУНКЦИЯ МАСКИ ДЛЯ РОССИЙСКИХ НОМЕРОВ ТЕЛЕФОНА
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let input = e.target.value.replace(/\D/g, '');
-    
     if (input.startsWith('7') || input.startsWith('8')) {
       input = input.substring(1);
     }
     input = input.substring(0, 10);
 
     let formatted = '';
-    if (input.length > 0) {
-      formatted = '+7 (' + input.substring(0, 3);
-    }
-    if (input.length > 3) {
-      formatted += ') ' + input.substring(3, 6);
-    }
-    if (input.length > 6) {
-      formatted += '-' + input.substring(6, 8);
-    }
-    if (input.length > 8) {
-      formatted += '-' + input.substring(8, 10);
-    }
+    if (input.length > 0) formatted = '+7 (' + input.substring(0, 3);
+    if (input.length > 3) formatted += ') ' + input.substring(3, 6);
+    if (input.length > 6) formatted += '-' + input.substring(6, 8);
+    if (input.length > 8) formatted += '-' + input.substring(8, 10);
     
     e.target.value = input ? formatted : '';
   };
 
-  // Централизованное содержимое самого квиз-интерфейса
   const renderCalcInterface = () => (
     <div className="calc-container" style={{ position: 'relative' }}>
       
@@ -63,7 +52,6 @@ export default function Calculator({ isModal = false, onClose }: CalculatorProps
         </button>
       )}
 
-      {/* Прогресс-бар и Скидка */}
       <div className="calc-top-bar" style={{ backgroundColor: '#f8fafc', padding: '20px 50px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px', borderBottom: '1px solid #e2e8f0', flexWrap: 'wrap' }}>
         <div style={{ flexGrow: 1, minWidth: '200px' }}>
           <div style={{ height: '6px', backgroundColor: '#e2e8f0', borderRadius: '10px', overflow: 'hidden' }}>
@@ -76,10 +64,7 @@ export default function Calculator({ isModal = false, onClose }: CalculatorProps
         </div>
       </div>
 
-      {/* ТЕЛО КАЛЬКУЛЯТОРА */}
       <div className="calc-body">
-        
-        {/* ШАГ 1: ТИП И РАЗМЕРЫ */}
         {calcStep === 1 && (
           <div>
             <h3 style={{ fontSize: '20px', fontWeight: '700', color: '#1e3a8a', marginBottom: '24px', textAlign: 'left' }}>1. Укажите тип балкона и примерные габариты:</h3>
@@ -116,12 +101,11 @@ export default function Calculator({ isModal = false, onClose }: CalculatorProps
           </div>
         )}
 
-        {/* ШАГ 2: ТИП ОСТКЛЕНИЯ */}
         {calcStep === 2 && (
           <div>
             <h3 style={{ fontSize: '20px', fontWeight: '700', color: '#1e3a8a', marginBottom: '24px', textAlign: 'left' }}>2. Какой профиль и тип открывания планируете?</h3>
             <div className="calc-grid-2">
-              {['Раздвижное алюминиевое (холодное)', 'Раздвижное пластиковое (Slidors)', 'Пластиковые распашные окна (теплое)', 'Французское витражное (от пола до потолка)'].map((opt) => (
+              {['Раздвижное алюминиевое (холодное)', 'Раздвижное plasticовое (Slidors)', 'Пластиковые распашные окна (теплое)', 'Французское витражное (от пола до потолка)'].map((opt) => (
                 <div key={opt} onClick={() => setCalcGlazing(opt)} className={`calc-option-row ${calcGlazing === opt ? 'active' : ''}`}>
                   <span style={{ color: calcGlazing === opt ? '#2563eb' : '#cbd5e1', fontSize: '18px' }}>{calcGlazing === opt ? '◈' : '◇'}</span> {opt}
                 </div>
@@ -130,7 +114,6 @@ export default function Calculator({ isModal = false, onClose }: CalculatorProps
           </div>
         )}
 
-        {/* ШАГ 3: СВАРКА / КРЫША */}
         {calcStep === 3 && (
           <div>
             <h3 style={{ fontSize: '20px', fontWeight: '700', color: '#1e3a8a', marginBottom: '24px', textAlign: 'left' }}>3. Нужны ли сложные наружные или сварочные работы?</h3>
@@ -144,10 +127,9 @@ export default function Calculator({ isModal = false, onClose }: CalculatorProps
           </div>
         )}
 
-        {/* ШАГ 4: ВНУТРЕННЯЯ ОТДЕЛКА */}
         {calcStep === 4 && (
           <div>
-            <h3 style={{ fontSize: '20px', fontWeight: '700', color: '#1e3a8a', marginBottom: '24px', textAlign: 'left' }}>4. Какой material чистовой отделки стен вам нравится?</h3>
+            <h3 style={{ fontSize: '20px', fontWeight: '700', color: '#1e3a8a', marginBottom: '24px', textAlign: 'left' }}>4. Какой материал чистовой отделки стен вам нравится?</h3>
             <div className="calc-grid-2">
               {['Без обшивки (просто остекление)', 'Белые или цветные ПВХ-панели', 'Натуральная деревянная евровагонкой', 'Влагостойкий гипсокартон под покраску'].map((opt) => (
                 <div key={opt} onClick={() => setCalcFinish(opt)} className={`calc-option-row ${calcFinish === opt ? 'active' : ''}`}>
@@ -158,7 +140,6 @@ export default function Calculator({ isModal = false, onClose }: CalculatorProps
           </div>
         )}
 
-        {/* ШАГ 5: УТЕПЛЕНИЕ */}
         {calcStep === 5 && (
           <div>
             <h3 style={{ fontSize: '20px', fontWeight: '700', color: '#1e3a8a', marginBottom: '24px', textAlign: 'left' }}>5. Потребуется ли утепление стен, пола и потолка?</h3>
@@ -172,7 +153,6 @@ export default function Calculator({ isModal = false, onClose }: CalculatorProps
           </div>
         )}
 
-        {/* ШАГ 6: МЕБЕЛЬ / ДОПЫ */}
         {calcStep === 6 && (
           <div>
             <h3 style={{ fontSize: '20px', fontWeight: '700', color: '#1e3a8a', marginBottom: '24px', textAlign: 'left' }}>6. Добавим ли полезную мебель или опции комфорта?</h3>
@@ -186,7 +166,6 @@ export default function Calculator({ isModal = false, onClose }: CalculatorProps
           </div>
         )}
 
-        {/* ШАГ 7: ОФОРМЛЕНИЕ ЗАЯВКИ */}
         {calcStep === 7 && (
           <div style={{ maxWidth: '520px', margin: '0 auto', textAlign: 'center' }}>
             <span style={{ fontSize: '50px', display: 'block', marginBottom: '14px' }}>🎁</span>
@@ -202,8 +181,8 @@ export default function Calculator({ isModal = false, onClose }: CalculatorProps
                 setIsSubmitting(true);
 
                 const form = e.target as HTMLFormElement;
-                const phoneInput = form.querySelector('input[type=\"tel\"]') as HTMLInputElement;
-                const selectedMessenger = (form.querySelector('input[name=\"messenger\"]:checked') as HTMLInputElement)?.value || 'WhatsApp';
+                const phoneInput = form.querySelector('input[type="tel"]') as HTMLInputElement;
+                const selectedMessenger = (form.querySelector('input[name="messenger"]:checked') as HTMLInputElement)?.value || 'WhatsApp';
 
                 const leadBreakdown = `КВИЗ-КАЛЬКУЛЯТОР: Тип: ${calcType}, Размер: ${calcWidth}x${calcHeight}см, Остекление: ${calcGlazing}, Сварка/Крыша: ${calcWelding}, Отделка: ${calcFinish}, Утепление: ${calcInsulation}, Мебель: ${calcAdditional}. Способ связи: ${selectedMessenger}`;
 
@@ -235,17 +214,17 @@ export default function Calculator({ isModal = false, onClose }: CalculatorProps
             >
               <div style={{ display: 'flex', justifyContent: 'center', gap: '24px', marginBottom: '4px' }}>
                 <label style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '14px', fontWeight: '600', color: '#475569', cursor: 'pointer' }}>
-                  <input type=\"radio\" name=\"messenger\" value=\"WhatsApp\" defaultChecked style={{ width: '18px', height: '18px', accentColor: '#10b981' }} /> WhatsApp
+                  <input type="radio" name="messenger" value="WhatsApp" defaultChecked style={{ width: '18px', height: '18px', accentColor: '#10b981' }} /> WhatsApp
                 </label>
                 <label style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '14px', fontWeight: '600', color: '#475569', cursor: 'pointer' }}>
-                  <input type=\"radio\" name=\"messenger\" value=\"Telegram\" style={{ width: '18px', height: '18px', accentColor: '#2563eb' }} /> Telegram
+                  <input type="radio" name="messenger" value="Telegram" style={{ width: '18px', height: '18px', accentColor: '#2563eb' }} /> Telegram
                 </label>
               </div>
 
               <input 
-                type=\"tel\" 
-                placeholder=\"+7 (999) 000-00-00\" 
-                aria-label=\"Номер мобильного телефона для получения сметы квиза\"
+                type="tel" 
+                placeholder="+7 (999) 000-00-00" 
+                aria-label="Номер мобильного телефона для получения сметы квиза"
                 onChange={handlePhoneChange}
                 minLength={18}
                 maxLength={18}
@@ -254,13 +233,13 @@ export default function Calculator({ isModal = false, onClose }: CalculatorProps
               />
 
               <div style={{ display: 'flex', alignItems: 'start', gap: '10px', textAlign: 'left' }}>
-                <input type=\"checkbox\" id=\"calc_consent\" required defaultChecked style={{ width: '16px', height: '16px', marginTop: '3px', flexShrink: 0 }} />
-                <label htmlFor=\"calc_consent\" style={{ fontSize: '12px', color: '#64748b', lineHeight: '1.4' }}>
+                <input type="checkbox" id="calc_consent" required defaultChecked style={{ width: '16px', height: '16px', marginTop: '3px', flexShrink: 0 }} />
+                <label htmlFor="calc_consent" style={{ fontSize: '12px', color: '#64748b', lineHeight: '1.4' }}>
                   Я даю согласие на обработку персональных данных и соглашаюсь с политикой конфиденциальности.
                 </label>
               </div>
 
-              <button type=\"submit\" disabled={isSubmitting} style={{ backgroundColor: '#10b981', color: '#fff', border: 'none', padding: '16px 0', borderRadius: '12px', fontSize: '15px', fontWeight: '600', cursor: 'pointer', width: '100%', boxShadow: '0 4px 12px rgba(16, 185, 129, 0.2)' }}>
+              <button type="submit" disabled={isSubmitting} style={{ backgroundColor: '#10b981', color: '#fff', border: 'none', padding: '16px 0', borderRadius: '12px', fontSize: '15px', fontWeight: '600', cursor: 'pointer', width: '100%', boxShadow: '0 4px 12px rgba(16, 185, 129, 0.2)' }}>
                 {isSubmitting ? 'Отправка...' : 'Получить точный расчет и скидку'}
               </button>
             </form>
@@ -268,7 +247,6 @@ export default function Calculator({ isModal = false, onClose }: CalculatorProps
         )}
       </div>
 
-      {/* НАВИГАЦИОННЫЙ ПОДВАЛ */}
       <div style={{ backgroundColor: '#f8fafc', padding: '20px 40px', borderTop: '1px solid #e2e8f0', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         {calcStep > 1 && calcStep < 7 ? (
           <button onClick={() => setCalcStep(calcStep - 1)} style={{ backgroundColor: 'transparent', color: '#64748b', border: 'none', cursor: 'pointer', fontSize: '14px', fontWeight: '600', outline: 'none' }}>← Назад</button>

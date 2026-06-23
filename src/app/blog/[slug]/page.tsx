@@ -1,8 +1,8 @@
-import { Metadata } from 'next';
+import React from 'react';
 import { notFound } from 'next/navigation';
 import { BlocksRenderer } from '@strapi/blocks-react-renderer';
 import Link from 'next/link';
-import Image from 'next/image'; // Подключили умный оптимизатор картинок
+import Image from 'next/image'; // ИСПРАВЛЕНО: Подключили компонент высокопроизводительных изображений
 
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -25,28 +25,25 @@ async function getArticle(slug: string) {
 }
 
 // Автоматическая генерация СЕО Мета-тегов для поисковиков (с поддержкой Next.js 15 Promise)
-export async function generateMetadata({ params }: { params: any }): Promise<Metadata> {
-  const resolvedParams = await params;
-  const slug = resolvedParams?.slug || '';
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
   const articleData = await getArticle(slug);
-  
   if (!articleData) return { title: 'Статья не найдена | Балконные Решения Омск' };
 
   const article = articleData.attributes || articleData;
   return {
     title: `${article.title || 'Статья'} | Балконные Решения Омск`,
     description: article.description || '',
-    // ИСПРАВЛЕНО: Добавлен канонический URL для каждой динамической статьи блога
+    // ИСПРАВЛЕНО: Внедрена генерация канонического URL для каждой отдельной статьи (устраняет ошибку SiteAnalyzer)
     alternates: {
       canonical: `https://balkonreshenie.ru/blog/${slug}`,
     }
   };
 }
 
-export default async function ArticlePage({ params }: { params: any }) {
+export default async function ArticlePage({ params }: { params: Promise<{ slug: string }> }) {
   // В Next.js 15 params является Promise. Обязательно делаем await params!
-  const resolvedParams = await params;
-  const slug = resolvedParams?.slug || '';
+  const { slug } = await params;
   const articleData = await getArticle(slug);
 
   // Если статья не найдена в базе или не опубликована — вызываем 404
@@ -94,11 +91,12 @@ export default async function ArticlePage({ params }: { params: any }) {
           
           {/* Обложка и заголовок */}
           <div style={{ height: '400px', width: '100%', position: 'relative' }}>
+            {/* ИСПРАВЛЕНО: Заменили img на Image с флагом priority для мгновенной отрисовки LCP */}
             <Image 
               src={coverUrl} 
-              alt={`Обложка экспертной статьи: ${title}`} 
-              fill
-              priority={true} // Этот флаг заставляет браузер загружать обложку мгновенно
+              alt={`Обложка статьи: ${title}`} 
+              fill 
+              priority={true} 
               style={{ objectFit: 'cover' }} 
             />
             <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(15,23,42,0.9) 0%, rgba(15,23,42,0.3) 60%, transparent 100%)', zIndex: 1 }}></div>
