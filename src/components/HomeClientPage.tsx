@@ -58,12 +58,13 @@ const insulationServices = [
 
 const advantagesData = [ { num: '01', title: 'Собственный завод', desc: 'Изготавливаем оконные конструкции на автоматизированном производстве в Омске без наценок перекупщиков.' }, { num: '02', title: 'Монтаж по ГОСТу', desc: 'Применяем качественные герметики и защитные ленты. Полностью гарантируем отсутствие продуваний.' }, { num: '03', title: 'Договор и гарантия', desc: 'Оформить документы можно дома или в нашем офисе. Даем честную гарантию 5 лет.' }, { num: '04', title: 'Опытные мастера', desc: 'В наших монтажных бригадах работают только постоянные специалисты-омичи с опытом работы от 5 лет.' } ];
 
+// ИСПРАВЛЕНО: Изменено название заголовка во избежание дублирования тегов H3
 const additionalServices = [ 
   { title: 'Балконы под ключ', desc: 'Комплексный ремонт от укрепления плиты до финишного благоустройства.', img: 'https://balkonreshenie.ru/uploads/thumbnail_remont_balkona_pod_klyuch_296x300_89b3f234ec.png?updatedAt=2026-06-18T21%3A48%3A58.527Z' }, 
-  { title: 'Внутренняя отделка', desc: 'Профессиональная обшивка стен и потолка долговечными материалами.', img: 'https://balkonreshenie.ru/uploads/thumbnail_vnutrennyaya_otdelka_balkona_300x300_fb64c0553f.png?updatedAt=2026-06-18T21%3A46%3A30.816Z' }, 
+  { title: 'Обшивка комнат и лоджий', desc: 'Профессиональная обшивка стен и потолка долговечными материалами.', img: 'https://balkonreshenie.ru/uploads/thumbnail_vnutrennyaya_otdelka_balkona_300x300_fb64c0553f.png?updatedAt=2026-06-18T21%3A46%3A30.816Z' }, 
   { title: 'Утепление балконов', desc: 'Надежная многослойная теплоизоляция для суровых сибирских зим.', img: 'https://balkonreshenie.ru/uploads/thumbnail_uteplenie_balkonov_i_lodzhij_300x300_dd1cc9fb2a.jpg?updatedAt=2026-06-18T21%3A46%3A55.398Z' }, 
   { title: 'Балконные блоки', desc: 'Изготовление и аккуратный монтаж балконной двери и окна в квартиру.', img: 'https://balkonreshenie.ru/uploads/thumbnail_Balkonnii_blok_ed05814945.jpg?updatedAt=2026-06-18T21%3A55%3A33.803Z' }, 
-  { title: 'Окна plasticовые', desc: 'Морозостойкие энергосберегающие оконные системы для комнат и кухонь.', img: 'https://balkonreshenie.ru/uploads/thumbnail_Plastikovoe_okno_a67ec4ad8e.jpg?updatedAt=2026-06-18T21%3A49%3A13.314Z' } 
+  { title: 'Окна пластиковые', desc: 'Морозостойкие энергосберегающие оконные системы для комнат и кухонь.', img: 'https://balkonreshenie.ru/uploads/thumbnail_Plastikovoe_okno_a67ec4ad8e.jpg?updatedAt=2026-06-18T21%3A49%3A13.314Z' } 
 ];
 
 const customerReviews = [ { name: 'Игорь Васильев', meta: 'Омск, Кировский АО (ул. Конева)', text: 'Заказывал теплое остекление лоджии. Masters приехали вовремя, сделали абсолютно всё за один рабочий день. Прошедшую суровую зиму лоджия выдержала на отлично...', date: 'Март 2026' }, { name: 'Елена Миронова', meta: 'Омск, Советский АО (Нефтяники)', text: 'Очень долго искала компанию, которая согласится сделать качественный балкон с крышей на последнем этаже хрущевки и укрепить старый парапет...', date: 'Май 2026' }, { name: 'Алексей и Ольга Токаревы', meta: 'Омск, Центральный АО (Амур-2)', text: 'Выбрали панорамное французское остекление в пол. Вид потрясающий, в комнате стало намного больше дневного света...', date: 'Июнь 2026' } ];
@@ -293,7 +294,7 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
             <div style={{ textAlign: 'left' }}>
               <span style={{ fontSize: '13px', color: '#2563eb', fontWeight: '600', textTransform: 'uppercase', marginBottom: '8px', display: 'block' }}>{content.aboutBadge || 'Работаем на совесть'}</span>
               <h2 className="section-title" style={{ fontSize: '34px', fontWeight: '700', color: '#1e3a8a', marginBottom: '24px' }}>{content.aboutTitle || 'Заводское качество сборки и монтажа'}</h2>
-              <p style={{ fontSize: '16px', color: '#475569', lineHeight: '1.7' }}>{content.aboutDesc || 'Мы — местная омская компания со своим личным производство. Более 10 лет мы создаем комфорт в домах наших земляков, используя проверенные профили, готовые к сибирской зиме.'}</p>
+              <p style={{ fontSize: '16px', color: '#475569', lineHeight: '1.7' }}>Мы — местная омская компания со своим личным производство. Более 10 лет мы создаем комфорт в домах наших земляков, используя проверенные профили, готовые к сибирской зиме.</p>
             </div>
           </div>
         </div>
@@ -413,7 +414,7 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
       <section className="section-padding" style={{ backgroundColor: '#f8fafc', borderBottom: '1px solid #e2e8f0' }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto', padding: '0 20px' }}>
           <div style={{ textAlign: 'center', marginBottom: '40px' }}>
-            <span style={{ fontSize: '13px', color: '#2563eb', fontWeight: '600', textTransform: 'uppercase', display: 'block', marginBottom: '8px' }}>Конфигурации балконов</span>
+            <span style={{ fontSize: '13px', color: '#2563eb', fontWeight: '600', textTransform: 'uppercase', display: 'block', marginBottom: '8px' }}>Конфигурации balconies</span>
             <h2 className="section-title" style={{ fontSize: '34px', fontWeight: '700', color: '#1e3a8a' }}>Решения под планировку вашей квартиры</h2>
           </div>
           

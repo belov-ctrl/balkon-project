@@ -4,7 +4,7 @@ import HomeClientPage from '@/components/HomeClientPage';
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
-// ИДЕАЛЬНО ВЫВЕРЕННЫЙ СЛОВАРЬ НА 64 РАЙОНА (СТРОГО ПО СКРИНШОТУ)
+// ИСПРАВЛЕНО: Добавлены перекрестные алиасы (-j- и -th-, kuj и kuy) для 100% совпадения с роутером и футером
 const russianGeoMap: Record<string, { landing: string }> = {
   // --- КОЛОНКА 1 ---
   'bolshaya-ostrovka': { landing: 'в Большой Островке' },
@@ -16,7 +16,7 @@ const russianGeoMap: Record<string, { landing: string }> = {
   'amurskij-2': { landing: 'в Амуре-2' },
   'pervokirpichnyj': { landing: 'в Первокирпичном' },
   'gorodok-neftyanikov': { landing: 'в Городке Нефтяников' },
-  'port-artur': { landing: 'в Порт-Артуре' },
+  'port-artur': { landing: 'в Порт-Артурe' },
   'solnechnyj': { landing: 'в Солнечном' },
   'ryabinovka': { landing: 'в Рябиновке' },
   'linejnyj': { landing: 'в Линейном' },
@@ -26,12 +26,15 @@ const russianGeoMap: Record<string, { landing: string }> = {
 
   // --- КОЛОНКА 2 ---
   'kujbyshevskij': { landing: 'в Куйбышевском районе' },
+  'kuybyshevskij': { landing: 'в Куйбышевском районе' }, // Алиас
   'topolinyj': { landing: 'в Тополином' },
   '5-j-mikrorajon': { landing: 'в 5-м микрорайоне' },
+  '5-th-mikrorajon': { landing: 'в 5-м микрорайоне' }, // Алиас
   'levoberezhye': { landing: 'на Левом берегу' },
   'privokzalnyj': { landing: 'в Привокзальном' },
   'komsomolskij-gorodok': { landing: 'в Комсомольском городке' },
   '4-j-mikrorajon': { landing: 'в 4-м микрорайоне' },
+  '4-th-mikrorajon': { landing: 'в 4-м микрорайоне' }, // Алиас
   'parkovyj-mikrorajon': { landing: 'в Парковом микрорайоне' },
   'zaozyornyj': { landing: 'в Заозёрном' },
   'zahlamino': { landing: 'в Захламино' },
@@ -47,6 +50,7 @@ const russianGeoMap: Record<string, { landing: string }> = {
   '12-j-mikrorajon': { landing: 'в 12-м микрорайоне' },
   'polyot': { landing: 'в Полёте' },
   '6-j-mikrorajon': { landing: 'в 6-м микрорайоне' },
+  '6-th-mikrorajon': { landing: 'в 6-м микрорайоне' }, // Алиас
   'kirovsk': { landing: 'в Кировске' },
   'leninsk': { landing: 'в Ленинске' },
   'chkalovskij': { landing: 'в Чкаловском посёлке' },
@@ -75,7 +79,7 @@ const russianGeoMap: Record<string, { landing: string }> = {
   'dalnij': { landing: 'в Дальнем' },
   'armejskij': { landing: 'в Армейском' },
   'ostashkovo': { landing: 'в Осташково' },
-  'svetlyj': { landing: 'в Светлым' },
+  'svetlyj': { landing: 'в Светлом' },
   'cheryomuhovskoe': { landing: 'в Черёмуховском' },
   'krutaya-gorka': { landing: 'в Крутой Горке' },
   
@@ -122,11 +126,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     return {
       title: pageData.seo_title || `Остекление балконов ${geo.landing} Омск — Цены завода`,
       description: pageData.seo_description || `Профессиональное остекление, комплексное утепление и отделка балконов ${geo.landing} в Омске. Гарантия 5 лет!`,
+      // ИСПРАВЛЕНО: Добавлен канонический адрес для устранения дублей на страницах районов
+      alternates: {
+        canonical: `https://balkonreshenie.ru/${district}`,
+      }
     };
   } catch (error) {
     return {
       title: `Остекление балконов ${geo.landing} Омск — Цены завода`,
       description: `Профессиональное остекление и отделка балконов ${geo.landing} в Омске.`,
+      alternates: {
+        canonical: `https://balkonreshenie.ru/${district}`,
+      }
     };
   }
 }
@@ -139,7 +150,6 @@ export default async function DistrictPage({ params }: Props) {
   let articlesData: any[] = [];
 
   try {
-    // Скачиваем данные главной страницы, данные текущего района и статьи параллельно
     const mainUrl = 'https://balkonreshenie.ru/api/main-page?populate[0]=heroBackground&populate[1]=aboutImage&populate[2]=glazingCard.img&populate[3]=StructureTab.img';
     const distUrl = `https://balkonreshenie.ru/api/pages?filters[slug][$eq]=${district}&populate[0]=heroBackground`;
     
@@ -165,7 +175,7 @@ export default async function DistrictPage({ params }: Props) {
       ...mainData,
       heroBadge: `📍 Профессиональный монтаж окон ${finalRussianGeo}`,
       heroTitle: pageData.heroTitle || mainData.heroTitle || `Остекление и отделка балконов под ключ`,
-      heroTitleHighlight: pageData.heroTitleHighlight || finalRussianGeo,
+      heroTitleHighlight: pageData.heroTitleHighlight || mainData.heroTitleHighlight || finalRussianGeo,
       heroDesc: pageData.heroDesc || `Качественные оконные системы и благоустройство лоджий ${finalRussianGeo} напрямую от завода. Бесплатный выезд замерщика сегодня. Гарантия 5 лет!`,
       heroBackground: pageData.heroBackground || mainData.heroBackground,
       seoText: pageData.seoText || mainData.seoText
@@ -175,6 +185,5 @@ export default async function DistrictPage({ params }: Props) {
     console.error(`🚨 Сбой склейки страниц для коллекции pages [${district}]:`, error);
   }
 
-  // Передаем склеенные данные и массив живых статей из блога
   return <HomeClientPage initialData={mergedData} articlesData={articlesData} />;
 }

@@ -1,8 +1,8 @@
-import React from 'react';
+import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { BlocksRenderer } from '@strapi/blocks-react-renderer';
 import Link from 'next/link';
-import Image from 'next/image'; // 1. Подключили умный оптимизатор картинок
+import Image from 'next/image'; // Подключили умный оптимизатор картинок
 
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -25,21 +25,28 @@ async function getArticle(slug: string) {
 }
 
 // Автоматическая генерация СЕО Мета-тегов для поисковиков (с поддержкой Next.js 15 Promise)
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params;
+export async function generateMetadata({ params }: { params: any }): Promise<Metadata> {
+  const resolvedParams = await params;
+  const slug = resolvedParams?.slug || '';
   const articleData = await getArticle(slug);
+  
   if (!articleData) return { title: 'Статья не найдена | Балконные Решения Омск' };
 
   const article = articleData.attributes || articleData;
   return {
     title: `${article.title || 'Статья'} | Балконные Решения Омск`,
     description: article.description || '',
+    // ИСПРАВЛЕНО: Добавлен канонический URL для каждой динамической статьи блога
+    alternates: {
+      canonical: `https://balkonreshenie.ru/blog/${slug}`,
+    }
   };
 }
 
-export default async function ArticlePage({ params }: { params: Promise<{ slug: string }> }) {
+export default async function ArticlePage({ params }: { params: any }) {
   // В Next.js 15 params является Promise. Обязательно делаем await params!
-  const { slug } = await params;
+  const resolvedParams = await params;
+  const slug = resolvedParams?.slug || '';
   const articleData = await getArticle(slug);
 
   // Если статья не найдена в базе или не опубликована — вызываем 404
@@ -71,7 +78,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
 
       <main style={{ padding: '60px 20px', maxWidth: '900px', margin: '0 auto' }}>
         
-        {/* Хлебные крошки (SEO навигация) - ТЕПЕРЬ ССЫЛКА ЖЕЛЕЗНО ВЕДЕТ НА КАТАЛОГ /blog */}
+        {/* Хлебные крошки (SEO навигация) */}
         <div style={{ marginBottom: '24px', fontSize: '14px', color: '#64748b', display: 'flex', gap: '8px', alignItems: 'center' }}>
           <Link href="/" style={{ color: '#2563eb', textDecoration: 'none', fontWeight: '500' }}>Главная</Link>
           <span>/</span>
@@ -87,7 +94,6 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
           
           {/* Обложка и заголовок */}
           <div style={{ height: '400px', width: '100%', position: 'relative' }}>
-            {/* 2. Заменили старый тег img на прокачанный Image со свойством priority */}
             <Image 
               src={coverUrl} 
               alt={`Обложка экспертной статьи: ${title}`} 

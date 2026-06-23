@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 
 // Список районов (зафиксирован)
 const districtsList = [ 
-  { name: 'Большая Островка', slug: 'bolshaya-ostrovka' }, { name: 'Куйбышевский', slug: 'kuybyshevskij' }, { name: 'Городок Водников', slug: 'gorodok-vodnikov' }, { name: 'Рыбачий', slug: 'rybachij' }, { name: '11-й микрорайон', slug: '11-j-mikrorajon' }, { name: 'Тополиный', slug: 'topolinyj' }, { name: '12-й микрорайон', slug: '12-j-mikrorajon' }, { name: 'Омский Кристалл', slug: 'omskij-kristall' }, { name: 'Амурский', slug: 'amurskij' }, { name: '5-й микрорайон', slug: '5-th-mikrorajon' }, { name: 'Полёт', slug: 'polyot' }, { name: 'Биофабрика', slug: 'biofabrika' }, { name: 'Прибрежный', slug: 'pribrezhnyj' }, { name: 'Левобережье', slug: 'levoberezhye' }, { name: '6-й микрорайон', slug: '6-th-mikrorajon' }, { name: 'Авиагородок', slug: 'aviagorodok' }, { name: 'Космос', slug: 'kosmos' }, { name: 'Привокзальный', slug: 'privokzalnyj' }, { name: 'Кировск', slug: 'kirovsk' }, { name: 'Кордный', slug: 'kordnyj' }, { name: '3-й микрорайон', slug: '3-j-mikrorajon' }, { name: 'Комсомольский городок', slug: 'komsomolskij-gorodok' }, { name: 'Ленинск', slug: 'leninsk' }, { name: '1-й микрорайон', slug: '1-j-mikrorajon' }, { name: 'Амурский-2', slug: 'amurskij-2' }, { name: '4-й микрорайон', slug: '4-th-mikrorajon' }, { name: 'Чкаловский', slug: 'chkalovskij' }, { name: 'Чукреевка', slug: 'chukreevka' }, { name: 'Первокирпичный', slug: 'pervokirpichnyj' }, { name: 'Парковый микрорайон', slug: 'parkovyj-mikrorajon' }, { name: '2-й микрорайон', slug: '2-j-mikrorajon' }, { name: 'Восточный', slug: 'vostochnyj' }, { name: 'Городок Нефтяников', slug: 'gorodok-neftyanikov' }, { name: 'Заозёрный', slug: 'zaozyornyj' }, { name: 'Старый Кировск', slug: 'staryj-kirovsk' }, { name: 'Чередовый', slug: 'cheredovyj' }, { name: 'Порт-Артур', slug: 'port-artur' }, { name: 'Захламино', slug: 'zahlamino' }, { name: 'Большие Поля', slug: 'bolshie-polya' }, { name: 'Степной', slug: 'stepnoj' }, { name: 'Солнечный', slug: 'solnechnyj' }, { name: 'Московка', slug: 'moskovka' }, { name: 'Юбилейный', slug: 'yubilejnyj' }, { name: 'Дальний', slug: 'dalnij' }, { name: 'Рябиновка', slug: 'ryabinovka' }, { name: 'Волжский', slug: 'volzhskij' }, { name: 'Булатово', slug: 'bulatovo' }, { name: 'Армейский', slug: 'armejskij' }, { name: 'Линейный', slug: 'linejnyj' }, { name: 'Карьер', slug: 'karyer' }, { name: 'Загородный', slug: 'zagorodnyj' }, { name: 'Осташково', slug: 'ostashkovo' }, { name: 'Зелёная долина', slug: 'zelyonaya-dolina' }, { name: 'Ясная Поляна', slug: 'yasnaya-polyana' }, { name: 'микрорайон Входной', slug: 'vhodnoj' }, { name: 'Светлый', slug: 'svetlyj' }, { name: 'Николаевка', slug: 'nikolaevka' }, { name: 'Северный', slug: 'severnyj' }, { name: 'Черёмушки', slug: 'cheryomushki' }, { name: 'Черёмуховское', slug: 'cheryomuhovskoe' }, { name: 'Новая Станица', slug: 'novaya-stanica' }, { name: 'Александровская усадьба', slug: 'aleksandrovskaya-usadba' }, { name: 'Береговой', slug: 'beregovoj' }, { name: 'Крутая Горка', slug: 'krutaya-gorka' }
+  { name: 'Большая Островка', slug: 'bolshaya-ostrovka' }, { name: 'Куйбышевский', slug: 'kuybyshevskij' }, { name: 'Городок Водников', slug: 'gorodok-vodnikov' }, { name: 'Рыбачий', slug: 'rybachij' }, { name: '11-й микрорайон', slug: '11-j-mikrorajon' }, { name: 'Тополиный', slug: 'topolinyj' }, { name: '12-й микрорайон', slug: '12-j-mikrorajon' }, { name: 'Омский Кристалл', slug: 'omskij-kristall' }, { name: 'Амурский', slug: 'amurskij' }, { name: '5-й микрорайон', slug: '5-th-mikrorajon' }, { name: 'Полёт', slug: 'polyot' }, { name: 'Биофабрика', slug: 'biofabrika' }, { name: 'Прибрежный', slug: 'pribrezhnyj' }, { name: 'Левобережье', slug: 'levoberezhye' }, { name: '6-й микрорайон', slug: '6-th-mikrorajon' }, { name: 'Авиагородок', slug: 'aviagorodok' }, { name: 'Космос', slug: 'kosmos' }, { name: 'Привокзальный', slug: 'privokzalnyj' }, { name: 'Кировск', slug: 'kirovsk' }, { name: 'Кордный', slug: 'kordnyj' }, { name: '3-й микрорайон', slug: '3-j-mikrorajon' }, { name: 'Комсомольский городок', slug: 'komsomolskij-gorodok' }, { name: 'Ленинск', slug: 'leninsk' }, { name: '1-й микрорайон', slug: '1-j-mikrorajon' }, { name: 'Амурский-2', slug: 'amurskij-2' }, { name: '4-й микрорайон', slug: '4-th-mikrorajon' }, { name: 'Чкаловский', slug: 'chkalovskij' }, { name: 'Чукреевка', slug: 'chukreevka' }, { name: 'Первокирпичный', slug: 'pervokirpichnyj' }, { name: 'Парковый микрорайон', slug: 'parkovyj-mikrorajon' }, { name: '2-й микрорайон', slug: '2-j-mikrorajon' }, { name: 'Восточный', slug: 'vostochnyj' }, { name: 'Городок Нефтяников', slug: 'gorodok-neftyanikov' }, { name: 'Заозёрный', slug: 'zaozyornyj' }, { name: 'Старый Кировск', slug: 'staryj-kirovsk' }, { name: 'Чредовый', slug: 'cheredovyj' }, { name: 'Порт-Артур', slug: 'port-artur' }, { name: 'Захламино', slug: 'zahlamino' }, { name: 'Большие Поля', slug: 'bolshie-polya' }, { name: 'Степной', slug: 'stepnoj' }, { name: 'Солнечный', slug: 'solnechnyj' }, { name: 'Московка', slug: 'moskovka' }, { name: 'Юбилейный', slug: 'yubilejnyj' }, { name: 'Дальний', slug: 'dalnij' }, { name: 'Рябиновка', slug: 'ryabinovka' }, { name: 'Волжский', slug: 'volzhskij' }, { name: 'Булатово', slug: 'bulatovo' }, { name: 'Армейский', slug: 'armejskij' }, { name: 'Линейный', slug: 'linejnyj' }, { name: 'Карьер', slug: 'karyer' }, { name: 'Загородный', slug: 'zagorodnyj' }, { name: 'Осташково', slug: 'ostashkovo' }, { name: 'Зелёная долина', slug: 'zelyonaya-dolina' }, { name: 'Ясная Поляна', slug: 'yasnaya-polyana' }, { name: 'микрорайон Входной', slug: 'vhodnoj' }, { name: 'Светлый', slug: 'svetlyj' }, { name: 'Николаевка', slug: 'nikolaevka' }, { name: 'Северный', slug: 'severnyj' }, { name: 'Черёмушки', slug: 'cheryomushki' }, { name: 'Черёмуховское', slug: 'cheryomuhovskoe' }, { name: 'Новая Станица', slug: 'novaya-stanica' }, { name: 'Александровская усадьба', slug: 'aleksandrovskaya-usadba' }, { name: 'Береговой', slug: 'beregovoj' }, { name: 'Крутая Горка', slug: 'krutaya-gorka' }
 ];
 
 // Полная SEO-структура меню под многостраничник
@@ -175,7 +175,7 @@ export default function Header() {
       </div>
 
       {/* СТРОКА 2 — УМНАЯ СЕО НАВИГАЦИЯ ДЛЯ КОМПЬЮТЕРОВ */}
-      <nav className="desktop-only-block" style={{ borderTop: '1px solid #e2e8f0', height: '50px', display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: '#f8fafc' }}>
+      <nav className="desktop-only-block" style={{ borderTop: '1px solid #e2e8f0', height: '50px', display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: '#f8fafc' }} aria-label="Основное меню">
         <div className="nav-links-wrap" style={{ display: 'flex', gap: '35px', position: 'relative', height: '100%', alignItems: 'center' }}>
           
           {navigationMenu.map((menu) => (
@@ -195,6 +195,7 @@ export default function Header() {
                       onClick={() => triggerForm(`План страницы: ${subItem}`)}
                       className="dropdown-item-link"
                       style={{ fontSize: '13.5px', color: '#475569', padding: '8px 12px', transition: 'all 0.15s', whiteSpace: 'nowrap' }}
+                      role="button"
                     >
                       📄 {subItem}
                     </div>
@@ -254,6 +255,7 @@ export default function Header() {
                       key={subItem} 
                       onClick={() => triggerForm(`План страницы: ${subItem}`)}
                       style={{ fontSize: '14px', color: '#475569', padding: '8px 0', cursor: 'pointer' }}
+                      role="button"
                     >
                       📄 {subItem}
                     </div>
@@ -304,12 +306,12 @@ export default function Header() {
         </div>
       </div>
 
-      {/* ВСПЛЫВАЮЩЕЕ ОКНО ШАПКИ С ФИЛЬТРОМ ТЕЛЕФОНА */}
+      {/* ВСПЛЫВАЮЩЕЕ ОКНО ШАПКИ С ФИЛЬТРОМ ТЕЛЕФОНА И ИСПРАВЛЕННЫМИ LABELS */}
       {isHeaderModalOpen && (
         <div style={{ position: 'fixed', inset: 0, backgroundColor: 'rgba(15, 23, 42, 0.4)', backdropFilter: 'blur(8px)', zIndex: 9999999, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px' }}>
           <div style={{ backgroundColor: '#fff', width: '100%', maxWidth: '440px', borderRadius: '24px', padding: '36px', boxShadow: '0 25px 50px -12px rgba(0,0,0,0.25)', position: 'relative', textAlign: 'left', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
             
-            <button onClick={() => setIsHeaderModalOpen(false)} style={{ position: 'absolute', top: '20px', right: '20px', background: 'none', border: 'none', fontSize: '24px', color: '#64748b', cursor: 'pointer', outline: 'none' }}>×</button>
+            <button onClick={() => setIsHeaderModalOpen(false)} style={{ position: 'absolute', top: '20px', right: '20px', background: 'none', border: 'none', fontSize: '24px', color: '#64748b', cursor: 'pointer', outline: 'none' }} aria-label="Закрыть окно">×</button>
             
             <h3 style={{ fontSize: '19px', fontWeight: '700', color: '#1e3a8a', marginBottom: '8px', lineHeight: '1.3', paddingRight: '20px' }}>{headerModalTitle}</h3>
             <p style={{ fontSize: '13.5px', color: '#475569', marginBottom: '24px', lineHeight: '1.5' }}>Оставьте ваш номер. Мы мгновенно свяжемся с вами, проконсультируем по выбранному направлению и зафиксируем за вашим номером скидку до 15%.</p>
@@ -350,13 +352,15 @@ export default function Header() {
             >
               <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
                 <div>
-                  <label style={{ fontSize: '12px', fontWeight: '600', color: '#475569', display: 'block', marginBottom: '6px' }}>Ваше имя</label>
-                  <input type="text" placeholder="Иван" required style={{ width: '100%', padding: '12px 14px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '14px', outline: 'none', backgroundColor: '#fff', color: '#0f172a' }} />
+                  {/* ИСПРАВЛЕНО: Добавлен атрибут htmlFor и id для связки */}
+                  <label htmlFor="header-client-name" style={{ fontSize: '12px', fontWeight: '600', color: '#475569', display: 'block', marginBottom: '6px' }}>Ваше имя</label>
+                  <input id="header-client-name" type="text" placeholder="Иван" required style={{ width: '100%', padding: '12px 14px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '14px', outline: 'none', backgroundColor: '#fff', color: '#0f172a' }} />
                 </div>
                 <div>
-                  <label style={{ fontSize: '12px', fontWeight: '600', color: '#475569', display: 'block', marginBottom: '6px' }}>Номер телефона</label>
-                  {/* ДОБАВЛЕНА МАСКА И ВАЛИДАЦИЯ ДЛИНЫ СТРОКИ (РОВНО 18 СИМВОЛОВ) */}
+                  {/* ИСПРАВЛЕНО: Добавлен атрибут htmlFor и id для связки */}
+                  <label htmlFor="header-client-phone" style={{ fontSize: '12px', fontWeight: '600', color: '#475569', display: 'block', marginBottom: '6px' }}>Номер телефона</label>
                   <input 
+                    id="header-client-phone"
                     type="tel" 
                     placeholder="+7 (999) 000-00-00" 
                     onChange={handlePhoneChange}

@@ -179,7 +179,7 @@ export default function FloatingWidgets({ onOpenCalc }: FloatingWidgetsProps) {
         <span className="widget-calc-text">Калькулятор</span>
       </div>
 
-      <div className="widget-gift-btn" onClick={() => setIsGiftOpen(true)}>
+      <div className="widget-gift-btn" onClick={() => setIsGiftOpen(true)} role="button" aria-label="Открыть окно с подарком">
         <span style={{ fontSize: '22px' }}>🎁</span>
         <span className="widget-gift-text">Вам подарок!</span>
       </div>
@@ -187,7 +187,7 @@ export default function FloatingWidgets({ onOpenCalc }: FloatingWidgetsProps) {
       {isGiftOpen && (
         <div style={{ position: 'fixed', inset: 0, backgroundColor: 'rgba(15, 23, 42, 0.6)', backdropFilter: 'blur(4px)', zIndex: 9999999, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px' }}>
           <div style={{ backgroundColor: '#fff', maxWidth: '400px', width: '100%', borderRadius: '24px', padding: '36px', position: 'relative', textAlign: 'center', animation: 'slideUp 0.3s ease' }}>
-            <button onClick={() => setIsGiftOpen(false)} style={{ position: 'absolute', top: '16px', right: '20px', background: 'none', border: 'none', fontSize: '24px', color: '#64748b', cursor: 'pointer' }}>×</button>
+            <button onClick={() => setIsGiftOpen(false)} style={{ position: 'absolute', top: '16px', right: '20px', background: 'none', border: 'none', fontSize: '24px', color: '#64748b', cursor: 'pointer' }} aria-label="Закрыть окно">×</button>
             <span style={{ fontSize: '50px', display: 'block', marginBottom: '10px' }}>🎁</span>
             <h3 style={{ fontSize: '22px', fontWeight: '700', color: '#e11d48', marginBottom: '10px' }}>Подарок за визит!</h3>
             <p style={{ fontSize: '14px', color: '#475569', marginBottom: '24px', lineHeight: '1.5' }}>Забронируйте <strong>дополнительную скидку 10%</strong> и набор по уходу за окнами при заказе. Оставьте номер, чтобы мы закрепили подарок за вами.</p>
@@ -195,6 +195,7 @@ export default function FloatingWidgets({ onOpenCalc }: FloatingWidgetsProps) {
               <input 
                 type="tel" 
                 placeholder="+7 (999) 000-00-00" 
+                aria-label="Номер телефона для бронирования подарка"
                 onChange={handlePhoneChange}
                 minLength={18}
                 maxLength={18}
@@ -209,7 +210,8 @@ export default function FloatingWidgets({ onOpenCalc }: FloatingWidgetsProps) {
         </div>
       )}
 
-      <div className="widget-chat-btn" onClick={() => setIsChatOpen(!isChatOpen)}>
+      {/* ИСПРАВЛЕНО: Добавлен aria-label для экранных дикторов на плавающую кнопку чата */}
+      <div className="widget-chat-btn" onClick={() => setIsChatOpen(!isChatOpen)} role="button" aria-label="Открыть онлайн-консультацию с Оксаной">
         {isChatOpen ? (
           <span style={{ color: '#fff', fontSize: '28px', lineHeight: 1 }}>×</span>
         ) : (
@@ -226,7 +228,7 @@ export default function FloatingWidgets({ onOpenCalc }: FloatingWidgetsProps) {
               <div style={{ width: '10px', height: '10px', backgroundColor: '#4ade80', borderRadius: '50%' }}></div>
               <span style={{ fontWeight: '600', fontSize: '15px' }}>Менеджер Оксана</span>
             </div>
-            <button onClick={() => setIsChatOpen(false)} style={{ background: 'none', border: 'none', color: '#fff', fontSize: '20px', cursor: 'pointer' }}>×</button>
+            <button onClick={() => setIsChatOpen(false)} style={{ background: 'none', border: 'none', color: '#fff', fontSize: '20px', cursor: 'pointer' }} aria-label="Закрыть чат">×</button>
           </div>
           
           <div style={{ padding: '20px', backgroundColor: '#fff', display: 'flex', flexDirection: 'column' }}>
@@ -241,6 +243,7 @@ export default function FloatingWidgets({ onOpenCalc }: FloatingWidgetsProps) {
                   <input 
                     type="tel" 
                     placeholder="+7 (999) 000-00-00" 
+                    aria-label="Ваш номер телефона для связи в чате"
                     onChange={handlePhoneChange}
                     minLength={18}
                     maxLength={18}
@@ -258,8 +261,8 @@ export default function FloatingWidgets({ onOpenCalc }: FloatingWidgetsProps) {
                   Спасибо! Ваш номер сохранен. Теперь вы можете задать свой вопрос, я читаю:
                 </div>
                 <div style={{ display: 'flex', gap: '8px' }}>
-                  <input type="text" placeholder="Введите сообщение..." style={{ flex: 1, padding: '12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '14px', outline: 'none' }} />
-                  <button onClick={() => alert('Сообщение отправлено Оксане! Она ответит вам в СМС или перезвонит в течение 2-х минут.')} style={{ backgroundColor: '#2563eb', color: '#fff', border: 'none', width: '44px', borderRadius: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <input type="text" placeholder="Введите сообщение..." aria-label="Текст вашего вопроса" style={{ flex: 1, padding: '12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '14px', outline: 'none' }} />
+                  <button onClick={() => alert('Сообщение отправлено Оксане! Она ответит вам в СМС или перезвонит в течение 2-х минут.')} style={{ backgroundColor: '#2563eb', color: '#fff', border: 'none', width: '44px', borderRadius: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }} aria-label="Отправить сообщение">
                     ➤
                   </button>
                 </div>

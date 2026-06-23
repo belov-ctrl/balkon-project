@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image'; // 1. Импортируем компонент высокопроизводительных изображений
@@ -21,9 +23,13 @@ async function getAllArticles() {
   }
 }
 
+// ИСПРАВЛЕНО: Добавлен canonical URL для ликвидации предупреждения SiteAnalyzer
 export const metadata = {
   title: 'Блог и полезные советы об остеклении балконов в Омске',
   description: 'Профессиональные статьи, обзоры материалов, инструкции по утеплению и идеи дизайна лоджий от компании Балконные Решения.',
+  alternates: {
+    canonical: 'https://balkonreshenie.ru/blog',
+  }
 };
 
 export default async function BlogPage() {
@@ -108,7 +114,6 @@ export default async function BlogPage() {
                 <article key={item.id || idx} className="blog-article-card">
                   {/* Изображение карточки */}
                   <div style={{ height: '220px', width: '100%', overflow: 'hidden', position: 'relative' }}>
-                    {/* 2. Заменили старый <img> на адаптивный <Image> с отложенной загрузкой по умолчанию */}
                     <Image 
                       src={imgUrl} 
                       alt={`Превью статьи: ${title}`}
