@@ -34,7 +34,7 @@ const WarrantyIcon = () => (
 // =========================================================================
 // ДЕФОЛТНЫЕ ДАННЫЕ (ФОЛЛБЭКИ НА СЛУЧАЙ ПУСТОЙ CMS)
 // =========================================================================
-const managerPhoto = "http://localhost:1337/uploads/firma_po_otdelki_balkonov_8d224645e3.png?updatedAt=2026-06-18T21%3A47%3A24.419Z";
+const managerPhoto = "http://83.222.18.44:1337/uploads/firma_po_otdelki_balkonov_8d224645e3.png?updatedAt=2026-06-18T21%3A47%3A24.419Z";
 
 const defaultGlazingCards = [ 
   { title: 'Теплое остекление', price: '3 200', desc: 'ПВХ профиль. Подходит для создания жилой комнаты, теплого кабинета или продолжения кухни.', img: 'https://images.unsplash.com/photo-1590073844006-33379778ae09?q=80&w=600', badge: 'Максимум тепла' }, 
@@ -50,19 +50,19 @@ const structuresData = [
 ];
 
 const insulationServices = [ 
-  { title: 'Комплексное утепление', desc: 'Качественная изоляция по принципу термоса. На вашем балконе будет абсолютно сухо и тепло даже в самые суровые сибирские морозы.', price: '1 200', materials: ['Утеплитель Пеноплэкс (абсолютно не боится влаги)', 'Пароизоляция Пенофол со специальным отражающим слоем', 'Герметизация стыков профессиональной пеной и составом Стиз'], img: 'http://localhost:1337/uploads/thumbnail_Kompleksnoye_utepleniye_balkona_a47ff0fea6.png?updatedAt=2026-06-18T21%3A00%3A08.300Z' }, 
-  { title: 'Внутренняя отделка', desc: 'Превращаем холодный бетонный балкон в уютную жилую зону, удобное рабочее место или аккуратный уголок для отдыха.', price: '1 500', materials: ['Натуральная деревянная евровагонка высшего сорта', 'Износостойкий ламинат для отделки стен и пола', 'Практичные ПВХ и МДФ панели любых современных цветов'], img: 'http://localhost:1337/uploads/thumbnail_Vnutrennyaya_otdelka_balkona_c5925c9216.png?updatedAt=2026-06-18T21%3A45%3A56.280Z' }, 
-  { title: 'Проводка и мебель', desc: 'Добавляем важные и полезные детали, чтобы обновленным пространством лоджии было максимально комфортно пользоваться каждый день.', price: '900', materials: ['Mонтаж безопасного инфракрасного теплого пола с датчиком', 'Удобный вывод розеток, выключателей и точечного света', 'Встроенные шкафчики, тумбы и потолочные сушилки'], img: 'http://localhost:1337/uploads/thumbnail_Provodka_i_mebel_na_balkon_00bad2d485.png?updatedAt=2026-06-18T21%3A46%3A06.978Z' } 
+  { title: 'Комплексное утепление', desc: 'Качественная изоляция по принципу термоса. На вашем балконе будет абсолютно сухо и тепло даже в самые суровые сибирские морозы.', price: '1 200', materials: ['Утеплитель Пеноплэкс (абсолютно не боится влаги)', 'Пароизоляция Пенофол со специальным отражающим слоем', 'Герметизация стыков профессиональной пеной и составом Стиз'], img: 'http://83.222.18.44:1337/uploads/thumbnail_Kompleksnoye_utepleniye_balkona_a47ff0fea6.png?updatedAt=2026-06-18T21%3A00%3A08.300Z' }, 
+  { title: 'Внутренняя отделка', desc: 'Превращаем холодный бетонный балкон в уютную жилую зону, удобное рабочее место или аккуратный уголок для отдыха.', price: '1 500', materials: ['Натуральная деревянная евровагонка высшего сорта', 'Износостойкий ламинат для отделки стен и пола', 'Практичные ПВХ и МДФ панели любых современных цветов'], img: 'http://83.222.18.44:1337/uploads/thumbnail_Vnutrennyaya_otdelka_balkona_c5925c9216.png?updatedAt=2026-06-18T21%3A45%3A56.280Z' }, 
+  { title: 'Проводка и мебель', desc: 'Добавляем важные и полезные детали, чтобы обновленным пространством лоджии было максимально комфортно пользоваться каждый день.', price: '900', materials: ['Mонтаж безопасного инфракрасного теплого пола с датчиком', 'Удобный вывод розеток, выключателей и точечного света', 'Встроенные шкафчики, тумбы и потолочные сушилки'], img: 'http://83.222.18.44:1337/uploads/thumbnail_Provodka_i_mebel_na_balkon_00bad2d485.png?updatedAt=2026-06-18T21%3A46%3A06.978Z' } 
 ];
 
 const advantagesData = [ { num: '01', title: 'Собственный завод', desc: 'Изготавливаем оконные конструкции на автоматизированном производстве в Омске без наценок перекупщиков.' }, { num: '02', title: 'Монтаж по ГОСТу', desc: 'Применяем качественные герметики и защитные ленты. Полностью гарантируем отсутствие продуваний.' }, { num: '03', title: 'Договор и гарантия', desc: 'Оформить документы можно дома или в нашем офисе. Даем честную гарантию 5 лет.' }, { num: '04', title: 'Опытные мастера', desc: 'В наших монтажных бригадах работают только постоянные специалисты-омичи с опытом работы от 5 лет.' } ];
 
 const additionalServices = [ 
-  { title: 'Балконы под ключ', desc: 'Комплексный ремонт от укрепления плиты до финишного благоустройства.', img: 'http://localhost:1337/uploads/thumbnail_remont_balkona_pod_klyuch_296x300_89b3f234ec.png?updatedAt=2026-06-18T21%3A48%3A58.527Z' }, 
-  { title: 'Внутренняя отделка', desc: 'Профессиональная обшивка стен и потолка долговечными материалами.', img: 'http://localhost:1337/uploads/thumbnail_vnutrennyaya_otdelka_balkona_300x300_fb64c0553f.png?updatedAt=2026-06-18T21%3A46%3A30.816Z' }, 
-  { title: 'Утепление балконов', desc: 'Надежная многослойная теплоизоляция для суровых сибирских зим.', img: 'http://localhost:1337/uploads/thumbnail_uteplenie_balkonov_i_lodzhij_300x300_dd1cc9fb2a.jpg?updatedAt=2026-06-18T21%3A46%3A55.398Z' }, 
-  { title: 'Балконные блоки', desc: 'Изготовление и аккуратный монтаж балконной двери и окна в квартиру.', img: 'http://localhost:1337/uploads/thumbnail_Balkonnii_blok_ed05814945.jpg?updatedAt=2026-06-18T21%3A55%3A33.803Z' }, 
-  { title: 'Окна plasticовые', desc: 'Морозостойкие энергосберегающие оконные системы для комнат и кухонь.', img: 'http://localhost:1337/uploads/thumbnail_Plastikovoe_okno_a67ec4ad8e.jpg?updatedAt=2026-06-18T21%3A49%3A13.314Z' } 
+  { title: 'Балконы под ключ', desc: 'Комплексный ремонт от укрепления плиты до финишного благоустройства.', img: 'http://83.222.18.44:1337/uploads/thumbnail_remont_balkona_pod_klyuch_296x300_89b3f234ec.png?updatedAt=2026-06-18T21%3A48%3A58.527Z' }, 
+  { title: 'Внутренняя отделка', desc: 'Профессиональная обшивка стен и потолка долговечными материалами.', img: 'http://83.222.18.44:1337/uploads/thumbnail_vnutrennyaya_otdelka_balkona_300x300_fb64c0553f.png?updatedAt=2026-06-18T21%3A46%3A30.816Z' }, 
+  { title: 'Утепление балконов', desc: 'Надежная многослойная теплоизоляция для суровых сибирских зим.', img: 'http://83.222.18.44:1337/uploads/thumbnail_uteplenie_balkonov_i_lodzhij_300x300_dd1cc9fb2a.jpg?updatedAt=2026-06-18T21%3A46%3A55.398Z' }, 
+  { title: 'Балконные блоки', desc: 'Изготовление и аккуратный монтаж балконной двери и окна в квартиру.', img: 'http://83.222.18.44:1337/uploads/thumbnail_Balkonnii_blok_ed05814945.jpg?updatedAt=2026-06-18T21%3A55%3A33.803Z' }, 
+  { title: 'Окна plasticовые', desc: 'Морозостойкие энергосберегающие оконные системы для комнат и кухонь.', img: 'http://83.222.18.44:1337/uploads/thumbnail_Plastikovoe_okno_a67ec4ad8e.jpg?updatedAt=2026-06-18T21%3A49%3A13.314Z' } 
 ];
 
 const customerReviews = [ { name: 'Игорь Васильев', meta: 'Омск, Кировский АО (ул. Конева)', text: 'Заказывал теплое остекление лоджии. Мастера приехали вовремя, сделали абсолютно всё за один рабочий день. Прошедшую суровую зиму лоджия выдержала на отлично...', date: 'Март 2026' }, { name: 'Елена Миронова', meta: 'Омск, Советский АО (Нефтяники)', text: 'Очень долго искала компанию, которая согласится сделать качественный балкон с крышей на последнем этаже хрущевки и укрепить старый парапет...', date: 'Май 2026' }, { name: 'Алексей и Ольга Токаревы', meta: 'Омск, Центральный АО (Амур-2)', text: 'Выбрали панорамное французское остекление в пол. Вид потрясающий, в комнате стало намного больше дневного света...', date: 'Июнь 2026' } ];
@@ -109,14 +109,14 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
   let rawBg = content.heroBackground;
   let bgUrl = Array.isArray(rawBg) ? rawBg[0]?.url : rawBg?.url;
   if (bgUrl) {
-    displayBg = bgUrl.startsWith('http') ? bgUrl : `http://localhost:1337${bgUrl}`;
+    displayBg = bgUrl.startsWith('http') ? bgUrl : `http://83.222.18.44:1337${bgUrl}`;
   }
 
   let aboutBg = 'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?q=80&w=800';
   let rawAboutImg = content.aboutImage;
   let aboutUrl = Array.isArray(rawAboutImg) ? rawAboutImg[0]?.url : rawAboutImg?.url;
   if (aboutUrl) {
-    aboutBg = aboutUrl.startsWith('http') ? aboutUrl : `http://localhost:1337${aboutUrl}`;
+    aboutBg = aboutUrl.startsWith('http') ? aboutUrl : `http://83.222.18.44:1337${aboutUrl}`;
   }
 
   const activeGlazingCards = content.glazingCard && content.glazingCard.length > 0 ? content.glazingCard : defaultGlazingCards;
@@ -127,7 +127,7 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
   let rawTabImg = currentTab.img;
   let tabUrl = Array.isArray(rawTabImg) ? rawTabImg[0]?.url : rawTabImg?.url;
   if (tabUrl) {
-    tabImgUrl = tabUrl.startsWith('http') ? tabUrl : `http://localhost:1337${tabUrl}`;
+    tabImgUrl = tabUrl.startsWith('http') ? tabUrl : `http://83.222.18.44:1337${tabUrl}`;
   } else {
     tabImgUrl = 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=800';
   }
@@ -294,7 +294,7 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
               let rawCardImg = card.img;
               let imgUrl = Array.isArray(rawCardImg) ? rawCardImg[0]?.url : rawCardImg?.url;
               if (imgUrl) {
-                cardImg = imgUrl.startsWith('http') ? imgUrl : `http://localhost:1337${imgUrl}`;
+                cardImg = imgUrl.startsWith('http') ? imgUrl : `http://83.222.18.44:1337${imgUrl}`;
               }
 
               return (
@@ -666,9 +666,9 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '30px' }}>
             {(articlesData && articlesData.length > 0 ? articlesData : [
-              { title: 'Как подготовить балкон к сибирской зиме: пошаговый гайд', description: 'Разбираем, какой оконный профиль выдержит сильные морозы до -40°C и какую толщину утеплителя выбрать для лоджии.', img: 'http://localhost:1337/uploads/thumbnail_Kak_podgotovit_balkon_k_zime_7f6dc23ee6.png?updatedAt=2026-06-18T21%3A48%3A23.194Z', slug: '', isFallback: true },
-              { title: 'Панорамное остекление в хрущевках: мифы и реальность', description: 'Выдержит ли старая бетонная плита вес современных французских окон в пол? Тщательно анализируем технические нюансы.', img: 'http://localhost:1337/uploads/thumbnail_Panoramnoe_osteklenie_v_khrushchevkakh_2e69037ad7.png?updatedAt=2026-06-18T21%3A47%3A40.835Z', slug: '', isFallback: true },
-              { title: 'Чем лучше обшить балкон внутри: евровагонка или ламинат', description: 'Сравниваем популярные отделочные материалы по цене, практичности и общей долговечности для омского климата.', img: 'http://localhost:1337/uploads/thumbnail_Gemini_Generated_Image_ilo4r7ilo4r7ilo4_e7d1e32b45.png?updatedAt=2026-06-18T21%3A47%3A55.875Z', slug: '', isFallback: true }
+              { title: 'Как подготовить балкон к сибирской зиме: пошаговый гайд', description: 'Разбираем, какой оконный профиль выдержит сильные морозы до -40°C и какую толщину утеплителя выбрать для лоджии.', img: 'http://83.222.18.44:1337/uploads/thumbnail_Kak_podgotovit_balkon_k_zime_7f6dc23ee6.png?updatedAt=2026-06-18T21%3A48%3A23.194Z', slug: '', isFallback: true },
+              { title: 'Панорамное остекление в хрущевках: мифы и реальность', description: 'Выдержит ли старая бетонная плита вес современных французских окон в пол? Тщательно анализируем технические нюансы.', img: 'http://83.222.18.44:1337/uploads/thumbnail_Panoramnoe_osteklenie_v_khrushchevkakh_2e69037ad7.png?updatedAt=2026-06-18T21%3A47%3A40.835Z', slug: '', isFallback: true },
+              { title: 'Чем лучше обшить балкон внутри: евровагонка или ламинат', description: 'Сравниваем популярные отделочные материалы по цене, практичности и общей долговечности для омского климата.', img: 'http://83.222.18.44:1337/uploads/thumbnail_Gemini_Generated_Image_ilo4r7ilo4r7ilo4_e7d1e32b45.png?updatedAt=2026-06-18T21%3A47%3A55.875Z', slug: '', isFallback: true }
             ]).map((item: any, idx: number) => {
               const article = item.attributes || item;
               const title = article.title;
@@ -679,7 +679,7 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
               const coverMedia = article.cover?.data?.attributes || article.cover;
               if (coverMedia?.url) {
                 const rawUrl = coverMedia.url;
-                imgUrl = rawUrl.startsWith('http') ? rawUrl : `http://localhost:1337${rawUrl}`;
+                imgUrl = rawUrl.startsWith('http') ? rawUrl : `http://83.222.18.44:1337${rawUrl}`;
               }
 
               return (

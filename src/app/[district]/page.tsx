@@ -99,7 +99,7 @@ async function getCleanDistrict(params: any): Promise<string> {
 // Запрос списка живых статей из Strapi для вывода внизу контента
 async function getArticlesData() {
   try {
-    const url = 'http://localhost:1337/api/articles?populate[0]=cover&sort[0]=publishedAt:desc';
+    const url = 'http://83.222.18.44:1337/api/articles?populate[0]=cover&sort[0]=publishedAt:desc';
     const res = await fetch(url, { cache: 'no-store' });
     if (!res.ok) return null;
     const json = await res.json();
@@ -115,7 +115,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const geo = russianGeoMap[district] || { landing: 'в вашем районе' };
 
   try {
-    const res = await fetch(`http://localhost:1337/api/pages?filters[slug][$eq]=${district}`, { cache: 'no-store' });
+    const res = await fetch(`http://83.222.18.44:1337/api/pages?filters[slug][$eq]=${district}`, { cache: 'no-store' });
     const json = await res.json();
     const pageData = json.data?.[0] || {};
 
@@ -140,8 +140,8 @@ export default async function DistrictPage({ params }: Props) {
 
   try {
     // Скачиваем данные главной страницы, данные текущего района и статьи параллельно
-    const mainUrl = 'http://localhost:1337/api/main-page?populate[0]=heroBackground&populate[1]=aboutImage&populate[2]=glazingCard.img&populate[3]=StructureTab.img';
-    const distUrl = `http://localhost:1337/api/pages?filters[slug][$eq]=${district}&populate[0]=heroBackground`;
+    const mainUrl = 'http://83.222.18.44:1337/api/main-page?populate[0]=heroBackground&populate[1]=aboutImage&populate[2]=glazingCard.img&populate[3]=StructureTab.img';
+    const distUrl = `http://83.222.18.44:1337/api/pages?filters[slug][$eq]=${district}&populate[0]=heroBackground`;
     
     const [mainRes, distRes, fetchedArticles] = await Promise.all([
       fetch(mainUrl, { cache: 'no-store' }),
