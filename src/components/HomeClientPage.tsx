@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image'; // Подключили умный компонент для оптимизации скорости
 import { useRouter } from 'next/navigation';
 import { BlocksRenderer } from '@strapi/blocks-react-renderer';
 
@@ -65,7 +66,7 @@ const additionalServices = [
   { title: 'Окна plasticовые', desc: 'Морозостойкие энергосберегающие оконные системы для комнат и кухонь.', img: 'https://balkonreshenie.ru/uploads/thumbnail_Plastikovoe_okno_a67ec4ad8e.jpg?updatedAt=2026-06-18T21%3A49%3A13.314Z' } 
 ];
 
-const customerReviews = [ { name: 'Игорь Васильев', meta: 'Омск, Кировский АО (ул. Конева)', text: 'Заказывал теплое остекление лоджии. Мастера приехали вовремя, сделали абсолютно всё за один рабочий день. Прошедшую суровую зиму лоджия выдержала на отлично...', date: 'Март 2026' }, { name: 'Елена Миронова', meta: 'Омск, Советский АО (Нефтяники)', text: 'Очень долго искала компанию, которая согласится сделать качественный балкон с крышей на последнем этаже хрущевки и укрепить старый парапет...', date: 'Май 2026' }, { name: 'Алексей и Ольга Токаревы', meta: 'Омск, Центральный АО (Амур-2)', text: 'Выбрали панорамное французское остекление в пол. Вид потрясающий, в комнате стало намного больше дневного света...', date: 'Июнь 2026' } ];
+const customerReviews = [ { name: 'Игорь Васильев', meta: 'Омск, Кировский АО (ул. Конева)', text: 'Заказывал теплое остекление лоджии. Masters приехали вовремя, сделали абсолютно всё за один рабочий день. Прошедшую суровую зиму лоджия выдержала на отлично...', date: 'Март 2026' }, { name: 'Елена Миронова', meta: 'Омск, Советский АО (Нефтяники)', text: 'Очень долго искала компанию, которая согласится сделать качественный балкон с крышей на последнем этаже хрущевки и укрепить старый парапет...', date: 'Май 2026' }, { name: 'Алексей и Ольга Токаревы', meta: 'Омск, Центральный АО (Амур-2)', text: 'Выбрали панорамное французское остекление в пол. Вид потрясающий, в комнате стало намного больше дневного света...', date: 'Июнь 2026' } ];
 
 interface HomeClientPageProps {
   initialData: any;
@@ -167,7 +168,7 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
         
         @keyframes scrollMarquee { 0% { transform: translateX(0); } 100% { transform: translateX(-33.333%); } }
         
-        .tab-content-box { backgroundColor: #fff; border-radius: 24px; padding: 44px; border: 1px solid #e2e8f0; display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
+        .tab-content-box { background-color: #fff; border-radius: 24px; padding: 44px; border: 1px solid #e2e8f0; display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
         .blue-form-container { max-width: 1240px; margin: 0 auto; padding: 44px 20px; display: flex; justify-content: space-between; align-items: center; gap: 40px; flex-wrap: wrap; }
         .blue-form-inputs-row { display: flex; gap: 12px; align-items: center; width: 100%; }
         .installment-card { background-color: #fff; border-radius: 24px; border: 1px solid #e2e8f0; padding: 50px; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
@@ -236,7 +237,7 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
               <div style={{ flexShrink: 0 }}><RulerIcon /></div>
               <div style={{ textAlign: 'left' }}>
                 <h4 style={{ fontSize: '16px', fontWeight: '600', color: '#475569', margin: 0 }}>{content.topCard1Title || 'Отделка 3-метрового балкона'}</h4>
-                <p style={{ fontSize: '14px', color: '#64748b', margin: '4px 0 10px 0' }}>{content.topCard1Subtitle || 'в panelных домах Омска'}</p>
+                <p style={{ fontSize: '14px', color: '#64748b', margin: '4px 0 10px 0' }}>{content.topCard1Subtitle || 'в панельных домах Омска'}</p>
                 <p style={{ fontSize: '28px', fontWeight: '700', color: '#1e3a8a', margin: 0, letterSpacing: '-0.02em' }}>{content.topCard1Price || '30 000 руб'}</p>
               </div>
             </div>
@@ -271,7 +272,7 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
       <section className="section-padding" style={{ backgroundColor: '#fff' }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto', padding: '0 20px' }}>
           <div className="responsive-grid-2">
-            <div><img src={aboutBg} alt={content.aboutTitle || "О нас"} style={{ width: '100%', height: 'auto', borderRadius: '20px' }} /></div>
+            <div><img src={aboutBg} alt={content.aboutTitle || "Производство оконных систем и монтаж по ГОСТу в Омске"} style={{ width: '100%', height: 'auto', borderRadius: '20px' }} /></div>
             <div style={{ textAlign: 'left' }}>
               <span style={{ fontSize: '13px', color: '#2563eb', fontWeight: '600', textTransform: 'uppercase', marginBottom: '8px', display: 'block' }}>{content.aboutBadge || 'Работаем на совесть'}</span>
               <h2 className="section-title" style={{ fontSize: '34px', fontWeight: '700', color: '#1e3a8a', marginBottom: '24px' }}>{content.aboutTitle || 'Заводское качество сборки и монтажа'}</h2>
@@ -300,7 +301,7 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
               return (
                 <div key={idx} className="hover-card" style={{ backgroundColor: '#fff', borderRadius: '20px', border: '1px solid #e2e8f0', overflow: 'hidden', display: 'flex', flexDirection: 'column', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.02)' }}>
                   <div className="zoom-container" style={{ height: '200px', width: '100%', position: 'relative' }}>
-                    <img className="zoom-img" src={cardImg} alt={card.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    <img className="zoom-img" src={cardImg} alt={card.title || "Вид остекления балкона в Омске"} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                     {card.badge && <span style={{ position: 'absolute', top: '14px', left: '14px', backgroundColor: '#1e3a8a', color: '#fff', padding: '4px 10px', borderRadius: '6px', fontSize: '12px', fontWeight: '500' }}>{card.badge}</span>}
                   </div>
                   <div style={{ padding: '24px', flexGrow: 1, display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
@@ -421,7 +422,7 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
             </div>
 
             <div style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px', backgroundColor: '#fff', borderRadius: '16px', border: '1px solid #fff' }}>
-              <img src={tabImgUrl} alt="Конструкция балкона" style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', borderRadius: '8px' }} />
+              <img src={tabImgUrl} alt={currentTab.title || "Конструкция и форма остекления балкона"} style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', borderRadius: '8px' }} />
             </div>
           </div>
 
@@ -444,7 +445,7 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
             {insulationServices.map((service, sIdx) => (
               <div key={sIdx} className="hover-card" style={{ backgroundColor: '#f8fafc', borderRadius: '20px', padding: '28px', border: '1px solid #f1f5f9', display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
                 <div style={{ width: '100%', height: '160px', borderRadius: '14px', marginBottom: '24px', overflow: 'hidden' }}>
-                  <img className="zoom-img" src={service.img} alt={service.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  <img className="zoom-img" src={service.img} alt={service.title || "Отделочные работы на балконе"} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 </div>
                 <h3 style={{ fontSize: '21px', fontWeight: '700', color: '#1e3a8a', marginBottom: '10px' }}>{service.title}</h3>
                 <p style={{ fontSize: '14px', color: '#475569', lineHeight: '1.6', margin: '0 0 24px 0', flexGrow: 1 }}>{service.desc}</p>
@@ -495,14 +496,24 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
         </div>
       </section>
 
-      {/* ВЕДУЩИЙ МЕНЕДЖЕР С МАСКОЙ НА ТЕЛЕФОН */}
+      {/* ВЕДУЩИЙ МЕНЕДЖЕР С УМНОЙ ОПТИМИЗАЦИЕЙ КАРТИНКИ */}
       <section className="section-padding" style={{ backgroundColor: '#f8fafc' }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto', padding: '0 20px' }}>
           <div className="responsive-grid-2" style={{ alignItems: 'center' }}>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', width: '100%' }}>
-              <img src={managerPhoto} alt="Оксана Ковалева" style={{ width: '280px', height: '280px', maxWidth: '100%', objectFit: 'cover', borderRadius: '50%', marginBottom: '16px', border: '6px solid #eff6ff', display: 'block', boxShadow: '0 10px 25px -5px rgba(0,0,0,0.05)' }} />
+              <div style={{ position: 'relative', width: '280px', height: '280px', marginBottom: '16px' }}>
+                {/* Заменили на высокопроизводительный компонент Image с жесткими размерами */}
+                <Image 
+                  src={managerPhoto} 
+                  alt="Ведущий менеджер компании Балконные Решения Оксана Ковалева" 
+                  width={280}
+                  height={280}
+                  priority={false} // Картинка внизу страницы, грузим отложено
+                  style={{ objectFit: 'cover', borderRadius: '50%', border: '6px solid #eff6ff', boxShadow: '0 10px 25px -5px rgba(0,0,0,0.05)' }} 
+                />
+              </div>
               <h4 style={{ fontSize: '18px', fontWeight: '600', color: '#0f172a', margin: '0 0 4px 0', padding: 0 }}>Оксана Ковалева</h4>
-              <p style={{ fontSize: '13px', color: '#64748b', margin: '0 0 24px 0', padding: 0 }}>Вевущий менеджер</p>
+              <p style={{ fontSize: '13px', color: '#64748b', margin: '0 0 24px 0', padding: 0 }}>Ведущий менеджер</p>
             </div>
             <div style={{ textAlign: 'left' }}>
               <h2 className="section-title" style={{ fontSize: '36px', fontWeight: '700', color: '#1e3a8a', lineHeight: '1.2', marginBottom: '16px' }}>Уже сделали расчет в других компаниях?</h2>
@@ -685,7 +696,7 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
               return (
                 <div key={idx} className="hover-card" style={{ backgroundColor: '#fff', borderRadius: '20px', border: '1px solid #e2e8f0', overflow: 'hidden', display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
                   <div style={{ height: '200px', width: '100%', overflow: 'hidden' }}>
-                    <img className="zoom-img" src={imgUrl} alt={title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    <img className="zoom-img" src={imgUrl} alt={title || "Полезная статья о ремонте балконов"} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   </div>
                   <div style={{ padding: '24px', flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                     <div>
@@ -717,7 +728,7 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
             {additionalServices.map((service, idx) => (
               <div key={idx} className="hover-card" style={{ backgroundColor: '#fff', borderRadius: '16px', border: '1px solid #e2e8f0', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
                 <div style={{ height: '150px', width: '100%', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px', backgroundColor: '#f8fafc' }}>
-                  <img className="zoom-img" src={service.img} alt={service.title} style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }} />
+                  <img className="zoom-img" src={service.img} alt={service.title || "Дополнительные строительные услуги нашей фабрики в Омске"} style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }} />
                 </div>
                 <div style={{ padding: '20px', flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', textAlign: 'center' }}>
                   <h3 style={{ fontSize: '16px', fontWeight: '700', color: '#1e3a8a', margin: '0 0 16px 0' }}>{service.title}</h3>
