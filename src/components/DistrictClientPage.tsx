@@ -653,7 +653,7 @@ export default function DistrictClientPage({ district, initialData }: { district
                   required 
                   style={{ padding: '14px 18px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '14px', outline: 'none', backgroundColor: '#fff', color: '#0f172a', fontWeight: '600' }} 
                 />
-                <button type="submit" disabled={isSubmittingInstallment} className="ui-btn" style={{ backgroundColor: '#1e3a8a', color: '#fff', border: 'none', padding: '14px 0', borderRadius: '10px', fontSize: '14px', fontWeight: '600', cursor: 'pointer', boxshadow: '0 4px 12px rgba(30, 58, 138, 0.15)' }}>
+                <button type="submit" disabled={isSubmittingInstallment} className="ui-btn" style={{ backgroundColor: '#1e3a8a', color: '#fff', border: 'none', padding: '14px 0', borderRadius: '10px', fontSize: '14px', fontWeight: '600', cursor: 'pointer', boxShadow: '0 4px 12px rgba(30, 58, 138, 0.15)' }}>
                   {isSubmittingInstallment ? 'Отправка...' : 'Подать быструю заявку'}
                 </button>
               </form>
