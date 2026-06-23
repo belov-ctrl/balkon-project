@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image'; // 1. Импортируем встроенный оптимизатор Next.js
 
 const portfolioProjects = [
   { 
@@ -21,7 +22,7 @@ const portfolioProjects = [
   },
   { 
     title: 'Панорамный французский балкон от пола до потолка KBE', 
-    location: 'Омск, Центральный АО (ул. Масленникова)', 
+    location: 'Омск, Centralный АО (ул. Масленникова)', 
     desc: 'Полный демонтаж старого ограждения. Установка масштабной французской витражной конструкции на базе теплого ПВХ профиля KBE Master 70 мм с тонировкой.', 
     img: 'https://balkonreshenie.ru/uploads/thumbnail_Panoramnii_frantsuzskii_balkon_ot_pola_do_potolka_KBE_3b5a591f2c.jpg?updatedAt=2026-06-18T23%3A25%3A19.358Z', 
     totalPrice: '77 433', 
@@ -71,9 +72,19 @@ export default function Portfolio({ onOpenForm }: PortfolioProps) {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '30px' }}>
           {portfolioProjects.map((project, pIdx) => (
             <div key={pIdx} className="hover-card" style={{ backgroundColor: '#fff', borderRadius: '24px', overflow: 'hidden', border: '1px solid #e2e8f0', display: 'flex', flexDirection: 'column', textAlign: 'left', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.02)' }}>
-              <div className="zoom-container" style={{ height: '220px', width: '100%', backgroundColor: '#f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '12px' }}>
-                <img className="zoom-img" src={project.img} alt={project.title} style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', borderRadius: '8px' }} />
+              
+              {/* 2. Обновили контейнер для умного рендеринга через fill */}
+              <div className="zoom-container" style={{ height: '220px', width: '100%', backgroundColor: '#f8fafc', position: 'relative' }}>
+                <Image 
+                  className="zoom-img" 
+                  src={project.img} 
+                  alt={`Пример реализованного проекта компании Балконные Решения: ${project.title}`}
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  style={{ objectFit: 'contain', padding: '12px' }} 
+                />
               </div>
+
               <div style={{ padding: '28px', flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
                 <span style={{ fontSize: '13px', color: '#2563eb', fontWeight: '600', display: 'block', marginBottom: '6px' }}>{project.location}</span>
                 <h3 style={{ fontSize: '20px', fontWeight: '700', color: '#1e3a8a', marginBottom: '12px', lineHeight: '1.3' }}>{project.title}</h3>
@@ -96,7 +107,6 @@ export default function Portfolio({ onOpenForm }: PortfolioProps) {
                     <span style={{ fontSize: '12px', color: '#64748b', display: 'block' }}>Итого под ключ</span>
                     <span style={{ fontSize: '26px', fontWeight: '700', color: '#10b981', letterSpacing: '-0.02em' }}>от {project.totalPrice} ₽</span>
                   </div>
-                  {/* Кнопка теперь открывает умное окно */}
                   <button 
                     onClick={() => onOpenForm(`Хочу такой же ремонт: ${project.title}`)}
                     className="ui-btn" 

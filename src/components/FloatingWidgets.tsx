@@ -1,18 +1,58 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 interface FloatingWidgetsProps {
   onOpenCalc: () => void;
 }
 
 export default function FloatingWidgets({ onOpenCalc }: FloatingWidgetsProps) {
+  const [isMounted, setIsMounted] = useState(false); // Флаг отложенного старта
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [chatStep, setChatStep] = useState(1);
   const [isChatSubmitting, setIsChatSubmitting] = useState(false);
 
   const [isGiftOpen, setIsGiftOpen] = useState(false);
   const [isGiftSubmitting, setIsGiftSubmitting] = useState(false);
+
+  // УМНЫЙ РАЗГОН: Загружаем тяжелые виджеты только через 3 секунды либо при первом скролле
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    
+    const loadWidgets = () => {
+      setIsMounted(true);
+      window.removeEventListener('scroll', loadWidgets);
+      window.removeEventListener('touchstart', loadWidgets);
+    };
+
+    // Триггер по времени
+    timer = setTimeout(loadWidgets, 3000);
+
+    // Триггеры по действию пользователя
+    window.addEventListener('scroll', loadWidgets, { passive: true });
+    window.addEventListener('touchstart', loadWidgets, { passive: true });
+
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('scroll', loadWidgets);
+      window.removeEventListener('touchstart', loadWidgets);
+    };
+  }, []);
+
+  // ФУНКЦИЯ МАСКИ НОМЕРА ТЕЛЕФОНА
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let input = e.target.value.replace(/\D/g, '');
+    if (input.startsWith('7') || input.startsWith('8')) input = input.substring(1);
+    input = input.substring(0, 10);
+
+    let formatted = '';
+    if (input.length > 0) formatted = '+7 (' + input.substring(0, 3);
+    if (input.length > 3) formatted += ') ' + input.substring(3, 6);
+    if (input.length > 6) formatted += '-' + input.substring(6, 8);
+    if (input.length > 8) formatted += '-' + input.substring(8, 10);
+    
+    e.target.value = input ? formatted : '';
+  };
 
   const handleChatSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -64,6 +104,9 @@ export default function FloatingWidgets({ onOpenCalc }: FloatingWidgetsProps) {
       setIsGiftSubmitting(false);
     }
   };
+
+  // Если время/скролл еще не наступили — возвращаем пустоту, не нагружая процессор мобилки
+  if (!isMounted) return null;
 
   return (
     <>
@@ -149,7 +192,15 @@ export default function FloatingWidgets({ onOpenCalc }: FloatingWidgetsProps) {
             <h3 style={{ fontSize: '22px', fontWeight: '700', color: '#e11d48', marginBottom: '10px' }}>Подарок за визит!</h3>
             <p style={{ fontSize: '14px', color: '#475569', marginBottom: '24px', lineHeight: '1.5' }}>Забронируйте <strong>дополнительную скидку 10%</strong> и набор по уходу за окнами при заказе. Оставьте номер, чтобы мы закрепили подарок за вами.</p>
             <form onSubmit={handleGiftSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              <input type="tel" placeholder="+7 (___) ___-__-__" required style={{ padding: '14px 16px', borderRadius: '10px', border: '2px solid #e2e8f0', fontSize: '15px', outline: 'none', textAlign: 'center' }} />
+              <input 
+                type="tel" 
+                placeholder="+7 (999) 000-00-00" 
+                onChange={handlePhoneChange}
+                minLength={18}
+                maxLength={18}
+                required 
+                style={{ padding: '14px 16px', borderRadius: '10px', border: '2px solid #e2e8f0', fontSize: '15px', outline: 'none', textAlign: 'center', backgroundColor: '#fff', color: '#0f172a', fontWeight: '600' }} 
+              />
               <button type="submit" disabled={isGiftSubmitting} style={{ backgroundColor: '#e11d48', color: '#fff', border: 'none', padding: '16px', borderRadius: '10px', fontSize: '15px', fontWeight: '700', cursor: 'pointer' }}>
                 {isGiftSubmitting ? 'Бронируем...' : 'Забрать подарок'}
               </button>
@@ -187,7 +238,15 @@ export default function FloatingWidgets({ onOpenCalc }: FloatingWidgetsProps) {
                   Чтобы мы могли начать диалог и не потерялись в случае закрытия сайта, пожалуйста, укажите ваш номер телефона:
                 </div>
                 <form onSubmit={handleChatSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                  <input type="tel" placeholder="Ваш телефон..." required style={{ padding: '12px 14px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '14px', outline: 'none' }} />
+                  <input 
+                    type="tel" 
+                    placeholder="+7 (999) 000-00-00" 
+                    onChange={handlePhoneChange}
+                    minLength={18}
+                    maxLength={18}
+                    required 
+                    style={{ padding: '12px 14px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '14px', outline: 'none', backgroundColor: '#fff', color: '#0f172a', fontWeight: '600' }} 
+                  />
                   <button type="submit" disabled={isChatSubmitting} style={{ backgroundColor: '#2563eb', color: '#fff', border: 'none', padding: '12px', borderRadius: '8px', fontSize: '14px', fontWeight: '600', cursor: 'pointer' }}>
                     {isChatSubmitting ? 'Соединяем...' : 'Начать диалог'}
                   </button>

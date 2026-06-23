@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image'; // 1. Импортируем компонент высокопроизводительных изображений
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ContactsMap from '@/components/ContactsMap';
@@ -107,12 +108,15 @@ export default async function BlogPage() {
                 <article key={item.id || idx} className="blog-article-card">
                   {/* Изображение карточки */}
                   <div style={{ height: '220px', width: '100%', overflow: 'hidden', position: 'relative' }}>
-                    <img 
+                    {/* 2. Заменили старый <img> на адаптивный <Image> с отложенной загрузкой по умолчанию */}
+                    <Image 
                       src={imgUrl} 
-                      alt={title} 
-                      style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+                      alt={`Превью статьи: ${title}`}
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      style={{ objectFit: 'cover' }}
                     />
-                    <span style={{ position: 'absolute', top: '16px', left: '16px', backgroundColor: '#eff6ff', color: '#2563eb', padding: '6px 12px', borderRadius: '8px', fontSize: '11px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                    <span style={{ position: 'absolute', top: '16px', left: '16px', backgroundColor: '#eff6ff', color: '#2563eb', padding: '6px 12px', borderRadius: '8px', fontSize: '11px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.05em', zIndex: 1 }}>
                       Полезное
                     </span>
                   </div>

@@ -157,7 +157,7 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
         .ui-btn:active { transform: translateY(1px); }
         .hover-card { transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important; }
         .hover-card:hover { transform: translateY(-6px); box-shadow: 0 16px 24px -4px rgba(15, 23, 42, 0.08) !important; }
-        .zoom-container { overflow: hidden; }
+        .zoom-container { overflow: hidden; position: relative; }
         .zoom-img { transition: transform 0.4s ease !important; }
         .hover-card:hover .zoom-img { transform: scale(1.06) !important; }
         
@@ -169,6 +169,7 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
         @keyframes scrollMarquee { 0% { transform: translateX(0); } 100% { transform: translateX(-33.333%); } }
         
         .tab-content-box { background-color: #fff; border-radius: 24px; padding: 44px; border: 1px solid #e2e8f0; display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
+        .tab-img-box { width: 100%; height: 360px; position: relative; }
         .blue-form-container { max-width: 1240px; margin: 0 auto; padding: 44px 20px; display: flex; justify-content: space-between; align-items: center; gap: 40px; flex-wrap: wrap; }
         .blue-form-inputs-row { display: flex; gap: 12px; align-items: center; width: 100%; }
         .installment-card { background-color: #fff; border-radius: 24px; border: 1px solid #e2e8f0; padding: 50px; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
@@ -183,7 +184,7 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
         .seo-content li { margin-bottom: 8px; }
         .seo-content strong { color: #0f172a; font-weight: 600; }
 
-        .hero-section { padding-bottom: 120px; min-height: 75vh; }
+        .hero-section { padding-bottom: 120px; min-height: 75vh; position: relative; display: flex; alignItems: center; }
         .hero-title { font-size: 56px; }
 
         @media (max-width: 991px) {
@@ -195,7 +196,7 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
           .floating-cards-container { position: relative !important; bottom: 0 !important; left: 0 !important; transform: none !important; margin-top: 40px !important; padding: 0 20px !important; }
           .floating-cards-grid { grid-template-columns: 1fr !important; gap: 16px !important; }
           .tab-content-box { grid-template-columns: 1fr !important; padding: 20px !important; gap: 24px !important; }
-          .tab-content-box div:last-child { height: 260px !important; }
+          .tab-img-box { height: 260px !important; }
           .blue-form-container { flex-direction: column !important; text-align: center !important; padding: 32px 20px !important; gap: 24px !important; }
           .blue-form-text { text-align: center !important; }
           .blue-form-inputs-row { flex-direction: column !important; gap: 12px !important; }
@@ -208,8 +209,16 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
 
       <Header />
 
+      {/* ГЛАВНЫЙ БЛОК ОПТИМИЗИРОВАН ЧЕРЕЗ NEXT/IMAGE ДЛЯ ИСКЛЮЧЕНИЯ НАГРУЗКИ НА LCP */}
       <main style={{ position: 'relative', width: '100%' }}>
-        <section className="hero-section" style={{ width: '100%', backgroundImage: `url('${displayBg}')`, backgroundSize: 'cover', backgroundPosition: 'center', position: 'relative', display: 'flex', alignItems: 'center' }}>
+        <section className="hero-section" style={{ width: '100%' }}>
+          <Image 
+            src={displayBg}
+            alt="Основной фоновый баннер фабрики Балконные Решения Омск"
+            fill
+            priority={true}
+            style={{ objectFit: 'cover' }}
+          />
           <div style={{ position: 'absolute', inset: 0, backgroundColor: 'rgba(255,255,255,0.75)', zIndex: 1 }}></div>
           <div style={{ maxWidth: '1240px', margin: '0 auto', width: '100%', padding: '0 20px', position: 'relative', zIndex: 10, paddingTop: '40px' }}>
             <div style={{ maxWidth: '780px', textAlign: 'left' }}>
@@ -268,11 +277,19 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
         </div>
       </section>
 
-      {/* О НАШЕМ ЗАВОДЕ */}
+      {/* О НАШЕМ ЗАВОДЕ ОПТИМИЗИРОВАНО ЧЕРЕЗ NEXT/IMAGE */}
       <section className="section-padding" style={{ backgroundColor: '#fff' }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto', padding: '0 20px' }}>
           <div className="responsive-grid-2">
-            <div><img src={aboutBg} alt={content.aboutTitle || "Производство оконных систем и монтаж по ГОСТу в Омске"} style={{ width: '100%', height: 'auto', borderRadius: '20px' }} /></div>
+            <div style={{ position: 'relative', width: '100%', height: '350px' }}>
+              <Image 
+                src={aboutBg} 
+                alt={content.aboutTitle || "Заводское производство оконных систем и монтажные бригады в Омске"} 
+                fill
+                sizes="(max-width: 991px) 100vw, 50vw"
+                style={{ objectFit: 'cover', borderRadius: '20px' }}
+              />
+            </div>
             <div style={{ textAlign: 'left' }}>
               <span style={{ fontSize: '13px', color: '#2563eb', fontWeight: '600', textTransform: 'uppercase', marginBottom: '8px', display: 'block' }}>{content.aboutBadge || 'Работаем на совесть'}</span>
               <h2 className="section-title" style={{ fontSize: '34px', fontWeight: '700', color: '#1e3a8a', marginBottom: '24px' }}>{content.aboutTitle || 'Заводское качество сборки и монтажа'}</h2>
@@ -282,7 +299,7 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
         </div>
       </section>
 
-      {/* КАРТОЧКИ ВИДОВ ОСТЕКЛЕНИЯ */}
+      {/* КАРТОЧКИ ВИДОВ ОСТЕКЛЕНИЯ ОПТИМИЗИРОВАНЫ ЧЕРЕЗ NEXT/IMAGE */}
       <section className="section-padding" style={{ backgroundColor: '#fff' }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto', padding: '0 20px' }}>
           <div style={{ textAlign: 'center', marginBottom: '50px' }}>
@@ -300,9 +317,16 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
 
               return (
                 <div key={idx} className="hover-card" style={{ backgroundColor: '#fff', borderRadius: '20px', border: '1px solid #e2e8f0', overflow: 'hidden', display: 'flex', flexDirection: 'column', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.02)' }}>
-                  <div className="zoom-container" style={{ height: '200px', width: '100%', position: 'relative' }}>
-                    <img className="zoom-img" src={cardImg} alt={card.title || "Вид остекления балкона в Омске"} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                    {card.badge && <span style={{ position: 'absolute', top: '14px', left: '14px', backgroundColor: '#1e3a8a', color: '#fff', padding: '4px 10px', borderRadius: '6px', fontSize: '12px', fontWeight: '500' }}>{card.badge}</span>}
+                  <div className="zoom-container" style={{ height: '200px', width: '100%' }}>
+                    <Image 
+                      className="zoom-img" 
+                      src={cardImg} 
+                      alt={card.title || "Вид остекления балкона в Омске"} 
+                      fill
+                      sizes="(max-width: 768px) 100vw, 25vw"
+                      style={{ objectFit: 'cover' }}
+                    />
+                    {card.badge && <span style={{ position: 'absolute', top: '14px', left: '14px', backgroundColor: '#1e3a8a', color: '#fff', padding: '4px 10px', borderRadius: '6px', fontSize: '12px', fontWeight: '500', zIndex: 1 }}>{card.badge}</span>}
                   </div>
                   <div style={{ padding: '24px', flexGrow: 1, display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
                     <h3 style={{ fontSize: '21px', fontWeight: '700', color: '#1e3a8a', margin: '0 0 10px 0' }}>{card.title}</h3>
@@ -384,7 +408,7 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
         </div>
       </section>
 
-      {/* ДИНАМИЧЕСКИЕ ТАБЫ ПЛАНИРОВОК БАЛКОНОВ */}
+      {/* ДИНАМИЧЕСКИЕ ТАБЫ ПЛАНИРОВОК БАЛКОНОВ ОПТИМИЗИРОВАНЫ */}
       <section className="section-padding" style={{ backgroundColor: '#f8fafc', borderBottom: '1px solid #e2e8f0' }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto', padding: '0 20px' }}>
           <div style={{ textAlign: 'center', marginBottom: '40px' }}>
@@ -421,8 +445,14 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
               </button>
             </div>
 
-            <div style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px', backgroundColor: '#fff', borderRadius: '16px', border: '1px solid #fff' }}>
-              <img src={tabImgUrl} alt={currentTab.title || "Конструкция и форма остекления балкона"} style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', borderRadius: '8px' }} />
+            <div className="tab-img-box">
+              <Image 
+                src={tabImgUrl} 
+                alt={currentTab.title || "Конструкция и форма остекления балкона"} 
+                fill
+                sizes="(max-width: 991px) 100vw, 50vw"
+                style={{ objectFit: 'contain', borderRadius: '8px' }} 
+              />
             </div>
           </div>
 
@@ -434,7 +464,7 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
         </div>
       </section>
 
-      {/* УТЕПЛЕНИЕ И ОТДЕЛКА */}
+      {/* УТЕПЛЕНИЕ И ОТДЕЛКА ОПТИМИЗИРОВАНО ЧЕРЕЗ NEXT/IMAGE */}
       <section className="section-padding" style={{ backgroundColor: '#fff' }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto', padding: '0 20px' }}>
           <div style={{ textAlign: 'center', marginBottom: '50px' }}>
@@ -444,8 +474,15 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '30px' }}>
             {insulationServices.map((service, sIdx) => (
               <div key={sIdx} className="hover-card" style={{ backgroundColor: '#f8fafc', borderRadius: '20px', padding: '28px', border: '1px solid #f1f5f9', display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
-                <div style={{ width: '100%', height: '160px', borderRadius: '14px', marginBottom: '24px', overflow: 'hidden' }}>
-                  <img className="zoom-img" src={service.img} alt={service.title || "Отделочные работы на балконе"} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                <div className="zoom-container" style={{ width: '100%', height: '160px', marginBottom: '24px', borderRadius: '14px' }}>
+                  <Image 
+                    className="zoom-img" 
+                    src={service.img} 
+                    alt={service.title || "Отделочные работы на балконе"} 
+                    fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    style={{ objectFit: 'cover' }} 
+                  />
                 </div>
                 <h3 style={{ fontSize: '21px', fontWeight: '700', color: '#1e3a8a', marginBottom: '10px' }}>{service.title}</h3>
                 <p style={{ fontSize: '14px', color: '#475569', lineHeight: '1.6', margin: '0 0 24px 0', flexGrow: 1 }}>{service.desc}</p>
@@ -502,13 +539,12 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
           <div className="responsive-grid-2" style={{ alignItems: 'center' }}>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', width: '100%' }}>
               <div style={{ position: 'relative', width: '280px', height: '280px', marginBottom: '16px' }}>
-                {/* Заменили на высокопроизводительный компонент Image с жесткими размерами */}
                 <Image 
                   src={managerPhoto} 
                   alt="Ведущий менеджер компании Балконные Решения Оксана Ковалева" 
                   width={280}
                   height={280}
-                  priority={false} // Картинка внизу страницы, грузим отложено
+                  priority={false} 
                   style={{ objectFit: 'cover', borderRadius: '50%', border: '6px solid #eff6ff', boxShadow: '0 10px 25px -5px rgba(0,0,0,0.05)' }} 
                 />
               </div>
@@ -574,101 +610,7 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
 
       <Portfolio onOpenForm={openForm} />
 
-      {/* РАССРОЧКА С МАСКОЙ НА ТЕЛЕФОН */}
-      <section className="section-padding" style={{ backgroundColor: '#f8fafc', borderBottom: '1px solid #e2e8f0' }}>
-        <div style={{ maxWidth: '1240px', margin: '0 auto', padding: '0 20px' }}>
-          <div className="installment-card">
-            <div style={{ textAlign: 'left' }}>
-              <span style={{ fontSize: '13px', color: '#2563eb', fontWeight: '600', textTransform: 'uppercase', display: 'block', marginBottom: '8px' }}>Финансовый комфорт</span>
-              <h2 className="section-title" style={{ fontSize: '34px', fontWeight: '700', color: '#1e3a8a', lineHeight: '1.25', marginBottom: '16px' }}>Установка окон и отделка балконов <br /> в рассрочку 0% без переплат!</h2>
-              <p style={{ fontSize: '16px', color: '#475569', marginBottom: '36px' }}>Обустройте лоджию уже сегодня, а платите небольшими равными частями без скрытых комиссий.</p>
-              <div className="stats-row">
-                <div><span style={{ fontSize: '44px', fontWeight: '700', color: '#2563eb' }}>0%</span><span style={{ fontSize: '14px', color: '#475569', display: 'block' }}>Взнос</span></div>
-                <div><span style={{ fontSize: '44px', fontWeight: '700', color: '#10b981' }}>0%</span><span style={{ fontSize: '14px', color: '#475569', display: 'block' }}>Переплата</span></div>
-                <div><span style={{ fontSize: '44px', fontWeight: '700', color: '#1e3a8a' }}>12 мес</span><span style={{ fontSize: '14px', color: '#475569', display: 'block' }}>Срок</span></div>
-              </div>
-            </div>
-            <div style={{ width: '100%', backgroundColor: '#f8fafc', padding: '36px', borderRadius: '16px', border: '1px solid #e2e8f0', textAlign: 'center' }}>
-              <h3 style={{ fontSize: '19px', fontWeight: '700', color: '#1e3a8a', marginBottom: '8px' }}>Оформить рассрочку</h3>
-              
-              <form 
-                style={{ display: 'flex', flexDirection: 'column', gap: '12px' }} 
-                onSubmit={async (e) => {
-                  e.preventDefault();
-                  const form = e.target as HTMLFormElement;
-                  const nameInput = form.querySelector('input[placeholder="Ваше имя"]') as HTMLInputElement;
-                  const phoneInput = form.querySelector('input[type="tel"]') as HTMLInputElement;
-                  const btn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
-                  const originalText = btn.innerText;
-
-                  btn.innerText = 'Отправка...';
-                  btn.disabled = true;
-
-                  try {
-                    const res = await fetch('/api/leads', {
-                      method: 'POST',
-                      headers: { 'Content-Type': 'application/json' },
-                      body: JSON.stringify({
-                        name: nameInput.value,
-                        phone: phoneInput.value,
-                        source: 'Блок Финансовый комфорт: Быстая заявка на Рассрочку 0%'
-                      })
-                    });
-
-                    if (res.ok) {
-                      form.reset();
-                      router.push('/thanks');
-                    } else {
-                      alert('Ошибка при оформлении заявки.');
-                    }
-                  } catch {
-                    alert('Ошибка подключения.');
-                  } finally {
-                    btn.innerText = originalText;
-                    btn.disabled = false;
-                  }
-                }}
-              >
-                <input type="text" placeholder="Ваше имя" required style={{ padding: '14px 16px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '14px', outline: 'none', backgroundColor: '#fff' }} />
-                <input 
-                  type="tel" 
-                  placeholder="+7 (999) 000-00-00" 
-                  onChange={handlePhoneChange}
-                  minLength={18}
-                  maxLength={18}
-                  required 
-                  style={{ padding: '14px 18px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '14px', fontWeight: '600', outline: 'none', backgroundColor: '#fff', color: '#0f172a' }} 
-                />
-                <button type="submit" className="ui-btn" style={{ backgroundColor: '#1e3a8a', color: '#fff', border: 'none', padding: '14px 0', borderRadius: '10px', fontSize: '14px', fontWeight: '600', cursor: 'pointer' }}>Подать быструю заявку</button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ОТЗЫВЫ */}
-      <section className="section-padding" style={{ backgroundColor: '#fff' }}>
-        <div style={{ maxWidth: '1240px', margin: '0 auto', padding: '0 20px' }}>
-          <div style={{ marginBottom: '44px', textAlign: 'center' }}>
-            <span style={{ fontSize: '13px', color: '#2563eb', fontWeight: '600', textTransform: 'uppercase', display: 'block', marginBottom: '8px' }}>Обратная связь</span>
-            <h2 className="section-title" style={{ fontSize: '32px', fontWeight: '700', color: '#1e3a8a' }}>Что говорят омичи о нашей работе</h2>
-          </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px' }}>
-            {customerReviews.map((rev, rIdx) => (
-              <div key={rIdx} className="hover-card" style={{ backgroundColor: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '16px', padding: '24px', textAlign: 'left' }}>
-                <div style={{ color: '#f59e0b', marginBottom: '12px' }}>★★★★★</div>
-                <p style={{ fontSize: '14.5px', color: '#334155', lineHeight: '1.6' }}>«{rev.text}»</p>
-                <div style={{ borderTop: '1px solid #e2e8f0', paddingTop: '14px', marginTop: '14px' }}>
-                  <h4 style={{ fontSize: '15px', fontWeight: '700', color: '#1e3a8a', margin: 0 }}>{rev.name}</h4>
-                  <span style={{ fontSize: '12px', color: '#64748b' }}>{rev.meta}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ПОЛЕЗНЫЕ СТАТЬИ ИЗ STRAPI ИЛИ ФОЛЛБЭКИ */}
+      {/* ПОЛЕЗНЫЕ СТАТЬИ ИЗ STRAPI ИЛИ ФОЛЛБЭКИ ОПТИМИЗИРОВАНЫ */}
       <section className="section-padding" style={{ backgroundColor: '#f8fafc', borderTop: '1px solid #e2e8f0', borderBottom: '1px solid #e2e8f0' }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto', padding: '0 20px' }}>
           <div style={{ textAlign: 'left', marginBottom: '40px' }}>
@@ -695,8 +637,15 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
 
               return (
                 <div key={idx} className="hover-card" style={{ backgroundColor: '#fff', borderRadius: '20px', border: '1px solid #e2e8f0', overflow: 'hidden', display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
-                  <div style={{ height: '200px', width: '100%', overflow: 'hidden' }}>
-                    <img className="zoom-img" src={imgUrl} alt={title || "Полезная статья о ремонте балконов"} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  <div className="zoom-container" style={{ height: '200px', width: '100%' }}>
+                    <Image 
+                      className="zoom-img" 
+                      src={imgUrl} 
+                      alt={title || "Полезная статья о ремонте балконов"} 
+                      fill
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                      style={{ objectFit: 'cover' }} 
+                    />
                   </div>
                   <div style={{ padding: '24px', flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                     <div>
@@ -718,7 +667,7 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
         </div>
       </section>
 
-      {/* ДОПОЛНИТЕЛЬНЫЕ УСЛУГИ */}
+      {/* ДОПОЛНИТЕЛЬНЫЕ УСЛУГИ ОПТИМИЗИРОВАНЫ ЧЕРЕЗ NEXT/IMAGE */}
       <section className="section-padding" style={{ backgroundColor: '#fff' }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto', padding: '0 20px' }}>
           <div style={{ textAlign: 'center', marginBottom: '44px' }}>
@@ -727,8 +676,15 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px', maxWidth: '1200px', margin: '0 auto' }}>
             {additionalServices.map((service, idx) => (
               <div key={idx} className="hover-card" style={{ backgroundColor: '#fff', borderRadius: '16px', border: '1px solid #e2e8f0', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
-                <div style={{ height: '150px', width: '100%', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px', backgroundColor: '#f8fafc' }}>
-                  <img className="zoom-img" src={service.img} alt={service.title || "Дополнительные строительные услуги нашей фабрики в Омске"} style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }} />
+                <div className="zoom-container" style={{ height: '150px', width: '100%', backgroundColor: '#f8fafc' }}>
+                  <Image 
+                    className="zoom-img" 
+                    src={service.img} 
+                    alt={service.title || "Дополнительные строительные услуги нашей фабрики в Омске"} 
+                    fill
+                    sizes="(max-width: 768px) 50vw, 20vw"
+                    style={{ objectFit: 'contain', padding: '16px' }} 
+                  />
                 </div>
                 <div style={{ padding: '20px', flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', textAlign: 'center' }}>
                   <h3 style={{ fontSize: '16px', fontWeight: '700', color: '#1e3a8a', margin: '0 0 16px 0' }}>{service.title}</h3>
@@ -797,7 +753,7 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
                   <input type="text" placeholder="Ваше имя" required style={{ width: '100%', padding: '14px 16px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '14px', outline: 'none' }} />
                 </div>
                 <div>
-                  <label style={{ fontSize: '12px', fontWeight: '600', color: '#475569', display: 'block', marginBottom: '6px' }}>Телефон для связи</label>
+                  <label style={{ fontSize: '12px', fontWeight: '600', color: '#475569', display: 'block', marginBottom: '6px' }}>Telephone для связи</label>
                   <input 
                     type="tel" 
                     placeholder="+7 (999) 000-00-00" 

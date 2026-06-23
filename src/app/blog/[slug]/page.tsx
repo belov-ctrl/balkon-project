@@ -2,6 +2,7 @@ import React from 'react';
 import { notFound } from 'next/navigation';
 import { BlocksRenderer } from '@strapi/blocks-react-renderer';
 import Link from 'next/link';
+import Image from 'next/image'; // 1. Подключили умный оптимизатор картинок
 
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -86,13 +87,19 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
           
           {/* Обложка и заголовок */}
           <div style={{ height: '400px', width: '100%', position: 'relative' }}>
-            <img src={coverUrl} alt={title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-            <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(15,23,42,0.9) 0%, rgba(15,23,42,0.3) 60%, transparent 100%)' }}></div>
-            <div style={{ position: 'absolute', bottom: '40px', left: '40px', right: '40px', color: '#fff' }}>
+            {/* 2. Заменили старый тег img на прокачанный Image со свойством priority */}
+            <Image 
+              src={coverUrl} 
+              alt={`Обложка экспертной статьи: ${title}`} 
+              fill
+              priority={true} // Этот флаг заставляет браузер загружать обложку мгновенно
+              style={{ objectFit: 'cover' }} 
+            />
+            <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(15,23,42,0.9) 0%, rgba(15,23,42,0.3) 60%, transparent 100%)', zIndex: 1 }}></div>
+            <div style={{ position: 'absolute', bottom: '40px', left: '40px', right: '40px', color: '#fff', zIndex: 2 }}>
               <div style={{ display: 'inline-block', backgroundColor: '#2563eb', color: '#fff', padding: '6px 14px', borderRadius: '8px', fontSize: '12px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '16px' }}>
                 Полезно знать
               </div>
-              {/* Облегченный заголовок (жирность 600 вместо 800, увеличен отступ строк) */}
               <h1 style={{ fontSize: '36px', fontWeight: '600', margin: '0 0 16px 0', lineHeight: '1.3', letterSpacing: '-0.01em' }}>{title}</h1>
               <div style={{ fontSize: '14px', color: '#cbd5e1', display: 'flex', alignItems: 'center', gap: '10px', fontWeight: '500' }}>
                 <span>📅 {formattedDate}</span>

@@ -2,6 +2,8 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image'; 
+import { useRouter } from 'next/navigation';
 
 // Импортируем наши готовые изолированные модули
 import Header from '@/components/Header';
@@ -48,12 +50,12 @@ const districtMap: Record<string, { landing: string; geo: string }> = {
   '12-j-mikrorajon': { landing: 'в 12-м микрорайоне', geo: '12-м микрорайоне' },
   'omskij-kristall': { landing: 'в Омском Кристалле', geo: 'ЖК Омский Кристалл' },
   'amurskij': { landing: 'в Амурском посёлке', geo: 'Амурском посёлке' },
-  '5-th-mikrorajon': { landing: 'в 5-м микрорайоне', geo: '5-м микрорайоне' },
+  '5-j-mikrorajon': { landing: 'в 5-м микрорайоне', geo: '5-м микрорайоне' },
   'polyot': { landing: 'в районе Полёта', geo: 'районе ДК Полет' },
   'biofabrika': { landing: 'на Биофабрике', geo: 'посёлке Биофабрика' },
   'pribrezhnyj': { landing: 'в Прибрежном', geo: 'микрорайоне Прибрежный' },
   'levoberezhye': { landing: 'на Левом берегу', geo: 'Левобережье' },
-  '6-th-mikrorajon': { landing: 'в 6-м микрорайоне', geo: '6-м микрорайоне' },
+  '6-j-mikrorajon': { landing: 'в 6-м микрорайоне', geo: '6-м микрорайоне' },
   'aviagorodok': { landing: 'в Авиагородке', geo: 'Авиагородке' },
   'kosmos': { landing: 'в районе Космоса', geo: 'районе КДЦ Космос' },
   'privokzalnyj': { landing: 'в Привокзальном', geo: 'Привокзальном посёлке' },
@@ -64,7 +66,7 @@ const districtMap: Record<string, { landing: string; geo: string }> = {
   'leninsk': { landing: 'в Ленинском округе', geo: 'Ленинском АО' },
   '1-j-mikrorajon': { landing: 'в 1-м микрорайоне', geo: '1-м микрорайоне' },
   'amurskij-2': { landing: 'в Амуре-2', geo: 'микрорайоне Амурский-2' },
-  '4-th-mikrorajon': { landing: 'в 4-м микрорайоне', geo: '4-м микрорайоне' },
+  '4-j-mikrorajon': { landing: 'в 4-м микрорайоне', geo: '4-м микрорайоне' },
   'chkalovskij': { landing: 'в Чкаловском', geo: 'посёлке Чкаловский' },
   'chukreevka': { landing: 'в Чукреевке', geo: 'посёлке Чукреевка' },
   'pervokirpichnyj': { landing: 'в Первокирпичном', geo: 'посёлке Первокирпичный' },
@@ -146,6 +148,10 @@ const additionalServices = [
 
 export default function DistrictClientPage({ district, initialData }: { district: string, initialData: any }) {
   const [activeTab, setActiveTab] = useState(0);
+  const router = useRouter();
+  const [isSubmittingBlue, setIsSubmittingBlue] = useState(false);
+  const [isSubmittingCompetitor, setIsSubmittingCompetitor] = useState(false);
+  const [isSubmittingInstallment, setIsSubmittingInstallment] = useState(false);
 
   const slug = district || 'omsk';
   const districtStaticData = districtMap[slug] || { 
@@ -168,6 +174,21 @@ export default function DistrictClientPage({ district, initialData }: { district
       } catch (e) {}
     }
   }
+
+  // ФУНКЦИЯ МАСКИ НОМЕРА ТЕЛЕФОНА
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let input = e.target.value.replace(/\D/g, '');
+    if (input.startsWith('7') || input.startsWith('8')) input = input.substring(1);
+    input = input.substring(0, 10);
+
+    let formatted = '';
+    if (input.length > 0) formatted = '+7 (' + input.substring(0, 3);
+    if (input.length > 3) formatted += ') ' + input.substring(3, 6);
+    if (input.length > 6) formatted += '-' + input.substring(6, 8);
+    if (input.length > 8) formatted += '-' + input.substring(8, 10);
+    
+    e.target.value = input ? formatted : '';
+  };
 
   const cleanFonts = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif';
 
@@ -202,7 +223,7 @@ export default function DistrictClientPage({ district, initialData }: { district
 
         .responsive-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
         .responsive-grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; }
-        .hero-section { padding-bottom: 120px; min-height: 75vh; }
+        .hero-section { padding-bottom: 120px; min-height: 75vh; position: relative; display: flex; alignItems: center; }
         .hero-title { font-size: 56px; }
 
         @media (max-width: 991px) {
@@ -228,9 +249,16 @@ export default function DistrictClientPage({ district, initialData }: { district
       {/* ШАПКА */}
       <Header />
 
-      {/* ГЛАВНЫЙ БЛОК */}
+      {/* ГЛАВНЫЙ БЛОК ОПТИМИЗИРОВАН ЧЕРЕЗ NEXT/IMAGE ДЛЯ ИСКЛЮЧЕНИЯ НАГРУЗКИ НА LCP */}
       <main style={{ position: 'relative', width: '100%' }}>
-        <section className="hero-section" style={{ width: '100%', backgroundImage: `url(https://images.unsplash.com/photo-1596464716127-f2a82984de30?q=80&w=1920)`, backgroundSize: 'cover', backgroundPosition: 'center', position: 'relative', display: 'flex', alignItems: 'center' }}>
+        <section className="hero-section" style={{ width: '100%' }}>
+          <Image 
+            src="https://images.unsplash.com/photo-1596464716127-f2a82984de30?q=80&w=1920"
+            alt={`Базовый фон остекления окон ${districtStaticData.landing}`}
+            fill
+            priority={true}
+            style={{ objectFit: 'cover' }}
+          />
           <div style={{ position: 'absolute', inset: 0, backgroundColor: 'rgba(255,255,255,0.75)', zIndex: 1 }}></div>
           <div style={{ maxWidth: '1240px', margin: '0 auto', width: '100%', padding: '0 20px', position: 'relative', zIndex: 10, paddingTop: '40px' }}>
             <div style={{ maxWidth: '780px', textAlign: 'left' }}>
@@ -296,7 +324,15 @@ export default function DistrictClientPage({ district, initialData }: { district
       <section className="section-padding" style={{ backgroundColor: '#fff', padding: '70px 0 90px 0' }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto', padding: '0 20px' }}>
           <div className="responsive-grid-2">
-            <div><img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?q=80&w=800" alt="Мастер" style={{ width: '100%', height: 'auto', borderRadius: '20px' }} /></div>
+            <div style={{ position: 'relative', width: '100%', height: '350px' }}>
+              <Image 
+                src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?q=80&w=800" 
+                alt="Мастер-инженер нашей омской фабрики на замере" 
+                fill
+                sizes="(max-width: 991px) 100vw, 50vw"
+                style={{ objectFit: 'cover', borderRadius: '20px' }} 
+              />
+            </div>
             <div style={{ textAlign: 'left' }}>
               <span style={{ fontSize: '13px', color: '#2563eb', fontWeight: '600', textTransform: 'uppercase', marginBottom: '8px', display: 'block' }}>Работаем на совесть</span>
               <h2 className="section-title" style={{ fontSize: '34px', fontWeight: '700', color: '#1e3a8a', marginBottom: '24px' }}>Заводское качество сборки и монтажа</h2>
@@ -311,14 +347,21 @@ export default function DistrictClientPage({ district, initialData }: { district
         <div style={{ maxWidth: '1240px', margin: '0 auto', padding: '0 20px' }}>
           <div style={{ textAlign: 'center', marginBottom: '50px' }}>
             <span style={{ fontSize: '13px', color: '#2563eb', fontWeight: '600', textTransform: 'uppercase', display: 'block', marginBottom: '8px' }}>Стоимость услуг</span>
-            <h2 className="section-title" style={{ fontSize: '34px', fontWeight: '700', color: '#1e3a8a' }}>Цены на популярные виды остекления</h2>
+            <h2 className="section-title" style={{ fontSize: '34px', fontWeight: '700', color: '#1e3a8a' }}>Цены на popularные виды остекления</h2>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '30px' }}>
             {glazingCards.map((card, idx) => (
               <div key={idx} className="hover-card" style={{ backgroundColor: '#fff', borderRadius: '20px', border: '1px solid #e2e8f0', overflow: 'hidden', display: 'flex', flexDirection: 'column', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.02)' }}>
                 <div className="zoom-container" style={{ height: '200px', width: '100%', position: 'relative' }}>
-                  <img className="zoom-img" src={card.img} alt={card.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                  <span style={{ position: 'absolute', top: '14px', left: '14px', backgroundColor: '#1e3a8a', color: '#fff', padding: '4px 10px', borderRadius: '6px', fontSize: '12px', fontWeight: '500' }}>{card.badge}</span>
+                  <Image 
+                    className="zoom-img" 
+                    src={card.img} 
+                    alt={`Остекление балконов типа: ${card.title} в Омске`} 
+                    fill
+                    sizes="(max-width: 768px) 100vw, 25vw"
+                    style={{ objectFit: 'cover' }} 
+                  />
+                  <span style={{ position: 'absolute', top: '14px', left: '14px', backgroundColor: '#1e3a8a', color: '#fff', padding: '4px 10px', borderRadius: '6px', fontSize: '12px', fontWeight: '500', zIndex: 1 }}>{card.badge}</span>
                 </div>
                 <div style={{ padding: '24px', flexGrow: 1, display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
                   <h3 style={{ fontSize: '21px', fontWeight: '700', color: '#1e3a8a', margin: '0 0 10px 0' }}>{card.title}</h3>
@@ -336,18 +379,49 @@ export default function DistrictClientPage({ district, initialData }: { district
         </div>
       </section>
 
-      {/* БЫСТРАЯ ФОРМА */}
+      {/* БЫСТРАЯ ФОРМА С РЕАЛЬНОЙ СВЯЗКОЙ С ИНЖЕНЕРНЫМ API */}
       <section style={{ backgroundColor: '#1e3a8a', color: '#fff', width: '100%' }}>
         <div className="blue-form-container" style={{ maxWidth: '1240px', margin: '0 auto', padding: '44px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '40px', flexWrap: 'wrap' }}>
           <div className="blue-form-text" style={{ flex: 1, textAlign: 'left' }}>
             <h3 style={{ fontSize: '24px', fontWeight: '700', color: '#fff', margin: 0 }}>Узнайте точную стоимость за 5 минут</h3>
             <p style={{ fontSize: '14px', color: '#93c5fd', margin: '6px 0 0 0', fontWeight: '400', lineHeight: '1.4' }}>Оставьте заявку на бесплатный замер. Приедем {districtStaticData.landing} в удобное время, посчитаем смету и сохраним скидку.</p>
           </div>
-          <form style={{ flex: 1.3, display: 'flex', flexDirection: 'column', gap: '8px' }} onSubmit={(e) => e.preventDefault()}>
+          <form 
+            style={{ flex: 1.3, display: 'flex', flexDirection: 'column', gap: '8px', width: '100%' }} 
+            onSubmit={async (e) => {
+              e.preventDefault();
+              setIsSubmittingBlue(true);
+              const form = e.target as HTMLFormElement;
+              const nameInput = form.querySelector('input[placeholder="Ваше имя"]') as HTMLInputElement;
+              const phoneInput = form.querySelector('input[type="tel"]') as HTMLInputElement;
+              try {
+                const res = await fetch('/api/leads', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({
+                    name: nameInput.value || 'Клиент',
+                    phone: phoneInput.value,
+                    source: `Синяя плашка (Страница под район): Заявка на замер ${districtStaticData.landing}`
+                  })
+                });
+                if (res.ok) { form.reset(); router.push('/thanks'); }
+              } catch (err) { alert('Ошибка сети.'); } finally { setIsSubmittingBlue(false); }
+            }}
+          >
             <div className="blue-form-inputs-row" style={{ display: 'flex', gap: '12px', alignItems: 'center', width: '100%' }}>
               <input type="text" placeholder="Ваше имя" style={{ flex: 1, padding: '14px 18px', borderRadius: '10px', border: 'none', backgroundColor: '#ffffff', fontSize: '14px', color: '#0f172a', outline: 'none' }} />
-              <input type="tel" placeholder="+7 (___) ___-__-__" required style={{ flex: 1, padding: '14px 18px', borderRadius: '10px', border: 'none', backgroundColor: '#ffffff', fontSize: '14px', fontWeight: '500', color: '#0f172a', outline: 'none' }} />
-              <button type="submit" className="ui-btn" style={{ backgroundColor: '#10b981', color: '#fff', border: 'none', padding: '14px 28px', borderRadius: '10px', fontSize: '14px', fontWeight: '600', cursor: 'pointer', whiteSpace: 'nowrap' }}>Вызвать мастера</button>
+              <input 
+                type="tel" 
+                placeholder="+7 (999) 000-00-00" 
+                onChange={handlePhoneChange}
+                minLength={18}
+                maxLength={18}
+                required 
+                style={{ flex: 1, padding: '14px 18px', borderRadius: '10px', border: 'none', backgroundColor: '#ffffff', fontSize: '14px', fontWeight: '600', color: '#0f172a', outline: 'none' }} 
+              />
+              <button type="submit" disabled={isSubmittingBlue} className="ui-btn" style={{ backgroundColor: '#10b981', color: '#fff', border: 'none', padding: '14px 28px', borderRadius: '10px', fontSize: '14px', fontWeight: '600', cursor: 'pointer', whiteSpace: 'nowrap' }}>
+                {isSubmittingBlue ? 'Отправка...' : 'Вызвать мастера'}
+              </button>
             </div>
           </form>
         </div>
@@ -376,7 +450,13 @@ export default function DistrictClientPage({ district, initialData }: { district
               </div>
             </div>
             <div className="tab-img-box" style={{ width: '100%', height: '360px', position: 'relative' }}>
-              <img src={structuresData[activeTab].img} alt="Конструкция" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '16px' }} />
+              <Image 
+                src={structuresData[activeTab].img} 
+                alt={`Конфигурация остекления: ${structuresData[activeTab].title}`} 
+                fill
+                sizes="(max-width: 991px) 100vw, 50vw"
+                style={{ objectFit: 'cover', borderRadius: '16px' }} 
+              />
             </div>
           </div>
         </div>
@@ -392,8 +472,15 @@ export default function DistrictClientPage({ district, initialData }: { district
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '30px' }}>
             {insulationServices.map((service, sIdx) => (
               <div key={sIdx} className="hover-card" style={{ backgroundColor: '#f8fafc', borderRadius: '20px', padding: '28px', border: '1px solid #f1f5f9', display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
-                <div className="zoom-container" style={{ width: '100%', height: '160px', borderRadius: '14px', marginBottom: '24px' }}>
-                  <img className="zoom-img" src={service.img} alt={service.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                <div className="zoom-container" style={{ width: '100%', height: '160px', position: 'relative', marginBottom: '24px' }}>
+                  <Image 
+                    className="zoom-img" 
+                    src={service.img} 
+                    alt={`Утепление и отделка: ${service.title} в Омске`} 
+                    fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    style={{ objectFit: 'cover', borderRadius: '14px' }} 
+                  />
                 </div>
                 <h3 style={{ fontSize: '21px', fontWeight: '700', color: '#1e3a8a', marginBottom: '10px' }}>{service.title}</h3>
                 <p style={{ fontSize: '14px', color: '#475569', lineHeight: '1.6', marginBottom: '24px', flexGrow: 1 }}>{service.desc}</p>
@@ -453,13 +540,21 @@ export default function DistrictClientPage({ district, initialData }: { district
         </div>
       </section>
 
-      {/* МЕНЕДЖЕР ОКСАНА */}
+      {/* МЕНЕДЖЕР ОКСАНА С УМНЫМ КОМПОНЕНТОМ IMAGE */}
       <section className="section-padding" style={{ backgroundColor: '#fff', padding: '100px 0' }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto', padding: '0 20px' }}>
           <div className="responsive-grid-2" style={{ alignItems: 'center' }}>
             
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', width: '100%' }}>
-              <img src={managerPhoto} alt="Оксана" style={{ width: '220px', height: '220px', objectFit: 'cover', borderRadius: '50%', marginBottom: '16px', border: '6px solid #eff6ff', display: 'block' }} />
+              <div style={{ position: 'relative', width: '220px', height: '220px', marginBottom: '16px' }}>
+                <Image 
+                  src={managerPhoto} 
+                  alt="Дежурный менеджер компании Оксана Ковалева" 
+                  width={220}
+                  height={220}
+                  style={{ objectFit: 'cover', borderRadius: '50%', border: '6px solid #eff6ff', boxShadow: '0 10px 25px -5px rgba(0,0,0,0.05)' }} 
+                />
+              </div>
               <h4 style={{ fontSize: '18px', fontWeight: '600', color: '#0f172a', margin: '0 0 4px 0', padding: 0 }}>Оксана Ковалева</h4>
               <p style={{ fontSize: '13px', color: '#64748b', margin: '0 0 24px 0', padding: 0 }}>Ведущий менеджер</p>
             </div>
@@ -467,9 +562,39 @@ export default function DistrictClientPage({ district, initialData }: { district
             <div style={{ textAlign: 'left' }}>
               <h2 className="section-title" style={{ fontSize: '36px', fontWeight: '700', color: '#1e3a8a', lineHeight: '1.2', marginBottom: '16px' }}>Уже сделали расчет в других компаниях?</h2>
               <p style={{ fontSize: '16px', color: '#475569', marginBottom: '36px' }}>Пришлите нам готовую смету, и мы гарантированно сделаем цену ниже напрямую от завода!</p>
-              <form style={{ display: 'flex', flexDirection: 'column', gap: '12px' }} onSubmit={(e) => e.preventDefault()}>
-                <input type="tel" placeholder="+7 (___) ___-__-__" required style={{ padding: '16px 20px', borderRadius: '12px', border: '1px solid #cbd5e1', fontSize: '14px', outline: 'none', backgroundColor: '#fff' }} />
-                <button type="submit" className="ui-btn" style={{ backgroundColor: '#2563eb', color: '#fff', border: 'none', padding: '16px 0', borderRadius: '12px', fontSize: '15px', fontWeight: '600', cursor: 'pointer' }}>⇒ Получить цену ниже конкурентов</button>
+              <form 
+                style={{ display: 'flex', flexDirection: 'column', gap: '12px' }} 
+                onSubmit={async (e) => {
+                  e.preventDefault();
+                  setIsSubmittingCompetitor(true);
+                  const form = e.target as HTMLFormElement;
+                  const phoneInput = form.querySelector('input[type="tel"]') as HTMLInputElement;
+                  try {
+                    const res = await fetch('/api/leads', {
+                      method: 'POST',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify({
+                        name: 'Смета конкурентов (Район)',
+                        phone: phoneInput.value,
+                        source: `Форма Оксаны на странице района: Заявка на расчет ниже конкурентов ${districtStaticData.landing}`
+                      })
+                    });
+                    if (res.ok) { form.reset(); router.push('/thanks'); }
+                  } catch (err) { alert('Ошибка сети.'); } finally { setIsSubmittingCompetitor(false); }
+                }}
+              >
+                <input 
+                  type="tel" 
+                  placeholder="+7 (999) 000-00-00" 
+                  onChange={handlePhoneChange}
+                  minLength={18}
+                  maxLength={18}
+                  required 
+                  style={{ padding: '16px 20px', borderRadius: '12px', border: '1px solid #cbd5e1', fontSize: '14px', outline: 'none', backgroundColor: '#fff', color: '#0f172a' }} 
+                />
+                <button type="submit" disabled={isSubmittingCompetitor} className="ui-btn" style={{ backgroundColor: '#2563eb', color: '#fff', border: 'none', padding: '16px 0', borderRadius: '12px', fontSize: '15px', fontWeight: '600', cursor: 'pointer' }}>
+                  {isSubmittingCompetitor ? 'Отправка...' : '⇒ Получить цену ниже конкурентов'}
+                </button>
               </form>
             </div>
 
@@ -496,10 +621,41 @@ export default function DistrictClientPage({ district, initialData }: { district
             </div>
             <div style={{ width: '100%', backgroundColor: '#f8fafc', padding: '36px', borderRadius: '16px', border: '1px solid #e2e8f0', textAlign: 'center' }}>
               <h3 style={{ fontSize: '19px', fontWeight: '700', color: '#1e3a8a', marginBottom: '8px' }}>Оформить рассрочку</h3>
-              <form style={{ display: 'flex', flexDirection: 'column', gap: '12px' }} onSubmit={(e) => e.preventDefault()}>
+              <form 
+                style={{ display: 'flex', flexDirection: 'column', gap: '12px' }} 
+                onSubmit={async (e) => {
+                  e.preventDefault();
+                  setIsSubmittingInstallment(true);
+                  const form = e.target as HTMLFormElement;
+                  const nameInput = form.querySelector('input[placeholder="Ваше имя"]') as HTMLInputElement;
+                  const phoneInput = form.querySelector('input[type="tel"]') as HTMLInputElement;
+                  try {
+                    const res = await fetch('/api/leads', {
+                      method: 'POST',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify({
+                        name: nameInput.value || 'Заявка на рассрочку',
+                        phone: phoneInput.value,
+                        source: `Форма рассрочки на странице района: ${districtStaticData.landing}`
+                      })
+                    });
+                    if (res.ok) { form.reset(); router.push('/thanks'); }
+                  } catch (err) { alert('Ошибка сети.'); } finally { setIsSubmittingInstallment(false); }
+                }}
+              >
                 <input type="text" placeholder="Ваше имя" style={{ padding: '14px 16px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '14px', outline: 'none', backgroundColor: '#fff' }} />
-                <input type="tel" placeholder="Номер телефона" required style={{ padding: '14px 18px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '14px', outline: 'none', backgroundColor: '#fff' }} />
-                <button type="submit" className="ui-btn" style={{ backgroundColor: '#1e3a8a', color: '#fff', border: 'none', padding: '14px 0', borderRadius: '10px', fontSize: '14px', fontWeight: '600', cursor: 'pointer', boxShadow: '0 4px 12px rgba(30, 58, 138, 0.15)' }}>Подать быструю заявку</button>
+                <input 
+                  type="tel" 
+                  placeholder="+7 (999) 000-00-00" 
+                  onChange={handlePhoneChange}
+                  minLength={18}
+                  maxLength={18}
+                  required 
+                  style={{ padding: '14px 18px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '14px', outline: 'none', backgroundColor: '#fff', color: '#0f172a', fontWeight: '600' }} 
+                />
+                <button type="submit" disabled={isSubmittingInstallment} className="ui-btn" style={{ backgroundColor: '#1e3a8a', color: '#fff', border: 'none', padding: '14px 0', borderRadius: '10px', fontSize: '14px', fontWeight: '600', cursor: 'pointer', boxshadow: '0 4px 12px rgba(30, 58, 138, 0.15)' }}>
+                  {isSubmittingInstallment ? 'Отправка...' : 'Подать быструю заявку'}
+                </button>
               </form>
             </div>
           </div>
@@ -511,7 +667,7 @@ export default function DistrictClientPage({ district, initialData }: { district
         <div style={{ maxWidth: '1240px', margin: '0 auto', padding: '0 20px' }}>
           <div style={{ marginBottom: '44px', textAlign: 'center' }}>
             <span style={{ fontSize: '13px', color: '#2563eb', fontWeight: '600', textTransform: 'uppercase', display: 'block', marginBottom: '8px' }}>Обратная связь</span>
-            <h2 className="section-title" style={{ fontSize: '32px', fontWeight: '700', color: '#1e3a8a' }}>Что говорят омичи о нашей работе</h2>
+            <h2 className="section-title" style={{ fontSize: '32px', fontWeight: '700', color: '#1e3a8a' }}>What говорят омичи о нашей работе</h2>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '24px' }}>
             {customerReviews.map((rev, rIdx) => (
@@ -543,8 +699,15 @@ export default function DistrictClientPage({ district, initialData }: { district
               { title: 'Чем лучше обшить балкон внутри: евровагонка или ламинат', desc: 'Сравниваем популярные отделочные материалы по цене, практичности и общей долговечности для омского климата.', img: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=600', url: '#' }
             ].map((article, idx) => (
               <div key={idx} className="hover-card" style={{ backgroundColor: '#fff', borderRadius: '20px', border: '1px solid #e2e8f0', overflow: 'hidden', display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
-                <div className="zoom-container" style={{ height: '200px', width: '100%' }}>
-                  <img className="zoom-img" src={article.img} alt={article.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                <div className="zoom-container" style={{ height: '200px', width: '100%', position: 'relative' }}>
+                  <Image 
+                    className="zoom-img" 
+                    src={article.img} 
+                    alt={`Полезная статья: ${article.title}`} 
+                    fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    style={{ objectFit: 'cover' }} 
+                  />
                 </div>
                 <div style={{ padding: '24px', flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                   <div>
@@ -571,8 +734,15 @@ export default function DistrictClientPage({ district, initialData }: { district
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '20px', maxWidth: '1000px', margin: '0 auto' }}>
             {additionalServices.map((service, idx) => (
               <div key={idx} className="hover-card" style={{ backgroundColor: '#fff', borderRadius: '16px', border: '1px solid #e2e8f0', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
-                <div className="zoom-container" style={{ height: '140px', width: '100%' }}>
-                  <img className="zoom-img" src={service.img} alt="Услуга" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                <div className="zoom-container" style={{ height: '140px', width: '100%', position: 'relative' }}>
+                  <Image 
+                    className="zoom-img" 
+                    src={service.img} 
+                    alt={`Дополнительная услуга фабрики окон: ${service.title}`} 
+                    fill
+                    sizes="(max-width: 768px) 50vw, 20vw"
+                    style={{ objectFit: 'cover' }} 
+                  />
                 </div>
                 <div style={{ padding: '16px', flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', textAlign: 'center' }}>
                   <div style={{ marginBottom: '16px' }}>
