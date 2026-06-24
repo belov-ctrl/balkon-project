@@ -26,6 +26,6 @@ export default function robots(): MetadataRoute.Robots {
       disallow: districtsSlugs.map(slug => `/${slug}`), 
     },
     // Указываем путь к карте сайта (понадобится Яндексу в будущем)
-    sitemap: 'http://localhost:3000/sitemap.xml', 
+    Sitemap: https://balkonreshenie.ru/sitemap.xml', 
   };
 }
