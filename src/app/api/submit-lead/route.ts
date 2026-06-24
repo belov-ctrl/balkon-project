@@ -3,10 +3,8 @@ import { NextResponse } from 'next/server';
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    // name - имя, phone - телефон, quizAnswers - массив или строка с ответами квиза
     const { name, phone, quizAnswers } = body;
 
-    // Красиво форматируем ответы квиза для передачи в поле "Примечание"
     let noteText = 'Заявка с калькулятора Next.js\n\n';
     if (Array.isArray(quizAnswers)) {
       noteText += quizAnswers.join('\n');
@@ -18,15 +16,14 @@ export async function POST(request: Request) {
       noteText += quizAnswers || 'Клиент не заполнил шаги квиза';
     }
 
-    // Собираем данные в формате x-www-form-urlencoded, который требует amoCRM
     const amoFormData = new URLSearchParams();
     amoFormData.append('form_id', '1726026');
     amoFormData.append('hash', '103318850eff6ebf324c41192541b1c6');
+    amoFormData.append('locale', 'ru'); // Добавили локаль из оригинального скрипта
     amoFormData.append('fields[name_1]', name || 'Имя не указано');
     amoFormData.append('fields[phone_1]', phone || 'Не указано');
-    amoFormData.append('fields[note_1]', noteText); // Передаем квиз в примечание
+    amoFormData.append('fields[note_1]', noteText);
 
-    // Отправляем скрытый запрос напрямую в очередь amoCRM
     const amoResponse = await fetch('https://forms.amocrm.ru/queue/add', {
       method: 'POST',
       headers: {
@@ -35,11 +32,17 @@ export async function POST(request: Request) {
       body: amoFormData.toString(),
     });
 
+    const amoTextResponse = await amoResponse.text();
+    
+    // ЭТОТ ЛОГ ВЫВЕДЕТ НАСТОЯЩИЙ ВЕРДИКТ AMOCRM ПРЯМО В КОНСОЛЬ PM2!
+    console.log('📢 ОТВЕТ ОТ СЕРВЕРА AMOCRM:', amoTextResponse);
+
     if (!amoResponse.ok) {
-      console.error('Ошибка ответа от amoCRM:', await amoResponse.text());
+      console.error('⚠️ Критическая ошибка статуса amoCRM:', amoTextResponse);
+      return NextResponse.json({ success: false, error: amoTextResponse }, { status: 500 });
     }
 
-    return NextResponse.json({ success: true, message: 'Lead successfully sent to amoCRM' });
+    return NextResponse.json({ success: true, amoResult: amoTextResponse });
   } catch (error) {
     console.error('Критическая ошибка отправки лида:', error);
     return NextResponse.json({ success: false, error: 'Internal Server Error' }, { status: 500 });
