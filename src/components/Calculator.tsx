@@ -105,7 +105,7 @@ export default function Calculator({ isModal = false, onClose }: CalculatorProps
           <div>
             <h3 style={{ fontSize: '20px', fontWeight: '700', color: '#1e3a8a', marginBottom: '24px', textAlign: 'left' }}>2. Какой профиль и тип открывания планируете?</h3>
             <div className="calc-grid-2">
-              {['Раздвижное алюминиевое (холодное)', 'Раздвижное plasticовое (Slidors)', 'Пластиковые распашные окна (теплое)', 'Французское витражное (от пола до потолка)'].map((opt) => (
+              {['Раздвижное алюминиевое (холодное)', 'Раздвижное пластиковое (Slidors)', 'Пластиковые распашные окна (теплое)', 'Французское витражное (от пола до потолка)'].map((opt) => (
                 <div key={opt} onClick={() => setCalcGlazing(opt)} className={`calc-option-row ${calcGlazing === opt ? 'active' : ''}`}>
                   <span style={{ color: calcGlazing === opt ? '#2563eb' : '#cbd5e1', fontSize: '18px' }}>{calcGlazing === opt ? '◈' : '◇'}</span> {opt}
                 </div>
@@ -129,7 +129,7 @@ export default function Calculator({ isModal = false, onClose }: CalculatorProps
 
         {calcStep === 4 && (
           <div>
-            <h3 style={{ fontSize: '20px', fontWeight: '700', color: '#1e3a8a', marginBottom: '24px', textAlign: 'left' }}>4. Какой материал чистовой отделки стен вам нравится?</h3>
+            <h3 style={{ fontSize: '20px', fontWeight: '700', color: '#1e3a8a', marginBottom: '24px', textAlign: 'left' }}>4. Какой material чистовой отделки стен вам нравится?</h3>
             <div className="calc-grid-2">
               {['Без обшивки (просто остекление)', 'Белые или цветные ПВХ-панели', 'Натуральная деревянная евровагонкой', 'Влагостойкий гипсокартон под покраску'].map((opt) => (
                 <div key={opt} onClick={() => setCalcFinish(opt)} className={`calc-option-row ${calcFinish === opt ? 'active' : ''}`}>
@@ -184,16 +184,26 @@ export default function Calculator({ isModal = false, onClose }: CalculatorProps
                 const phoneInput = form.querySelector('input[type="tel"]') as HTMLInputElement;
                 const selectedMessenger = (form.querySelector('input[name="messenger"]:checked') as HTMLInputElement)?.value || 'WhatsApp';
 
-                const leadBreakdown = `КВИЗ-КАЛЬКУЛЯТОР: Тип: ${calcType}, Размер: ${calcWidth}x${calcHeight}см, Остекление: ${calcGlazing}, Сварка/Крыша: ${calcWelding}, Отделка: ${calcFinish}, Утепление: ${calcInsulation}, Мебель: ${calcAdditional}. Способ связи: ${selectedMessenger}`;
+                // Формируем красивый массив ответов для нашей апишки и amoCRM
+                const quizAnswers = [
+                  `Тип балкона: ${calcType}`,
+                  `Размеры: ${calcWidth}х${calcHeight} см`,
+                  `Остекление: ${calcGlazing}`,
+                  `Внешние/Сварочные работы: ${calcWelding}`,
+                  `Отделка стен: ${calcFinish}`,
+                  `Утепление: ${calcInsulation}`,
+                  `Мебель/Доп. опции: ${calcAdditional}`,
+                  `Удобный способ связи: ${selectedMessenger}`
+                ];
 
                 try {
                   const res = await fetch('/api/leads', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                      name: `Клиент (Калькулятор - ${calcType})`,
+                      name: `Заявка с квиза (${calcType})`,
                       phone: phoneInput.value,
-                      source: leadBreakdown
+                      quizAnswers: quizAnswers // Отправляем как массив, который переварит бэкенд
                     })
                   });
 
@@ -203,10 +213,10 @@ export default function Calculator({ isModal = false, onClose }: CalculatorProps
                     if (isModal && onClose) onClose(); 
                     router.push('/thanks'); 
                   } else {
-                    alert('Ошибка при отправке.');
+                    alert('Ошибка при отправке в CRM.');
                   }
                 } catch {
-                  alert('Ошибка подключения.');
+                  alert('Ошибка подключения к серверу.');
                 } finally {
                   setIsSubmitting(false);
                 }

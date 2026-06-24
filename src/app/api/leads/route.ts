@@ -2,90 +2,46 @@ import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
   try {
-    // Получаем данные, которые клиент ввел на сайте
-    const { name, phone, source } = await request.json();
+    const body = await request.json();
+    // name - имя, phone - телефон, quizAnswers - массив или строка с ответами квиза
+    const { name, phone, quizAnswers } = body;
 
-    // =========================================================================
-    // ЭТАП 1: ХРАНЕНИЕ БЭКАПА В СОБСТВЕННОЙ АДМИНКЕ (STRAPI v5)
-    // =========================================================================
-    try {
-      // По правилам Strapi v5 данные отправляются в объекте { data: { ... } }
-      await fetch('https://balkonreshenie.ru/api/leads', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          data: {
-            name: name || 'Имя не указано',
-            phone: phone,
-            source: source || 'Форма на сайте'
-          }
-        })
-      });
-      console.log('🎉 Лид успешно зафиксирован внутри админки Strapi!');
-    } catch (strapiError) {
-      console.error('🚨 Ошибка сохранения бэкапа в Strapi:', strapiError);
+    // Красиво форматируем ответы квиза для передачи в поле "Примечание"
+    let noteText = 'Заявка с калькулятора Next.js\n\n';
+    if (Array.isArray(quizAnswers)) {
+      noteText += quizAnswers.join('\n');
+    } else if (typeof quizAnswers === 'object') {
+      noteText += Object.entries(quizAnswers)
+        .map(([question, answer]) => `${question}: ${answer}`)
+        .join('\n');
+    } else {
+      noteText += quizAnswers || 'Клиент не заполнил шаги квиза';
     }
 
-    // =========================================================================
-    // ЭТАП 2: ОТПРАВКА В AMOCRM (РАБОТАЕТ, КОГДА ЕСТЬ КЛЮЧИ)
-    // =========================================================================
-    const subdomain = process.env.AMOCRM_SUBDOMAIN;
-    const token = process.env.AMOCRM_ACCESS_TOKEN;
-    const statusId = process.env.AMOCRM_STATUS_ID;
+    // Собираем данные в формате x-www-form-urlencoded, который требует amoCRM
+    const amoFormData = new URLSearchParams();
+    amoFormData.append('form_id', '1726026');
+    amoFormData.append('hash', '103318850eff6ebf324c41192541b1c6');
+    amoFormData.append('fields[name_1]', name || 'Имя не указано');
+    amoFormData.append('fields[phone_1]', phone || 'Не указано');
+    amoFormData.append('fields[note_1]', noteText); // Передаем квиз в примечание
 
-    // Если токен еще не настроен (наш случай до завтра) — просто выходим с успехом
-    if (!subdomain || !token || token === 'тут_будет_длинный_токен' || token.startsWith('тут_будет')) {
-      return NextResponse.json({ 
-        success: true, 
-        message: 'Заявка сохранена в админку Strapi! (amoCRM ожидает настройки токена).' 
-      });
-    }
-
-    // Если ключи на месте — отправляем в amoCRM строго в нужный этап воронки
-    const amoUrl = `https://${subdomain}.amocrm.ru/api/v4/leads/complex`;
-    const body = [
-      {
-        name: `Заявка: ${source ? source.substring(0, 40) + '...' : 'Сайт балконов'}`,
-        status_id: parseInt(statusId || '0'),
-        _embedded: {
-          contacts: [
-            {
-              first_name: name || 'Клиент с сайта',
-              custom_fields_values: [
-                {
-                  field_code: 'PHONE',
-                  values: [
-                    {
-                      value: phone,
-                      enum_code: 'MOB'
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      }
-    ];
-
-    const amoResponse = await fetch(amoUrl, {
+    // Отправляем скрытый запрос напрямую в очередь amoCRM
+    const amoResponse = await fetch('https://forms.amocrm.ru/queue/add', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
+        'Content-Type': 'application/x-www-form-urlencoded',
       },
-      body: JSON.stringify(body)
+      body: amoFormData.toString(),
     });
 
     if (!amoResponse.ok) {
-      const errorData = await amoResponse.text();
-      console.error('Ошибка ответа amoCRM API:', errorData);
-      return NextResponse.json({ success: true, warning: 'Сохранено в базу, но CRM временно недоступна' });
+      console.error('Ошибка ответа от amoCRM:', await amoResponse.text());
     }
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true, message: 'Lead successfully sent to amoCRM' });
   } catch (error) {
-    console.error('Критическая системная ошибка обработчика лидов:', error);
-    return NextResponse.json({ success: false, error: 'Внутренняя ошибка сервера Next.js' }, { status: 500 });
+    console.error('Критическая ошибка отправки лида:', error);
+    return NextResponse.json({ success: false, error: 'Internal Server Error' }, { status: 500 });
   }
 }
