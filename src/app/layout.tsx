@@ -1,9 +1,6 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import Script from "next/script"; 
 import "./globals.css";
-
-const inter = Inter({ subsets: ["latin", "cyrillic"], display: "swap" });
 
 // ГЛАВНЫЙ БЛОК ДЛЯ SEO ОМСКА
 export const metadata: Metadata = {
@@ -13,7 +10,6 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://balkonreshenie.ru",
   },
-  // 🌟 ИСПРАВЛЕНО: Вставлен твой реальный код верификации Вебмастера
   verification: {
     yandex: "2b079a9c18aa7b96", 
   }
@@ -26,10 +22,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ru">
-      <body className={inter.className}>
+      <head>
+        {/* Безопасное подключение шрифта напрямую в браузере */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+      </head>
+      <body>
         {children}
 
-        {/* Внедрен асинхронный счетчик Яндекс.Метрики без ущерба для скорости 1 CPU сервера */}
         <Script id="yandex-metrika" strategy="afterInteractive">
           {`
             (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
@@ -38,7 +39,6 @@ export default function RootLayout({
             k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
             (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
 
-            // 🌟 ИСПРАВЛЕНО: Вставлен твой реальный ID Метрики
             ym(110101263, "init", {
                  clickmap:true,
                  trackLinks:true,
@@ -49,7 +49,6 @@ export default function RootLayout({
         </Script>
         <noscript>
           <div>
-            {/* 🌟 ИСПРАВЛЕНО: Вставлен твой реальный ID Метрики в резервный пиксель */}
             <img src="https://mc.yandex.ru/watch/110101263" style={{ position: 'absolute', left: '-9999px' }} alt="" />
           </div>
         </noscript>
