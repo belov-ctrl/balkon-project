@@ -61,13 +61,14 @@ export default function FloatingWidgets({ onOpenCalc }: FloatingWidgetsProps) {
     const phoneInput = form.querySelector('input[type="tel"]') as HTMLInputElement;
 
     try {
-      const res = await fetch('/api/leads', {
+      // 🌟 ИСПРАВЛЕНО: Обход блокировки Nginx и выравнивание полей под amoCRM
+      const res = await fetch('/submit-lead', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: 'Клиент из Чата',
           phone: phoneInput.value,
-          source: 'Виджет: Онлайн-чат'
+          quizAnswers: 'Виджет: Онлайн-чат'
         })
       });
       if (res.ok) setChatStep(2);
@@ -85,13 +86,14 @@ export default function FloatingWidgets({ onOpenCalc }: FloatingWidgetsProps) {
     const phoneInput = form.querySelector('input[type="tel"]') as HTMLInputElement;
 
     try {
-      const res = await fetch('/api/leads', {
+      // 🌟 ИСПРАВЛЕНО: Обход блокировки Nginx и выравнивание полей под amoCRM
+      const res = await fetch('/submit-lead', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: 'Ловец подарков',
           phone: phoneInput.value,
-          source: 'Виджет: Скрытый подарок 🎁'
+          quizAnswers: 'Виджет: Скрытый подарок 🎁'
         })
       });
       if (res.ok) {
@@ -210,7 +212,6 @@ export default function FloatingWidgets({ onOpenCalc }: FloatingWidgetsProps) {
         </div>
       )}
 
-      {/* ИСПРАВЛЕНО: Добавлен aria-label для экранных дикторов на плавающую кнопку чата */}
       <div className="widget-chat-btn" onClick={() => setIsChatOpen(!isChatOpen)} role="button" aria-label="Открыть онлайн-консультацию с Оксаной">
         {isChatOpen ? (
           <span style={{ color: '#fff', fontSize: '28px', lineHeight: 1 }}>×</span>

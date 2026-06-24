@@ -168,13 +168,14 @@ export default function ContactsMap() {
               const phoneInput = form.querySelector('input[type="tel"]') as HTMLInputElement;
 
               try {
-                const res = await fetch('/api/leads', {
+                // 🌟 ИСПРАВЛЕНО: Новый изолированный путь отправки во избежание перехвата Nginx и формат под amoCRM
+                const res = await fetch('/submit-lead', {
                   method: 'POST',
                   headers: { 'Content-Type': 'application/json' },
                   body: JSON.stringify({
                     name: nameInput.value || 'Анонимный клиент',
                     phone: phoneInput.value,
-                    source: 'Нижняя форма у карты: Заявка на бесплатный замер (Гусарова)'
+                    quizAnswers: 'Нижняя форма у карты: Заявка на бесплатный замер (Гусарова)'
                   })
                 });
 
@@ -218,17 +219,15 @@ export default function ContactsMap() {
 
         {/* ПЛАШКА С КОНТАКТАМИ */}
         <div className="map-info-block">
-          {/* ИСПРАВЛЕНО: Убрана опечатка BABКОННЫЕ */}
           <div style={{ fontWeight: '700', fontSize: '18px', color: '#1e3a8a', letterSpacing: '-0.02em', marginBottom: '8px', lineHeight: '1.2' }}>
             БАЛКОННЫЕ РЕШЕНИЯ <span style={{ color: '#2563eb', display: 'block', fontSize: '14px', fontWeight: '800' }}>ОМСК</span>
           </div>
           
           <p style={{ fontSize: '14px', color: '#475569', lineHeight: '1.5', margin: '8px 0 16px 0', maxWidth: '240px' }}>
-            Остекление балконов и лоджий в Омске <br />
+            Остекление балконов и лоджий in Омске <br />
             <strong>ул. Гусарова, д. 26</strong>
           </p>
 
-          {/* ИСПРАВЛЕНО: Синхронизирован номер телефона в ссылке и на экране для исключения ложных вызовов */}
           <a href="tel:+73812288230" style={{ fontWeight: '700', color: '#0f172a', textDecoration: 'none', fontSize: '19px', marginBottom: '4px', display: 'block' }}>+7 (3812) 28-82-30</a>
           <p style={{ fontSize: '13px', color: '#64748b', margin: '0 0 24px 0', padding: 0 }}>Ведущий менеджер</p>
         </div>

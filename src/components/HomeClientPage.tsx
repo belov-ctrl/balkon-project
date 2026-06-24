@@ -39,13 +39,13 @@ const managerPhoto = "https://balkonreshenie.ru/uploads/firma_po_otdelki_balkono
 
 const defaultGlazingCards = [ 
   { title: 'Теплое остекление', price: '3 200', desc: 'ПВХ профиль. Подходит для создания жилой комнаты, теплого кабинета или продолжения кухни.', img: 'https://images.unsplash.com/photo-1590073844006-33379778ae09?q=80&w=600', badge: 'Максимум тепла' }, 
-  { title: 'Холодное остекление', price: '2 700', desc: 'Алюминиевый профиль. Легкие удобные раздвижные створки для защиты от ветра, пыли и дождя.', img: 'https://images.unsplash.com/photo-1604079628040-94301bb21b91?q=80&w=600', badge: 'Экономичный выбор' }, 
+  { title: 'Холодное остекление', price: '2 700', desc: 'Алюминиевый профиль. Легкие удобные раздвижные створки для защиты от ветра, пыли and дождя.', img: 'https://images.unsplash.com/photo-1604079628040-94301bb21b91?q=80&w=600', badge: 'Экономичный выбор' }, 
   { title: 'Остекление с выносом', price: '4 100', desc: 'Расширение пространства балкона наружу по линии подоконника. Увеличивает реальный объем.', img: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=600', badge: 'Больше места' }, 
   { title: 'Панорамное остекление', price: '3 500', desc: 'Красивые французские окна от пола до потолка. Дают максимум дневного света, стиля и роскошный обзор.', img: 'https://images.unsplash.com/photo-1527359443443-84a48abc7dfd?q=80&w=600', badge: 'Премиум стиль' } 
 ];
 
 const structuresData = [ 
-  { tabName: 'Прямой балкон', title: 'Прямое остекление лоджий и балконов', desc: 'Классический вариант: остекляется только передняя часть. Боковые стороны полностью закрыты теплыми плитами или глухими пластиковыми панелями. Самое популярное решение в омских девятиэтажках.', features: ['Максимальная защита от сильных сквозняков', 'Быстрый и чистый монтаж за несколько часов', 'Идеально подходит под полное объединение с комнатой'], img: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=800' }, 
+  { tabName: 'Пмямой балкон', title: 'Прямое остекление лоджий и балконов', desc: 'Классический вариант: остекляется только передняя часть. Боковые стороны полностью закрыты теплыми плитами или глухими пластиковыми панелями. Самое популярное решение в омских девятиэтажках.', features: ['Максимальная защита от сильных сквозняков', 'Быстрый и чистый монтаж за несколько часов', 'Идеально подходит под полное объединение с комнатой'], img: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=800' }, 
   { tabName: 'Угловой балкон', title: 'Г-образное (угловое) остекление балконов', desc: 'Конструкция состоит из двух надежных рам: широкой передней и одной боковой стеклянной части. Вторая боковая стена — это капитальная стена дома. Распространено в омских хрущевках.', features: ['Заметно увеличивает обзор и количество света в комнате', 'Боковую секцию можно сделать матовой или глухой', 'Надежный угловой соединительный стык без промерзания швов'], img: 'https://images.unsplash.com/photo-1505691938895-1758d7feb511?q=80&w=800' }, 
   { tabName: 'П-образный балкон', title: 'П-образное трёхстороннее остекление', desc: 'Балкон полностью выступает за пределы фасада здания. Остекление монтируется сразу с трех сторон: большая центральная рама и две боковые.', features: ['Шикарный панорамный обзор улицы на 180 градусов', 'Можно удобно комбинировать открывающиеся и глухие створки', 'Обязательное укрепление плиты-основания перед началом работ'], img: 'https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?q=80&w=800' } 
 ];
@@ -53,7 +53,7 @@ const structuresData = [
 const insulationServices = [ 
   { title: 'Комплексное утепление', desc: 'Качественная изоляция по принципу термоса. На вашем балконе будет абсолютно сухо и тепло даже в самые суровые сибирские морозы.', price: '1 200', materials: ['Утеплитель Пеноплэкс (абсолютно не боится влаги)', 'Пароизоляция Пенофол со специальным отражающим слоем', 'Герметизация стыков профессиональной пеной и составом Стиз'], img: 'https://balkonreshenie.ru/uploads/thumbnail_Kompleksnoye_utepleniye_balkona_a47ff0fea6.png?updatedAt=2026-06-18T21%3A00%3A08.300Z' }, 
   { title: 'Внутренняя отделка', desc: 'Превращаем холодный бетонный балкон в уютную жилую зону, удобное рабочее место или аккуратный уголок для отдыха.', price: '1 500', materials: ['Натуральная деревянная евровагонка высшего сорта', 'Износостойкий ламинат для отделки стен и пола', 'Практичные ПВХ и МДФ панели любых современных цветов'], img: 'https://balkonreshenie.ru/uploads/thumbnail_Vnutrennyaya_otdelka_balkona_c5925c9216.png?updatedAt=2026-06-18T21%3A45%3A56.280Z' }, 
-  { title: 'Проводка и мебель', desc: 'Добавляем важные и полезные детали, чтобы обновленным пространством лоджии было максимально комфортно пользоваться каждый день.', price: '900', materials: ['Mонтаж безопасного инфракрасного теплого пола с датчиком', 'Удобный вывод розеток, выключателей и точечного света', 'Встроенные шкафчики, тумбы и потолочные сушилки'], img: 'https://balkonreshenie.ru/uploads/thumbnail_Provodka_i_mebel_na_balkon_00bad2d485.png?updatedAt=2026-06-18T21%3A46%3A06.978Z' } 
+  { title: 'Проводка и мебель', desc: 'Добавляем важные и полезные детали, чтобы обновленным пространством лоджии было максимально комфортно пользоваться каждый день.', price: '900', materials: ['Mонтаж безопасного инфракрасного теплого пола с датчиком', 'Удобный вывод розеток, выключателей и точечного света', 'Встроенные шкафчики, тумбы и потогочные сушилки'], img: 'https://balkonreshenie.ru/uploads/thumbnail_Provodka_i_mebel_na_balkon_00bad2d485.png?updatedAt=2026-06-18T21%3A46%3A06.978Z' } 
 ];
 
 const advantagesData = [ { num: '01', title: 'Собственный завод', desc: 'Изготавливаем оконные конструкции на автоматизированном производстве в Омске без наценок перекупщиков.' }, { num: '02', title: 'Монтаж по ГОСТу', desc: 'Применяем качественные герметики и защитные ленты. Полностью гарантируем отсутствие продуваний.' }, { num: '03', title: 'Договор и гарантия', desc: 'Оформить документы можно дома или в нашем офисе. Даем честную гарантию 5 лет.' }, { num: '04', title: 'Опытные мастера', desc: 'В наших монтажных бригадах работают только постоянные специалисты-омичи с опытом работы от 5 лет.' } ];
@@ -189,7 +189,7 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
 
         @media (max-width: 991px) {
           .section-padding { padding: 40px 0 !important; }
-          .responsive-grid-2 { display: grid; grid-template-columns: 1fr !important; gap: 32px !important; }
+          .responsive-grid-2 { grid-template-columns: 1fr !important; gap: 32px !important; }
           .hero-title { font-size: 32px !important; }
           .hero-section { padding-bottom: 40px !important; min-height: auto !important; padding-top: 40px !important; }
           .hero-desc { font-size: 16px !important; margin-bottom: 24px !important; }
@@ -209,7 +209,6 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
 
       <Header />
 
-      {/* ГЛАВНЫЙ БЛОК ОПТИМИЗИРОВАН ЧЕРЕЗ NEXT/IMAGE ДЛЯ ИСКЛЮЧЕНИЯ НАГРУЗКИ НА LCP */}
       <main style={{ position: 'relative', width: '100%' }}>
         <section className="hero-section" style={{ width: '100%' }}>
           <Image 
@@ -217,7 +216,7 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
             alt="Основной фоновый баннер фабрики Балконные Решения Омск"
             fill
             priority={true}
-            unoptimized // 🌟 ИСПРАВЛЕНО: Убрали нагрузку на CPU при первом рендере фона
+            unoptimized // 🌟 ИСПРАВЛЕНО: Отключили онлайн-сжатие фонового баннера для экономии CPU 1-ядерного сервера
             style={{ objectFit: 'cover' }}
           />
           <div style={{ position: 'absolute', inset: 0, backgroundColor: 'rgba(255,255,255,0.75)', zIndex: 1 }}></div>
@@ -247,7 +246,6 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
               <div style={{ flexShrink: 0 }}><RulerIcon /></div>
               <div style={{ textAlign: 'left' }}>
                 <h4 style={{ fontSize: '16px', fontWeight: '600', color: '#475569', margin: 0 }}>{content.topCard1Title || 'Отделка 3-метрового балкона'}</h4>
-                {/* ИСПРАВЛЕНО: Смешанный текст panelных */}
                 <p style={{ fontSize: '14px', color: '#64748b', margin: '4px 0 10px 0' }}>{content.topCard1Subtitle || 'в панельных домах Омска'}</p>
                 <p style={{ fontSize: '28px', fontWeight: '700', color: '#1e3a8a', margin: 0, letterSpacing: '-0.02em' }}>{content.topCard1Price || '30 000 руб'}</p>
               </div>
@@ -289,7 +287,7 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
                 alt={content.aboutTitle || "Заводское производство оконных систем и монтажные бригады в Омске"} 
                 fill
                 sizes="(max-width: 991px) 100vw, 50vw"
-                unoptimized // 🌟 ИСПРАВЛЕНО: Исключаем нагрузку на процессор
+                unoptimized // 🌟 ИСПРАВЛЕНО: убрали онлайн-сжатие тяжелой графики
                 style={{ objectFit: 'cover', borderRadius: '20px' }}
               />
             </div>
@@ -327,7 +325,7 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
                       alt={card.title || "Вид остекления балкона в Омске"} 
                       fill
                       sizes="(max-width: 768px) 100vw, 25vw"
-                      unoptimized // 🌟 ИСПРАВЛЕНО: Разгружаем сервер при сканировании
+                      unoptimized // 🌟 ИСПРАВЛЕНО: убрали онлайн-сжатие
                       style={{ objectFit: 'cover' }}
                     />
                     {card.badge && <span style={{ position: 'absolute', top: '14px', left: '14px', backgroundColor: '#1e3a8a', color: '#fff', padding: '4px 10px', borderRadius: '6px', fontSize: '12px', fontWeight: '500', zIndex: 1 }}>{card.badge}</span>}
@@ -349,7 +347,7 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
         </div>
       </section>
 
-      {/* СИНЯЯ ФОРМА ЗАЯВКИ С МАСКОЙ */}
+      {/* ФОРМА 1: СИНЯЯ ФОРМА ЗАЯВКИ (ИСПРАВЛЕНО ПОД AMOCRM И ОБХОД NGINX) */}
       <section style={{ backgroundColor: '#1e3a8a', color: '#fff', width: '100%' }}>
         <div className="blue-form-container">
           <div className="blue-form-text" style={{ flex: 1 }}>
@@ -371,13 +369,14 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
               btn.disabled = true;
 
               try {
-                const res = await fetch('/api/leads', {
+                // ИСПРАВЛЕНО: Заменили роут на /submit-lead и source на quizAnswers
+                const res = await fetch('/submit-lead', {
                   method: 'POST',
                   headers: { 'Content-Type': 'application/json' },
                   body: JSON.stringify({
                     name: nameInput.value,
                     phone: phoneInput.value,
-                    source: 'Синяя плашка: Узнайте точную стоимость за 5 минут'
+                    quizAnswers: 'Синяя плашка: Узнайте точную стоимость за 5 минут'
                   })
                 });
 
@@ -417,7 +416,6 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
       <section className="section-padding" style={{ backgroundColor: '#f8fafc', borderBottom: '1px solid #e2e8f0' }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto', padding: '0 20px' }}>
           <div style={{ textAlign: 'center', marginBottom: '40px' }}>
-            {/* ИСПРАВЛЕНО: Смешанный текст balconies */}
             <span style={{ fontSize: '13px', color: '#2563eb', fontWeight: '600', textTransform: 'uppercase', display: 'block', marginBottom: '8px' }}>Конфигурации балконов</span>
             <h2 className="section-title" style={{ fontSize: '34px', fontWeight: '700', color: '#1e3a8a' }}>Решения под планировку вашей квартиры</h2>
           </div>
@@ -457,7 +455,7 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
                 alt={currentTab.title || "Конструкция и форма остекления балкона"} 
                 fill
                 sizes="(max-width: 991px) 100vw, 50vw"
-                unoptimized // 🌟 ИСПРАВЛЕНО: Изображение отдаётся напрямую
+                unoptimized // 🌟 ИСПРАВЛЕНО: убрали онлайн-сжатие
                 style={{ objectFit: 'contain', borderRadius: '8px' }} 
               />
             </div>
@@ -488,14 +486,14 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
                     alt={service.title || "Отделочные работы на балконе"} 
                     fill
                     sizes="(max-width: 768px) 100vw, 33vw"
-                    unoptimized // 🌟 ИСПРАВЛЕНО: Убрали пиковую нагрузку на 1 CPU
+                    unoptimized // 🌟 ИСПРАВЛЕНО: убрали онлайн-сжатие
                     style={{ objectFit: 'cover' }} 
                   />
                 </div>
                 <h3 style={{ fontSize: '21px', fontWeight: '700', color: '#1e3a8a', marginBottom: '10px' }}>{service.title}</h3>
                 <p style={{ fontSize: '14px', color: '#475569', lineHeight: '1.6', margin: '0 0 24px 0', flexGrow: 1 }}>{service.desc}</p>
                 <div style={{ marginBottom: '24px', borderTop: '1px solid #e2e8f0', paddingTop: '16px' }}>
-                  <span style={{ fontSize: '12px', color: '#64748b', fontWeight: '600', textTransform: 'uppercase', display: 'block', marginBottom: '10px' }}>Что применяем:</span>
+                  <span style={{ fontSize: '12px', color: '#64748b', fontWeight: '600', textTransform: 'uppercase', display: 'block', marginBottom: '10px' }}>Что мы применяем:</span>
                   {service.materials.map((mat, mIdx) => (
                     <div key={mIdx} style={{ display: 'flex', alignItems: 'start', gap: '8px', fontSize: '14px', color: '#334155', marginBottom: '4px' }}>• {mat}</div>
                   ))}
@@ -526,7 +524,6 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
       <section className="section-padding" style={{ backgroundColor: '#fff', borderTop: '1px solid #e2e8f0', borderBottom: '1px solid #e2e8f0' }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto', padding: '0 20px' }}>
           <div style={{ textAlign: 'left', marginBottom: '50px' }}>
-            {/* ИСПРАВЛЕНО: Англицизм Why us */}
             <span style={{ fontSize: '13px', color: '#2563eb', fontWeight: '600', textTransform: 'uppercase', display: 'block', marginBottom: '6px' }}>Почему мы</span>
             <h2 className="section-title" style={{ fontSize: '34px', fontWeight: '700', color: '#1e3a8a' }}>Честный подход к работе</h2>
           </div>
@@ -554,7 +551,7 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
                   width={280}
                   height={280}
                   priority={false} 
-                  unoptimized // 🌟 ИСПРАВЛЕНО: Убрали тяжелую генерацию круглой миниатюры
+                  unoptimized // 🌟 ИСПРАВЛЕНО: убрали онлайн-сжатие
                   style={{ objectFit: 'cover', borderRadius: '50%', border: '6px solid #eff6ff', boxShadow: '0 10px 25px -5px rgba(0,0,0,0.05)' }} 
                 />
               </div>
@@ -562,10 +559,10 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
               <p style={{ fontSize: '13px', color: '#64748b', margin: '0 0 24px 0', padding: 0 }}>Ведущий менеджер</p>
             </div>
             <div style={{ textAlign: 'left' }}>
-              {/* ИСПРАВЛЕНО: Смешанный текст in других компаниях */}
               <h2 className="section-title" style={{ fontSize: '36px', fontWeight: '700', color: '#1e3a8a', lineHeight: '1.2', marginBottom: '16px' }}>Уже сделали расчет в других компаниях?</h2>
               <p style={{ fontSize: '16px', color: '#475569', marginBottom: '36px' }}>Пришлите нам готовую смету, и мы гарантированно сделаем цену ниже напрямую от завода!</p>
               
+              {/* ФОРМА 2: ФОРМА ОКСАНЫ (ИСПРАВЛЕНО ПОД AMOCRM И ОБХОД NGINX) */}
               <form 
                 style={{ display: 'flex', flexDirection: 'column', gap: '12px' }} 
                 onSubmit={async (e) => {
@@ -579,13 +576,14 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
                   btn.disabled = true;
 
                   try {
-                    const res = await fetch('/api/leads', {
+                    // ИСПРАВЛЕНО: Заменили роут на /submit-lead и source на quizAnswers
+                    const res = await fetch('/submit-lead', {
                       method: 'POST',
                       headers: { 'Content-Type': 'application/json' },
                       body: JSON.stringify({
                         name: 'Клиент со сметой конкурентов',
                         phone: phoneInput.value,
-                        source: 'Форма Оксаны: Заявка на расчет ниже конкурентов'
+                        quizAnswers: 'Форма Оксаны: Заявка на расчет ниже конкурентов'
                       })
                     });
 
@@ -630,7 +628,6 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
             <h2 className="section-title" style={{ fontSize: '32px', fontWeight: '700', color: '#1e3a8a' }}>Полезные статьи про остекление и ремонт балконов</h2>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '30px' }}>
-            {/* ИСПРАВЛЕНО: Опечатка гайт -> гайд */}
             {(articlesData && articlesData.length > 0 ? articlesData : [
               { title: 'Как подготовить балкон к сибирской зиме: пошаговый гайд', description: 'Разбираем, какой оконный профиль выдержит сильные морозы до -40°C и какую толщину утеплителя выбрать для лоджии.', img: 'https://balkonreshenie.ru/uploads/thumbnail_Kak_podgotovit_balkon_k_zime_7f6dc23ee6.png?updatedAt=2026-06-18T21%3A48%3A23.194Z', slug: '', isFallback: true },
               { title: 'Панорамное остекление в хрущевках: мифы и реальность', description: 'Выдержит ли старая бетонная плита вес современных французских окон в пол? Тщательно анализируем технические нюансы.', img: 'https://balkonreshenie.ru/uploads/thumbnail_Panoramnoe_osteklenie_v_khrushchevkakh_2e69037ad7.png?updatedAt=2026-06-18T21%3A47%3A40.835Z', slug: '', isFallback: true },
@@ -657,7 +654,7 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
                       alt={title || "Полезная статья о ремонте балконов"} 
                       fill
                       sizes="(max-width: 768px) 100vw, 33vw"
-                      unoptimized // 🌟 ИСПРАВЛЕНО: Убираем пиковые таймауты
+                      unoptimized // 🌟 ИСПРАВЛЕНО: убрали онлайн-сжатие
                       style={{ objectFit: 'cover' }} 
                     />
                   </div>
@@ -681,7 +678,7 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
         </div>
       </section>
 
-      {/* ДОПОЛНИТЕЛЬНЫЕ УСЛУГИ ОПТИМИЗИРОВАНЫ ЧЕРЕЗ NEXT/IMAGE */}
+      {/* ДОПОЛНИТЕЛЬНЫЕ УСЛУГИ ОПТИМИЗИРОВАНО ЧЕРЕЗ NEXT/IMAGE */}
       <section className="section-padding" style={{ backgroundColor: '#fff' }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto', padding: '0 20px' }}>
           <div style={{ textAlign: 'center', marginBottom: '44px' }}>
@@ -697,7 +694,7 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
                     alt={service.title || "Дополнительные строительные услуги нашей фабрики в Омске"} 
                     fill
                     sizes="(max-width: 768px) 50vw, 20vw"
-                    unoptimized // 🌟 ИСПРАВЛЕНО: Разгружаем Node.js кэш
+                    unoptimized // 🌟 ИСПРАВЛЕНО: убрали онлайн-сжатие
                     style={{ objectFit: 'contain', padding: '16px' }} 
                   />
                 </div>
@@ -714,7 +711,7 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
       <ContactsMap />
       <Footer />
 
-      {/* УНИВЕРСАЛЬНОЕ СЕО-ОКНО ЗАХВАТА С МАСКОЙ */}
+      {/* ФОРМА 3: УНИВЕРСАЛЬНОЕ СЕО-ОКНО ЗАХВАТА С МАСКОЙ (ИСПРАВЛЕНО ПОД AMOCRM И ОБХОД NGINX) */}
       {isModalOpen && (
         <div style={{ position: 'fixed', inset: 0, backgroundColor: 'rgba(15, 23, 42, 0.4)', backdropFilter: 'blur(8px)', zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px' }}>
           <div style={{ backgroundColor: '#fff', width: '100%', maxWidth: '480px', borderRadius: '24px', padding: '36px', boxShadow: '0 25px 50px -12px rgba(0,0,0,0.25)', position: 'relative', animation: 'modalFadeIn 0.2s ease-out', textAlign: 'left' }}>
@@ -737,13 +734,14 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
                 btn.disabled = true;
 
                 try {
-                  const res = await fetch('/api/leads', {
+                  // ИСПРАВЛЕНО: Заменили роут на /submit-lead и source на quizAnswers
+                  const res = await fetch('/submit-lead', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                       name: nameInput.value,
                       phone: phoneInput.value,
-                      source: modalTitle 
+                      quizAnswers: modalTitle 
                     })
                   });
 
@@ -768,7 +766,6 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
                   <input id="modal-name" type="text" placeholder="Ваше имя" required style={{ width: '100%', padding: '14px 16px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '14px', outline: 'none' }} />
                 </div>
                 <div>
-                  {/* ИСПРАВЛЕНО: Англицизм Telephone */}
                   <label htmlFor="modal-phone" style={{ fontSize: '12px', fontWeight: '600', color: '#475569', display: 'block', marginBottom: '6px' }}>Телефон для связи</label>
                   <input 
                     id="modal-phone"

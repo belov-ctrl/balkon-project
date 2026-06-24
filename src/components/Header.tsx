@@ -326,13 +326,14 @@ export default function Header() {
                 const phoneInput = form.querySelector('input[type="tel"]') as HTMLInputElement;
 
                 try {
-                  const res = await fetch('/api/leads', {
+                  // ГЛАВНОЕ ИЗМЕНЕНИЕ: Отправляем на новый путь /submit-lead и передаем quizAnswers
+                  const res = await fetch('/submit-lead', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                       name: nameInput.value,
                       phone: phoneInput.value,
-                      source: `Шапка сайта: ${headerModalTitle}`
+                      quizAnswers: `Шапка сайта: ${headerModalTitle}` // Сервер запишет это в примечание amoCRM
                     })
                   });
 
@@ -341,7 +342,7 @@ export default function Header() {
                     form.reset();
                     router.push('/thanks');
                   } else {
-                    alert('Произошла ошибка при отправке конфигурации. Повторите попытку.');
+                    alert('Произошла ошибка при отправке в CRM. Повторите попытку.');
                   }
                 } catch {
                   alert('Ошибка подключения к сети.');

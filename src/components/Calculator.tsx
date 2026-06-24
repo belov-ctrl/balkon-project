@@ -197,13 +197,14 @@ export default function Calculator({ isModal = false, onClose }: CalculatorProps
                 ];
 
                 try {
-                  const res = await fetch('/api/leads', {
+                  // ГЛАВНОЕ ИЗМЕНЕНИЕ: Отправляем на новый изолированный путь, который пролетит мимо правил Nginx
+                  const res = await fetch('/submit-lead', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                       name: `Заявка с квиза (${calcType})`,
                       phone: phoneInput.value,
-                      quizAnswers: quizAnswers // Отправляем как массив, который переварит бэкенд
+                      quizAnswers: quizAnswers
                     })
                   });
 

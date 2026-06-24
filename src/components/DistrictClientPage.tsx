@@ -63,7 +63,7 @@ const additionalServices = [
   { title: 'Обшивка комнат и лоджий', desc: 'Профессиональная обшивка стен и потолка долговечными материалами.', img: 'https://balkonreshenie.ru/uploads/thumbnail_vnutrennyaya_otdelka_balkona_300x300_fb64c0553f.png?updatedAt=2026-06-18T21%3A46%3A30.816Z' }, 
   { title: 'Утепление балконов', desc: 'Надежная многослойная теплоизоляция для суровых сибирских зим.', img: 'https://balkonreshenie.ru/uploads/thumbnail_uteplenie_balkonov_i_lodzhij_300x300_dd1cc9fb2a.jpg?updatedAt=2026-06-18T21%3A46%3A55.398Z' }, 
   { title: 'Балконные блоки', desc: 'Изготовление и аккуратный монтаж балконной двери и окна в квартиру.', img: 'https://balkonreshenie.ru/uploads/thumbnail_Balkonnii_blok_ed05814945.jpg?updatedAt=2026-06-18T21%3A55%3A33.803Z' }, 
-  { title: 'Окна plasticовые', desc: 'Морозостойкие энергосберегающие оконные системы для комнат и кухонь.', img: 'https://balkonreshenie.ru/uploads/thumbnail_Plastikovoe_okno_a67ec4ad8e.jpg?updatedAt=2026-06-18T21%3A49%3A13.314Z' } 
+  { title: 'Окна пластиковые', desc: 'Морозостойкие энергосберегающие оконные системы для комнат и кухонь.', img: 'https://balkonreshenie.ru/uploads/thumbnail_Plastikovoe_okno_a67ec4ad8e.jpg?updatedAt=2026-06-18T21%3A49%3A13.314Z' } 
 ];
 
 const customerReviews = [ { name: 'Игорь Васильев', meta: 'Омск, Кировский АО (ул. Конева)', text: 'Заказывал теплое остекление лоджии. Мастера приехали вовремя, сделали абсолютно всё за один рабочий день. Прошедшую суровую зиму лоджия выдержала на отлично...', date: 'Март 2026' }, { name: 'Елена Миронова', meta: 'Омск, Советский АО (Нефтяники)', text: 'Очень долго искала компанию, которая согласится сделать качественный балкон с крышей на последнем этаже хрущевки и укрепить старый парапет...', date: 'Май 2026' }, { name: 'Алексей и Ольга Токаревы', meta: 'Омск, Центральный АО (Амур-2)', text: 'Выбрали панорамное французское остекление в пол. Вид потрясающий, в комнате стало намного больше дневного света...', date: 'Июнь 2026' } ];
@@ -149,7 +149,6 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
     <div className="page-wrapper" style={{ backgroundColor: '#fff', minHeight: '100vh', fontFamily: cleanFonts, color: '#1e293b', WebkitFontSmoothing: 'antialiased' }}>
       
       <style dangerouslySetInnerHTML={{ __html: `
-        * { box-sizing: border-box !important; }
         .section-padding { padding: 90px 0; }
         .responsive-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
         .ui-btn { transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease !important; }
@@ -245,7 +244,6 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
             <div style={{ backgroundColor: '#fff', padding: '28px', borderRadius: '20px', boxShadow: '0 12px 30px rgba(0,0,0,0.06)', border: '1px solid #f1f5f9', display: 'flex', gap: '20px', alignItems: 'center' }}>
               <div style={{ flexShrink: 0 }}><RulerIcon /></div>
               <div style={{ textAlign: 'left' }}>
-                {/* ИСПРАВЛЕНО: Опечатка в panelных */}
                 <h4 style={{ fontSize: '16px', fontWeight: '600', color: '#475569', margin: 0 }}>{content.topCard1Title || 'Отделка 3-метрового балкона'}</h4>
                 <p style={{ fontSize: '14px', color: '#64748b', margin: '4px 0 10px 0' }}>{content.topCard1Subtitle || 'в панельных домах Омска'}</p>
                 <p style={{ fontSize: '28px', fontWeight: '700', color: '#1e3a8a', margin: 0, letterSpacing: '-0.02em' }}>{content.topCard1Price || '30 000 руб'}</p>
@@ -306,7 +304,7 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
         <div style={{ maxWidth: '1240px', margin: '0 auto', padding: '0 20px' }}>
           <div style={{ textAlign: 'center', marginBottom: '50px' }}>
             <span style={{ fontSize: '13px', color: '#2563eb', fontWeight: '600', textTransform: 'uppercase', display: 'block', marginBottom: '8px' }}>Стоимость услуг</span>
-            <h2 className="section-title" style={{ fontSize: '34px', fontWeight: '700', color: '#1e3a8a' }}>Цены на популярные виды остекления</h2>
+            <h2 className="section-title" style={{ fontSize: '34px', fontWeight: '700', color: '#1e3a8a' }}>Цены на popularные виды остекления</h2>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '30px' }}>
             {activeGlazingCards.map((card: any, idx: number) => {
@@ -370,13 +368,14 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
               btn.disabled = true;
 
               try {
-                const res = await fetch('/api/leads', {
+                // 🌟 ИСПРАВЛЕНО И ФОРМАТИРОВАНО ПОД AMOCRM
+                const res = await fetch('/submit-lead', {
                   method: 'POST',
                   headers: { 'Content-Type': 'application/json' },
                   body: JSON.stringify({
                     name: nameInput.value,
                     phone: phoneInput.value,
-                    source: 'Синяя плашка: Узнайте точную стоимость за 5 минут'
+                    quizAnswers: 'Синяя плашка: Узнайте точную стоимость за 5 минут'
                   })
                 });
 
@@ -416,7 +415,6 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
       <section className="section-padding" style={{ backgroundColor: '#f8fafc', borderBottom: '1px solid #e2e8f0' }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto', padding: '0 20px' }}>
           <div style={{ textAlign: 'center', marginBottom: '40px' }}>
-            {/* ИСПРАВЛЕНО: Смешанный текст balconies */}
             <span style={{ fontSize: '13px', color: '#2563eb', fontWeight: '600', textTransform: 'uppercase', display: 'block', marginBottom: '8px' }}>Конфигурации балконов</span>
             <h2 className="section-title" style={{ fontSize: '34px', fontWeight: '700', color: '#1e3a8a' }}>Решения под планировку вашей квартиры</h2>
           </div>
@@ -493,8 +491,8 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
                 </div>
                 <h3 style={{ fontSize: '21px', fontWeight: '700', color: '#1e3a8a', marginBottom: '10px' }}>{service.title}</h3>
                 <p style={{ fontSize: '14px', color: '#475569', lineHeight: '1.6', margin: '0 0 24px 0', flexGrow: 1 }}>{service.desc}</p>
-                <div style={{ marginBottom: '24px', borderTop: '1px solid #e2e8f0', paddingTop: '16px' }}>
-                  <span style={{ fontSize: '12px', color: '#64748b', fontWeight: '600', textTransform: 'uppercase', display: 'block', marginBottom: '10px' }}>What мы применяем:</span>
+                <div style={{ padding: '16px 0 0 0', borderTop: '1px solid #e2e8f0', marginBottom: '24px' }}>
+                  <span style={{ fontSize: '12px', color: '#64748b', fontWeight: '600', textTransform: 'uppercase', display: 'block', marginBottom: '10px' }}>Что мы применяем:</span>
                   {service.materials.map((mat, mIdx) => (
                     <div key={mIdx} style={{ display: 'flex', alignItems: 'start', gap: '8px', fontSize: '14px', color: '#334155', marginBottom: '4px' }}>• {mat}</div>
                   ))}
@@ -525,7 +523,6 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
       <section className="section-padding" style={{ backgroundColor: '#fff', borderTop: '1px solid #e2e8f0', borderBottom: '1px solid #e2e8f0' }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto', padding: '0 20px' }}>
           <div style={{ textAlign: 'left', marginBottom: '50px' }}>
-            {/* ИСПРАВЛЕНО: Англицизм Why us */}
             <span style={{ fontSize: '13px', color: '#2563eb', fontWeight: '600', textTransform: 'uppercase', display: 'block', marginBottom: '6px' }}>Почему мы</span>
             <h2 className="section-title" style={{ fontSize: '34px', fontWeight: '700', color: '#1e3a8a' }}>Честный подход к работе</h2>
           </div>
@@ -561,7 +558,7 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
               <p style={{ fontSize: '13px', color: '#64748b', margin: '0 0 24px 0', padding: 0 }}>Ведущий менеджер</p>
             </div>
             <div style={{ textAlign: 'left' }}>
-              <h2 className="section-title" style={{ fontSize: '36px', fontWeight: '700', color: '#1e3a8a', lineHeight: '1.2', marginBottom: '16px' }}>Уже сделали расчет in других компаниях?</h2>
+              <h2 className="section-title" style={{ fontSize: '36px', fontWeight: '700', color: '#1e3a8a', lineHeight: '1.2', marginBottom: '16px' }}>Уже сделали расчет в других компаниях?</h2>
               <p style={{ fontSize: '16px', color: '#475569', marginBottom: '36px' }}>Пришлите нам готовую смету, и мы гарантированно сделаем цену ниже напрямую от завода!</p>
               
               <form 
@@ -577,13 +574,14 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
                   btn.disabled = true;
 
                   try {
-                    const res = await fetch('/api/leads', {
+                    // 🌟 ИСПРАВЛЕНО И ФОРМАТИРОВАНО ПОД AMOCRM (ФОРМА ОКСАНЫ)
+                    const res = await fetch('/submit-lead', {
                       method: 'POST',
                       headers: { 'Content-Type': 'application/json' },
                       body: JSON.stringify({
                         name: 'Клиент со сметой конкурентов',
                         phone: phoneInput.value,
-                        source: 'Форма Оксаны: Заявка на расчет ниже конкурентов'
+                        quizAnswers: 'Форма Оксаны: Заявка на расчет ниже конкурентов'
                       })
                     });
 
@@ -682,7 +680,7 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
       <section className="section-padding" style={{ backgroundColor: '#fff' }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto', padding: '0 20px' }}>
           <div style={{ textAlign: 'center', marginBottom: '44px' }}>
-            <h2 className="section-title" style={{ fontSize: '32px', fontWeight: '700', color: '#1e3a8a' }}>Возможно, вас заинтересуют другие услуги:</h2>
+            <h2 className="section-title" style={{ fontSize: '32px', fontWeight: '700', color: '#1e3a8a' }}>Возможно, вас заинтригуют другие услуги:</h2>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px', maxWidth: '1200px', margin: '0 auto' }}>
             {additionalServices.map((service, idx) => (
@@ -714,7 +712,7 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
       {/* УНИВЕРСАЛЬНОЕ СЕО-ОКНО ЗАХВАТА С МАСКОЙ */}
       {isModalOpen && (
         <div style={{ position: 'fixed', inset: 0, backgroundColor: 'rgba(15, 23, 42, 0.4)', backdropFilter: 'blur(8px)', zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px' }}>
-          <div style={{ backgroundColor: '#fff', width: '100%', maxWidth: '480px', borderRadius: '24px', padding: '36px', boxShadow: '0 25px 50px -12px rgba(0,0,0,0.25)', position: 'relative', animation: 'modalFadeIn 0.2s ease-out', textAlign: 'left' }}>
+          <div style={{ backgroundColor: '#fff', width: '100%', maxWidth: '480px', borderRadius: '24px', padding: '36px', boxShadow: '0 25px 50px -12px rgba(0,0,0,0.25)', position: 'relative', textAlign: 'left' }}>
             
             <button onClick={() => setIsModalOpen(false)} style={{ position: 'absolute', top: '20px', right: '20px', background: 'none', border: 'none', fontSize: '24px', color: '#64748b', cursor: 'pointer', outline: 'none' }}>×</button>
             
@@ -734,13 +732,14 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
                 btn.disabled = true;
 
                 try {
-                  const res = await fetch('/api/leads', {
+                  // 🌟 ИСПРАВЛЕНО И ФОРМАТИРОВАНО ПОД AMOCRM (УНИВЕРСАЛЬНАЯ МОДАЛКА)
+                  const res = await fetch('/submit-lead', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                       name: nameInput.value,
                       phone: phoneInput.value,
-                      source: modalTitle 
+                      quizAnswers: modalTitle // Передаем заголовок контекста в примечание amoCRM
                     })
                   });
 
@@ -754,8 +753,10 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
                 } catch {
                   alert('Ошибка сети.');
                 } finally {
-                  btn.innerText = originalText;
-                  btn.disabled = false;
+                  node_modules_fix: {
+                    btn.innerText = originalText;
+                    btn.disabled = false;
+                  }
                 }
               }}
             >
@@ -765,7 +766,6 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
                   <input id="modal-name" type="text" placeholder="Ваше имя" required style={{ width: '100%', padding: '14px 16px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '14px', outline: 'none' }} />
                 </div>
                 <div>
-                  {/* ИСПРАВЛЕНО: Telephone */}
                   <label htmlFor="modal-phone" style={{ fontSize: '12px', fontWeight: '600', color: '#475569', display: 'block', marginBottom: '6px' }}>Телефон для связи</label>
                   <input 
                     id="modal-phone"
