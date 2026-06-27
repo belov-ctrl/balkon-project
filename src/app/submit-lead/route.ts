@@ -5,10 +5,6 @@ export async function POST(request: Request) {
     const body = await request.json();
     const { name, phone, quizAnswers } = body;
 
-    // Сюда мы подставили системный ID телефона и твой личный ID для "Ваше имя"
-    const ID_FIELDS_PHONE = '21303';   // Глобальный системный ID поля "Телефон" в amoCRM
-    const ID_FIELDS_NAME = '1063775';  // Найденный ID твоего поля "Ваше имя"
-
     // Формируем подробный текст для ленты примечаний карточки
     let noteText = 'Заявка с сайта Next.js\n\n';
     if (Array.isArray(quizAnswers)) {
@@ -35,13 +31,17 @@ export async function POST(request: Request) {
     amoFormData.append('hash', '103318850eff6ebf324c41192541b1c6');
     amoFormData.append('locale', 'ru');
     
-    // Оставляем информативное название сделки для общей доски Канбана
+    // 1. Передаем заголовок сделки и примечание
     amoFormData.append('fields[name_1]', ultimateTitle);
     amoFormData.append('fields[note_1]', noteText);
 
-    // Точечно распределяем имя и телефон по графам контакта через массив кастомных полей [cf]
-    amoFormData.append(`fields[cf][${ID_FIELDS_NAME}]`, name || 'Имя не указано');
-    amoFormData.append(`fields[cf][${ID_FIELDS_PHONE}]`, phone || 'Не указано');
+    // 2. 🔥 ИСПРАВЛЕНО: Передаем данные в строгом формате веб-форм amoCRM (fields[ID_1])
+    // Поле "Ваше имя" по его найденному системному ID
+    amoFormData.append('fields[1063775_1]', name || 'Имя не указано');
+    
+    // Поле "Телефон" передаем сразу в двух стандартах шлюза, чтобы графа заполнилась наверняка
+    amoFormData.append('fields[phone_1]', phone || 'Не указано'); 
+    amoFormData.append('fields[21303_1]', phone || 'Не указано'); 
 
     const amoResponse = await fetch('https://forms.amocrm.ru/queue/add', {
       method: 'POST',
