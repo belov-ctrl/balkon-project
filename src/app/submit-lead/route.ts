@@ -5,11 +5,7 @@ export async function POST(request: Request) {
     const body = await request.json();
     const { name, phone, quizAnswers } = body;
 
-    // 🔥 ШАГ 1: Жесткая очистка телефона от скобок, дефисов и пробелов.
-    // Из "+7 (927) 771-00-52" делаем чистые цифры "79277710052" для обхода валидатора amoCRM
-    const cleanPhone = phone ? phone.replace(/\D/g, '') : '';
-
-    // Формируем подробный текст для ленты примечаний (комментариев) карточки
+    // Формируем подробный текст для ленты примечаний карточки
     let noteText = 'Заявка с сайта Next.js\n\n';
     if (Array.isArray(quizAnswers)) {
       noteText += quizAnswers.join('\n');
@@ -27,8 +23,8 @@ export async function POST(request: Request) {
       answersSummary = quizAnswers || 'Прямая заявка';
     }
 
-    // Формируем заголовок для Канбан-доски, а детальный лог дублируем в начало примечания
-    const ultimateTitle = `📞 +${cleanPhone} | ${name || 'Аноним'} | ${answersSummary}`;
+    // Собираем бронебойное название для отображения на Канбан-доске
+    const ultimateTitle = `📞 ${phone || 'Номер не указан'} | ${name || 'Аноним'} | ${answersSummary}`;
     const fullNote = `${ultimateTitle}\n\n${noteText}`;
 
     const amoFormData = new URLSearchParams();
@@ -36,13 +32,14 @@ export async function POST(request: Request) {
     amoFormData.append('hash', '103318850eff6ebf324c41192541b1c6');
     amoFormData.append('locale', 'ru');
     
-    // Передаем заголовок сделки и развернутое примечание
-    amoFormData.append('fields[name_1]', ultimateTitle);
+    // Передаем заголовок сделки и развернутое примечание с квизом
+    amoFormData.append('fields[name_1]', ultimateTitle); // Для старых форм это также задает имя лида
     amoFormData.append('fields[note_1]', fullNote);
 
-    // 🔥 ШАГ 2: Передаем имя и очищенный телефон в стандартные кубики веб-формы
-    amoFormData.append('fields[name]', name || 'Имя не указано'); 
-    amoFormData.append('fields[phone_1]', cleanPhone ? `+${cleanPhone}` : 'Не указано');
+    // 🔥 ИСПОЛЬЗУЕМ ТОЧНЫЕ КЛЮЧИ ИЗ ДЕВТУЛС:
+    // Передаем чистое имя в поле ФИО (fields[name_1]) и телефон в поле Телефон (fields[phone_1])
+    amoFormData.append('fields[name_1]', name || 'Имя не указано'); 
+    amoFormData.append('fields[phone_1]', phone || 'Не указано');
 
     const amoResponse = await fetch('https://forms.amocrm.ru/queue/add', {
       method: 'POST',
