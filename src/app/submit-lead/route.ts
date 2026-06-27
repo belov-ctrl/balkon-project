@@ -5,35 +5,29 @@ export async function POST(request: Request) {
     const body = await request.json();
     const { name, phone, quizAnswers } = body;
 
-    // 1. Формируем подробный текст для примечания (оставляем твою рабочую логику)
+    // Сюда мы подставили системный ID телефона и твой личный ID для "Ваше имя"
+    const ID_FIELDS_PHONE = '21303';   // Глобальный системный ID поля "Телефон" в amoCRM
+    const ID_FIELDS_NAME = '1063775';  // Найденный ID твоего поля "Ваше имя"
+
+    // Формируем подробный текст для ленты примечаний карточки
     let noteText = 'Заявка с сайта Next.js\n\n';
     if (Array.isArray(quizAnswers)) {
       noteText += quizAnswers.join('\n');
-    } else if (typeof quizAnswers === 'object' && quizAnswers !== null) {
-      noteText += Object.entries(quizAnswers)
-        .map(([question, answer]) => `${question}: ${answer}`)
-        .join('\n');
     } else {
       noteText += quizAnswers || 'Клиент не заполнил шаги квиза';
     }
 
-    // 2. Делаем краткую выжимку для названия сделки (чтобы суть была видна на Канбане)
+    // Краткая выжимка ответов для бронебойного названия на Канбан-доске
     let answersSummary = '';
     if (Array.isArray(quizAnswers)) {
-      // Для квиза: убираем названия вопросов "Тип балкона: ", оставляя только чистые ответы "Лоджия ➔ 320х150 см"
       answersSummary = quizAnswers
         .map(item => item.includes(': ') ? item.split(': ')[1] : item)
         .join(' ➔ ');
     } else {
-      // Для обычных форм (шапка, форма у карты): берем текст как есть
       answersSummary = quizAnswers || 'Прямая заявка';
     }
 
-    // Проверяем, указал ли клиент имя
     const clientName = name && name !== 'Имя не указано' ? `${name} | ` : '';
-
-    // 🔥 ЖЕЛЕЗОБЕТОННЫЙ МЕТОД: Формируем супер-информативное название сделки.
-    // Теперь телефон никогда не потеряется, так как название сделки amoCRM принимает всегда!
     const ultimateTitle = `📞 ${phone || 'Номер не указан'} | ${clientName}${answersSummary}`;
 
     const amoFormData = new URLSearchParams();
@@ -41,12 +35,13 @@ export async function POST(request: Request) {
     amoFormData.append('hash', '103318850eff6ebf324c41192541b1c6');
     amoFormData.append('locale', 'ru');
     
-    // Передаем сгенерированное название сделки с телефоном внутри
+    // Оставляем информативное название сделки для общей доски Канбана
     amoFormData.append('fields[name_1]', ultimateTitle);
     amoFormData.append('fields[note_1]', noteText);
 
-    // На всякий случай дублируем телефон в стандартный ключ
-    amoFormData.append('fields[phone_1]', phone || 'Не указано');
+    // Точечно распределяем имя и телефон по графам контакта через массив кастомных полей [cf]
+    amoFormData.append(`fields[cf][${ID_FIELDS_NAME}]`, name || 'Имя не указано');
+    amoFormData.append(`fields[cf][${ID_FIELDS_PHONE}]`, phone || 'Не указано');
 
     const amoResponse = await fetch('https://forms.amocrm.ru/queue/add', {
       method: 'POST',
@@ -57,16 +52,9 @@ export async function POST(request: Request) {
     });
 
     const amoTextResponse = await amoResponse.text();
-    
-    // Логгер оставляем — он покажет в консоли PM2, что именно думает amoCRM
     console.log('📢 ОТВЕТ ОТ СЕРВЕРА AMOCRM:', amoTextResponse);
 
-    if (!amoResponse.ok) {
-      console.error('⚠️ Критическая ошибка статуса amoCRM:', amoTextResponse);
-      return NextResponse.json({ success: false, error: amoTextResponse }, { status: 500 });
-    }
-
-    return NextResponse.json({ success: true, amoResult: amoTextResponse });
+    return NextResponse.json({ success: true });
   } catch (error) {
     console.error('Критическая ошибка отправки лида:', error);
     return NextResponse.json({ success: false, error: 'Internal Server Error' }, { status: 500 });
