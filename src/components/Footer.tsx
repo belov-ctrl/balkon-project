@@ -1,90 +1,12 @@
-'use client';
-
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
-
-// ИСПРАВЛЕНО: Все слаги синхронизированы со словарем роутера для ликвидации 404 ошибок перелинковки
-const footerDistricts = [
-  // --- КОЛОНКА 1 ---
-  { slug: 'bolshaya-ostrovka', name: 'Большая Островка' },
-  { slug: '11-j-mikrorajon', name: '11-й микрорайон' },
-  { slug: 'amurskij', name: 'Амурский' },
-  { slug: 'pribrezhnyj', name: 'Прибрежный' },
-  { slug: 'kosmos', name: 'Космос' },
-  { slug: '3-j-mikrorajon', name: '3-й микрорайон' },
-  { slug: 'amurskij-2', name: 'Амурский-2' },
-  { slug: 'pervokirpichnyj', name: 'Первокирпичный' },
-  { slug: 'gorodok-neftyanikov', name: 'Городок Нефтяников' },
-  { slug: 'port-artur', name: 'Порт-Артур' },
-  { slug: 'solnechnyj', name: 'Солнечный' },
-  { slug: 'ryabinovka', name: 'Рябиновка' },
-  { slug: 'linejnyj', name: 'Линейный' },
-  { slug: 'zelyonaya-dolina', name: 'Зелёная долина' },
-  { slug: 'nikolaevka', name: 'Николаевка' },
-  { slug: 'novaya-stanica', name: 'Новая Станица' },
-
-  // --- КОЛОНКА 2 ---
-  { slug: 'kuybyshevskij', name: 'Куйбышевский' },
-  { slug: 'topolinyj', name: 'Тополиный' },
-  { slug: '5-th-mikrorajon', name: '5-й микрорайон' },
-  { slug: 'levoberezhye', name: 'Левобережье' },
-  { slug: 'privokzalnyj', name: 'Привокзальный' },
-  { slug: 'komsomolskij-gorodok', name: 'Комсомольский городок' },
-  { slug: '4-th-mikrorajon', name: '4-м микрорайон' },
-  { slug: 'parkovyj-mikrorajon', name: 'Парковый микрорайон' },
-  { slug: 'zaozyornyj', name: 'Заозёрный' },
-  { slug: 'zahlamino', name: 'Захламино' },
-  { slug: 'moskovka', name: 'Московка' },
-  { slug: 'volzhskij', name: 'Volжский' },
-  { slug: 'karyer', name: 'Карьер' },
-  { slug: 'yasnaya-polyana', name: 'Ясная Поляна' },
-  { slug: 'severnyj', name: 'Северный' },
-  { slug: 'aleksandrovskaya-usadba', name: 'Александровская усадьба' },
-
-  // --- КОЛОНКА 3 ---
-  { slug: 'gorodok-vodnikov', name: 'Городок Водников' },
-  { slug: '12-j-mikrorajon', name: '12-й микрорайон' },
-  { slug: 'polyot', name: 'Полёт' },
-  { slug: '6-th-mikrorajon', name: '6-й микрорайон' },
-  { slug: 'kirovsk', name: 'Кировск' },
-  { slug: 'staryj-kirovsk', name: 'Старый Кировск' },
-  { slug: 'leninsk', name: 'Ленинск' },
-  { slug: 'chkalovskij', name: 'Чкаловский' },
-  { slug: '2-j-mikrorajon', name: '2-й микрорайон' },
-  { slug: 'bolshie-polya', name: 'Большие Поля' },
-  { slug: 'yubilejnyj', name: 'Юбилейный' },
-  { slug: 'bulatovo', name: 'Булатово' },
-  { slug: 'zagorodnyj', name: 'Загородный' },
-  { slug: 'vhodnoj', name: 'Микрорайон Входной' },
-  { slug: 'cheryomushki', name: 'Черёмушки' },
-  { slug: 'beregovoj', name: 'Береговой' },
-
-  // --- КОЛОНКА 4 ---
-  { slug: 'rybachij', name: 'Рыбачий' },
-  { slug: 'omskij-kristall', name: 'Омский Кристалл' },
-  { slug: 'biofabrika', name: 'Биофабрика' },
-  { slug: 'aviagorodok', name: 'Авиагородок' },
-  { slug: 'kordnyj', name: 'Кордный' },
-  { slug: '1-j-mikrorajon', name: '1-й микрорайон' },
-  { slug: 'chukreevka', name: 'Чукреевка' },
-  { slug: 'vostochnyj', name: 'Восточный' },
-  { slug: 'cheredovyj', name: 'Чередовый' },
-  { slug: 'stepnoj', name: 'Степной' },
-  { slug: 'dalnij', name: 'Дальний' },
-  { slug: 'armejskij', name: 'Армейский' },
-  { slug: 'ostashkovo', name: 'Осташково' },
-  { slug: 'svetlyj', name: 'Светлый' },
-  { slug: 'cheryomuhovskoe', name: 'Черёмуховское' },
-  { slug: 'krutaya-gorka', name: 'Крутая Горка' }
-];
+import FooterDistrictList from './FooterDistrictList';
 
 export default function Footer() {
-  const [isOpen, setIsOpen] = useState(false);
-
   return (
     <footer style={{ backgroundColor: '#0f172a', color: '#94a3b8', padding: '60px 0 30px 0', borderTop: '1px solid #1e293b', fontFamily: 'inherit' }}>
       <div style={{ maxWidth: '1240px', margin: '0 auto', padding: '0 20px' }}>
-        
+
         {/* КЛАССИЧЕСКАЯ НАЧИНКА ФУТЕРА */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '40px', marginBottom: '50px', textAlign: 'left' }}>
           <div>
@@ -94,16 +16,15 @@ export default function Footer() {
           <div>
             <h4 style={{ color: '#fff', fontSize: '15px', fontWeight: '600', marginBottom: '16px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Услуги</h4>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '14px' }}>
-              <Link href="/#calculator" style={{ color: '#94a3b8', textDecoration: 'none' }}>Теплое остекление</Link>
-              <Link href="/#calculator" style={{ color: '#94a3b8', textDecoration: 'none' }}>Холодное остекление</Link>
-              <Link href="/#calculator" style={{ color: '#94a3b8', textDecoration: 'none' }}>Внутренняя отделка</Link>
-              <Link href="/#calculator" style={{ color: '#94a3b8', textDecoration: 'none' }}>Утепление лоджий</Link>
+              <Link href="/services/teploe-osteklenie-pvh" style={{ color: '#94a3b8', textDecoration: 'none' }}>Теплое остекление</Link>
+              <Link href="/services/holodnoe-osteklenie-al" style={{ color: '#94a3b8', textDecoration: 'none' }}>Холодное остекление</Link>
+              <Link href="/services/vnutrennyaya-otdelka" style={{ color: '#94a3b8', textDecoration: 'none' }}>Внутренняя отделка</Link>
+              <Link href="/services/kompleksnoe-uteplenie" style={{ color: '#94a3b8', textDecoration: 'none' }}>Утепление лоджий</Link>
             </div>
           </div>
           <div>
             <h4 style={{ color: '#fff', fontSize: '15px', fontWeight: '600', marginBottom: '16px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Контакты</h4>
             <p style={{ fontSize: '18px', margin: '0 0 10px 0', color: '#fff', fontWeight: '600' }}>
-              {/* ИСПРАВЛЕНО: Синхронизировали телефон с блоком ContactsMap для исключения ошибок связи */}
               <a href="tel:+73812288230" style={{ color: '#fff', textDecoration: 'none' }}>+7 (3812) 28-82-30</a>
             </p>
             <p style={{ fontSize: '14px', margin: '0 0 10px 0' }}>
@@ -114,30 +35,8 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* БЛОК СЕО ПЕРЕЛИНКОВКИ РАЙОНОВ */}
-        <div style={{ borderTop: '1px solid #1e293b', borderBottom: '1px solid #1e293b', padding: '24px 0', marginBottom: '30px', textAlign: 'left' }}>
-          <button 
-            onClick={() => setIsOpen(!isOpen)}
-            style={{ background: 'none', border: 'none', color: '#38bdf8', fontSize: '14px', fontWeight: '600', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px', padding: 0, outline: 'none' }}
-            aria-expanded={isOpen}
-          >
-            <span>{isOpen ? '▼' : '►'} Остекление балконов по микрорайонам Омска (64 локации)</span>
-          </button>
-
-          <div style={{ display: isOpen ? 'grid' : 'none', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: '12px 20px', paddingTop: '20px', fontSize: '13px' }}>
-            {footerDistricts.map((dist, index) => (
-              <Link 
-                key={index} 
-                href={`/${dist.slug}`}
-                style={{ color: '#64748b', textDecoration: 'none', transition: 'color 0.2s' }}
-                onMouseEnter={(e) => (e.currentTarget.style.color = '#fff')}
-                onMouseLeave={(e) => (e.currentTarget.style.color = '#64748b')}
-              >
-                Балконы {dist.name}
-              </Link>
-            ))}
-          </div>
-        </div>
+        {/* БЛОК СЕО ПЕРЕЛИНКОВКИ РАЙОНОВ (интерактивный аккордеон — клиентский компонент) */}
+        <FooterDistrictList />
 
         {/* КОПИРАЙТ И ОФИЦИАЛЬНЫЕ РЕКВИЗИТЫ КОМПАНИИ */}
         <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '16px', fontSize: '13px', color: '#475569', textAlign: 'left' }}>

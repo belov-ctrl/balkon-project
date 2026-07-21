@@ -2,16 +2,19 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image'; // Подключили умный компонент для оптимизации скорости
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { BlocksRenderer } from '@strapi/blocks-react-renderer';
+import dynamic from 'next/dynamic';
 
 import Header from '@/components/Header';
-import Calculator from '@/components/Calculator';
-import Portfolio from '@/components/Portfolio';
-import ContactsMap from '@/components/ContactsMap';
 import Footer from '@/components/Footer';
-import FloatingWidgets from '@/components/FloatingWidgets';
+
+// Тяжёлые клиентские блоки загружаются лениво — не попадают в первоначальный JS-бандл
+const Calculator    = dynamic(() => import('@/components/Calculator'),    { ssr: false });
+const Portfolio     = dynamic(() => import('@/components/Portfolio'),     { ssr: false });
+const ContactsMap   = dynamic(() => import('@/components/ContactsMap'),   { ssr: false });
+const FloatingWidgets = dynamic(() => import('@/components/FloatingWidgets'), { ssr: false });
 
 // =========================================================================
 // ИКОНКИ
@@ -38,10 +41,10 @@ const WarrantyIcon = () => (
 const managerPhoto = "https://balkonreshenie.ru/uploads/firma_po_otdelki_balkonov_8d224645e3.png?updatedAt=2026-06-18T21%3A47%3A24.419Z";
 
 const defaultGlazingCards = [ 
-  { title: 'Теплое остекление', price: '3 200', desc: 'ПВХ профиль. Подходит для создания жилой комнаты, теплого кабинета или продолжения кухни.', img: 'https://images.unsplash.com/photo-1590073844006-33379778ae09?q=80&w=600', badge: 'Максимум тепла' }, 
-  { title: 'Холодное остекление', price: '2 700', desc: 'Алюминиевый профиль. Легкие удобные раздвижные створки для защиты от ветра, пыли and дождя.', img: 'https://images.unsplash.com/photo-1604079628040-94301bb21b91?q=80&w=600', badge: 'Экономичный выбор' }, 
-  { title: 'Остекление с выносом', price: '4 100', desc: 'Расширение пространства балкона наружу по линии подоконника. Увеличивает реальный объем.', img: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=600', badge: 'Больше места' }, 
-  { title: 'Панорамное остекление', price: '3 500', desc: 'Красивые французские окна от пола до потолка. Дают максимум дневного света, стиля и роскошный обзор.', img: 'https://images.unsplash.com/photo-1527359443443-84a48abc7dfd?q=80&w=600', badge: 'Премиум стиль' } 
+  { title: 'Теплое остекление', price: '3 200', desc: 'ПВХ профиль. Подходит для создания жилой комнаты, теплого кабинета или продолжения кухни.', img: 'https://images.unsplash.com/photo-1590073844006-33379778ae09?q=80&w=600', badge: 'Максимум тепла', slug: 'teploe-osteklenie-pvh' }, 
+  { title: 'Холодное остекление', price: '2 700', desc: 'Алюминиевый профиль. Легкие удобные раздвижные створки для защиты от ветра, пыли and дождя.', img: 'https://images.unsplash.com/photo-1604079628040-94301bb21b91?q=80&w=600', badge: 'Экономичный выбор', slug: 'holodnoe-osteklenie-al' }, 
+  { title: 'Остекление с выносом', price: '4 100', desc: 'Расширение пространства балкона наружу по линии подоконника. Увеличивает реальный объем.', img: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=600', badge: 'Больше места', slug: 'osteklenie-s-vinosom' }, 
+  { title: 'Панорамное остекление', price: '3 500', desc: 'Красивые французские окна от пола до потолка. Дают максимум дневного света, стиля и роскошный обзор.', img: 'https://images.unsplash.com/photo-1527359443443-84a48abc7dfd?q=80&w=600', badge: 'Премиум стиль', slug: 'panoramnoe-osteklenie' } 
 ];
 
 const structuresData = [ 
@@ -59,11 +62,11 @@ const insulationServices = [
 const advantagesData = [ { num: '01', title: 'Собственный завод', desc: 'Изготавливаем оконные конструкции на автоматизированном производстве в Омске без наценок перекупщиков.' }, { num: '02', title: 'Монтаж по ГОСТу', desc: 'Применяем качественные герметики и защитные ленты. Полностью гарантируем отсутствие продуваний.' }, { num: '03', title: 'Договор и гарантия', desc: 'Оформить документы можно дома или в нашем офисе. Даем честную гарантию 5 лет.' }, { num: '04', title: 'Опытные мастера', desc: 'В наших монтажных бригадах работают только постоянные специалисты-омичи с опытом работы от 5 лет.' } ];
 
 const additionalServices = [ 
-  { title: 'Балконы под ключ', desc: 'Комплексный ремонт от укрепления плиты до финишного благоустройства.', img: 'https://balkonreshenie.ru/uploads/thumbnail_remont_balkona_pod_klyuch_296x300_89b3f234ec.png?updatedAt=2026-06-18T21%3A48%3A58.527Z' }, 
-  { title: 'Обшивка комнат и лоджий', desc: 'Профессиональная обшивка стен и потолка долговечными материалами.', img: 'https://balkonreshenie.ru/uploads/thumbnail_vnutrennyaya_otdelka_balkona_300x300_fb64c0553f.png?updatedAt=2026-06-18T21%3A46%3A30.816Z' }, 
-  { title: 'Утепление балконов', desc: 'Надежная многослойная теплоизоляция для суровых сибирских зим.', img: 'https://balkonreshenie.ru/uploads/thumbnail_uteplenie_balkonov_i_lodzhij_300x300_dd1cc9fb2a.jpg?updatedAt=2026-06-18T21%3A46%3A55.398Z' }, 
-  { title: 'Балконные блоки', desc: 'Изготовление и аккуратный монтаж балконной двери и окна в квартиру.', img: 'https://balkonreshenie.ru/uploads/thumbnail_Balkonnii_blok_ed05814945.jpg?updatedAt=2026-06-18T21%3A55%3A33.803Z' }, 
-  { title: 'Окна пластиковые', desc: 'Морозостойкие энергосберегающие оконные системы для комнат и кухонь.', img: 'https://balkonreshenie.ru/uploads/thumbnail_Plastikovoe_okno_a67ec4ad8e.jpg?updatedAt=2026-06-18T21%3A49%3A13.314Z' } 
+  { title: 'Балконы под ключ', desc: 'Комплексный ремонт от укрепления плиты до финишного благоустройства.', img: 'https://balkonreshenie.ru/uploads/thumbnail_remont_balkona_pod_klyuch_296x300_89b3f234ec.png?updatedAt=2026-06-18T21%3A48%3A58.527Z', slug: 'balkony-pod-klyuch' }, 
+  { title: 'Обшивка комнат и лоджий', desc: 'Профессиональная обшивка стен и потолка долговечными материалами.', img: 'https://balkonreshenie.ru/uploads/thumbnail_vnutrennyaya_otdelka_balkona_300x300_fb64c0553f.png?updatedAt=2026-06-18T21%3A46%3A30.816Z', slug: 'vnutrennyaya-otdelka' }, 
+  { title: 'Утепление балконов', desc: 'Надежная многослойная теплоизоляция для суровых сибирских зим.', img: 'https://balkonreshenie.ru/uploads/thumbnail_uteplenie_balkonov_i_lodzhij_300x300_dd1cc9fb2a.jpg?updatedAt=2026-06-18T21%3A46%3A55.398Z', slug: 'kompleksnoe-uteplenie' }, 
+  { title: 'Балконные блоки', desc: 'Изготовление и аккуратный монтаж балконной двери и окна в квартиру.', img: 'https://balkonreshenie.ru/uploads/thumbnail_Balkonnii_blok_ed05814945.jpg?updatedAt=2026-06-18T21%3A55%3A33.803Z', slug: 'balkonnye-bloki' }, 
+  { title: 'Окна пластиковые', desc: 'Морозостойкие энергосберегающие оконные системы для комнат и кухонь.', img: 'https://balkonreshenie.ru/uploads/thumbnail_Plastikovoe_okno_a67ec4ad8e.jpg?updatedAt=2026-06-18T21%3A49%3A13.314Z', slug: 'okna-plastikovye' } 
 ];
 
 const customerReviews = [ { name: 'Игорь Васильев', meta: 'Омск, Кировский АО (ул. Конева)', text: 'Заказывал теплое остекление лоджии. Мастера приехали вовремя, сделали абсолютно всё за один рабочий день. Прошедшую суровую зиму лоджия выдержала на отлично...', date: 'Март 2026' }, { name: 'Елена Миронова', meta: 'Омск, Советский АО (Нефтяники)', text: 'Очень долго искала компанию, которая согласится сделать качественный балкон с крышей на последнем этаже хрущевки и укрепить старый парапет...', date: 'Май 2026' }, { name: 'Алексей и Ольга Токаревы', meta: 'Омск, Центральный АО (Амур-2)', text: 'Выбрали панорамное французское остекление в пол. Вид потрясающий, в комнате стало намного больше дневного света...', date: 'Июнь 2026' } ];
@@ -80,6 +83,7 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalTitle, setModalTitle] = useState('Заявка на бесплатный замер');
   const [isCalcModalOpen, setIsCalcModalOpen] = useState(false);
+  const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
 
   const cleanFonts = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif';
   const content = initialData || {};
@@ -107,11 +111,45 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
   };
 
   let displayBg = 'https://images.unsplash.com/photo-1596464716127-f2a82984de30?q=80&w=1920';
-  let rawBg = content.heroBackground;
-  let bgUrl = Array.isArray(rawBg) ? rawBg[0]?.url : rawBg?.url;
-  if (bgUrl) {
-    displayBg = bgUrl.startsWith('http') ? bgUrl : `https://balkonreshenie.ru${bgUrl}`;
+  const rawBg = content.heroBackground;
+  if (typeof rawBg === 'string' && rawBg.startsWith('/images/hero/')) {
+    // Локальный пул картинок — железный приоритет, никаких переопределений
+    displayBg = rawBg;
+  } else if (typeof rawBg === 'string' && rawBg.trim()) {
+    // Внешний URL (например, из Strapi или хардкод)
+    displayBg = rawBg;
+  } else {
+    // Объект Strapi: { url: '/uploads/...' } или массив
+    const bgUrl = Array.isArray(rawBg) ? rawBg[0]?.url : rawBg?.url;
+    if (bgUrl) {
+      displayBg = bgUrl.startsWith('http') ? bgUrl : `https://balkonreshenie.ru${bgUrl}`;
+    }
   }
+
+  // Тип страницы: _serviceSlug присутствует только для страниц услуг
+  const isServicePage = !!content._serviceSlug;
+  // Внутренние страницы (районы и услуги) — не главная
+  const isInnerPage = isServicePage || !!content._geoLabel;
+
+  // Детерминированный выбор фото команды по слагу (уникализация для СЕО)
+  const _teamSlug = content._serviceSlug || content._geoLabel || '';
+  let _teamHash = 0;
+  for (let i = 0; i < _teamSlug.length; i++) {
+    _teamHash = _teamSlug.charCodeAt(i) + ((_teamHash << 5) - _teamHash);
+  }
+  const teamImgSrc = `/images/team/team-${(Math.abs(_teamHash) % 9) + 1}.jpg`;
+  const teamImgAlt = `Монтажная бригада фабрики Балконные Решения на объекте: ${displayTitle} Омск`;
+
+  // Динамический alt для фонового изображения (SEO)
+  const heroAlt = isServicePage
+    ? `Пример качественного монтажа: ${displayTitle} под ключ от завода`
+    : `Фото готовой работы фабрики Балконные Решения: ${displayTitle} Омск`;
+
+  // СЕО-бэдж: гео-плашка поверх обложки
+  const cleanTitleForBadge = displayTitle.replace(/\s+в\s+[Оо]мске\s*$/i, '');
+  const seoBadgeText = isServicePage
+    ? `📐 Профессиональный монтаж: ${cleanTitleForBadge} в Омске`
+    : `📍 Объект на контроле: Омск, ${content._geoLabel || 'ваш район'}`;
 
   let aboutBg = 'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?q=80&w=800';
   let rawAboutImg = content.aboutImage;
@@ -124,13 +162,19 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
   const activeTabsData = content.StructureTab && content.StructureTab.length > 0 ? content.StructureTab : structuresData;
   const currentTab = activeTabsData[activeTab] || activeTabsData[0] || {};
 
-  let tabImgUrl = '';
-  let rawTabImg = currentTab.img;
-  let tabUrl = Array.isArray(rawTabImg) ? rawTabImg[0]?.url : rawTabImg?.url;
-  if (tabUrl) {
-    tabImgUrl = tabUrl.startsWith('http') ? tabUrl : `https://balkonreshenie.ru${tabUrl}`;
+  // Разрешение картинки таба: сначала локальный путь, потом http-строка,
+  // потом Strapi-объект, потом дефолт
+  const rawTabImg = currentTab.img;
+  let tabImgUrl = 'https://images.unsplash.com/photo-1773085266769-fbee873610bd?w=800&q=80';
+  if (typeof rawTabImg === 'string' && rawTabImg.startsWith('/')) {
+    tabImgUrl = rawTabImg;
+  } else if (typeof rawTabImg === 'string' && rawTabImg.startsWith('http')) {
+    tabImgUrl = rawTabImg;
   } else {
-    tabImgUrl = 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=800';
+    const tabUrl = Array.isArray(rawTabImg) ? rawTabImg[0]?.url : rawTabImg?.url;
+    if (tabUrl) {
+      tabImgUrl = tabUrl.startsWith('http') ? tabUrl : `https://balkonreshenie.ru${tabUrl}`;
+    }
   }
 
   let featuresArray: string[] = [];
@@ -210,16 +254,27 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
       <Header />
 
       <main style={{ position: 'relative', width: '100%' }}>
-        <section className="hero-section" style={{ width: '100%' }}>
-          <Image 
+        <section
+          className="hero-section"
+          style={{ width: '100%', position: 'relative', overflow: 'hidden', minHeight: '75vh', display: 'flex', alignItems: 'center', paddingBottom: '120px' }}
+        >
+          <Image
             src={displayBg}
-            alt="Основной фоновый баннер фабрики Балконные Решения Омск"
+            alt={heroAlt}
             fill
-            priority={true}
-            unoptimized // 🌟 ИСПРАВЛЕНО: Отключили онлайн-сжатие фонового баннера для экономии CPU 1-ядерного сервера
-            style={{ objectFit: 'cover' }}
+            priority
+            unoptimized
+            sizes="100vw"
+            className="object-cover"
+            style={{ zIndex: 0 }}
           />
-          <div style={{ position: 'absolute', inset: 0, backgroundColor: 'rgba(255,255,255,0.75)', zIndex: 1 }}></div>
+          <div style={{ position: 'absolute', inset: 0, backgroundColor: 'rgba(255,255,255,0.75)', zIndex: 1 }} />
+          {/* СЕО гео-плашка: помогает поисковикам связать фото с конкретным объектом/услугой */}
+          <div
+            style={{ position: 'absolute', bottom: '16px', right: '16px', zIndex: 10, backgroundColor: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(6px)', color: '#fff', padding: '6px 12px', borderRadius: '8px', fontSize: '12px', lineHeight: '1.4' }}
+          >
+            {seoBadgeText}
+          </div>
           <div style={{ maxWidth: '1240px', margin: '0 auto', width: '100%', padding: '0 20px', position: 'relative', zIndex: 10, paddingTop: '40px' }}>
             <div style={{ maxWidth: '780px', textAlign: 'left' }}>
               <span style={{ backgroundColor: '#eff6ff', color: '#2563eb', padding: '6px 14px', borderRadius: '50px', fontSize: '14px', fontWeight: '600', display: 'inline-block', marginBottom: '16px' }}>
@@ -245,7 +300,7 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
             <div style={{ backgroundColor: '#fff', padding: '28px', borderRadius: '20px', boxShadow: '0 12px 30px rgba(0,0,0,0.06)', border: '1px solid #f1f5f9', display: 'flex', gap: '20px', alignItems: 'center' }}>
               <div style={{ flexShrink: 0 }}><RulerIcon /></div>
               <div style={{ textAlign: 'left' }}>
-                <h4 style={{ fontSize: '16px', fontWeight: '600', color: '#475569', margin: 0 }}>{content.topCard1Title || 'Отделка 3-метрового балкона'}</h4>
+                <p style={{ fontSize: '16px', fontWeight: '600', color: '#475569', margin: 0 }}>{content.topCard1Title || 'Отделка 3-метрового балкона'}</p>
                 <p style={{ fontSize: '14px', color: '#64748b', margin: '4px 0 10px 0' }}>{content.topCard1Subtitle || 'в панельных домах Омска'}</p>
                 <p style={{ fontSize: '28px', fontWeight: '700', color: '#1e3a8a', margin: 0, letterSpacing: '-0.02em' }}>{content.topCard1Price || '30 000 руб'}</p>
               </div>
@@ -282,12 +337,12 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
         <div style={{ maxWidth: '1240px', margin: '0 auto', padding: '0 20px' }}>
           <div className="responsive-grid-2">
             <div style={{ position: 'relative', width: '100%', height: '350px' }}>
-              <Image 
-                src={aboutBg} 
-                alt={content.aboutTitle || "Заводское производство оконных систем и монтажные бригады в Омске"} 
+              <Image
+                src={isInnerPage ? teamImgSrc : aboutBg}
+                alt={isInnerPage ? teamImgAlt : (content.aboutTitle || "Заводское производство оконных систем и монтажные бригады в Омске")}
                 fill
                 sizes="(max-width: 991px) 100vw, 50vw"
-                unoptimized // 🌟 ИСПРАВЛЕНО: убрали онлайн-сжатие тяжелой графики
+                unoptimized
                 style={{ objectFit: 'cover', borderRadius: '20px' }}
               />
             </div>
@@ -309,29 +364,47 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '30px' }}>
             {activeGlazingCards.map((card: any, idx: number) => {
+              // Приоритет разрешения картинки:
+              // 1) Локальный путь (строка, начинающаяся с "/") — из нашего пула public/
+              // 2) Strapi-объект { url } или массив [{ url }]
+              // 3) Внешний http-URL (устаревшие заглушки)
+              // 4) Дефолтная заглушка
+              const rawCardImg = card.img;
               let cardImg = 'https://images.unsplash.com/photo-1590073844006-33379778ae09?q=80&w=600';
-              let rawCardImg = card.img;
-              let imgUrl = Array.isArray(rawCardImg) ? rawCardImg[0]?.url : rawCardImg?.url;
-              if (imgUrl) {
-                cardImg = imgUrl.startsWith('http') ? imgUrl : `https://balkonreshenie.ru${imgUrl}`;
+              if (typeof rawCardImg === 'string' && rawCardImg.startsWith('/')) {
+                cardImg = rawCardImg;
+              } else if (typeof rawCardImg === 'string' && rawCardImg.startsWith('http')) {
+                cardImg = rawCardImg;
+              } else {
+                const imgUrl = Array.isArray(rawCardImg) ? rawCardImg[0]?.url : rawCardImg?.url;
+                if (imgUrl) {
+                  cardImg = imgUrl.startsWith('http') ? imgUrl : `https://balkonreshenie.ru${imgUrl}`;
+                }
               }
+              const cardAlt = card.alt || card.title || 'Вид остекления балкона в Омске';
 
               return (
                 <div key={idx} className="hover-card" style={{ backgroundColor: '#fff', borderRadius: '20px', border: '1px solid #e2e8f0', overflow: 'hidden', display: 'flex', flexDirection: 'column', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.02)' }}>
                   <div className="zoom-container" style={{ height: '200px', width: '100%' }}>
-                    <Image 
-                      className="zoom-img" 
-                      src={cardImg} 
-                      alt={card.title || "Вид остекления балкона в Омске"} 
+                    <Image
+                      className="zoom-img"
+                      src={cardImg}
+                      alt={cardAlt}
                       fill
                       sizes="(max-width: 768px) 100vw, 25vw"
-                      unoptimized // 🌟 ИСПРАВЛЕНО: убрали онлайн-сжатие
+                      unoptimized
                       style={{ objectFit: 'cover' }}
                     />
                     {card.badge && <span style={{ position: 'absolute', top: '14px', left: '14px', backgroundColor: '#1e3a8a', color: '#fff', padding: '4px 10px', borderRadius: '6px', fontSize: '12px', fontWeight: '500', zIndex: 1 }}>{card.badge}</span>}
                   </div>
                   <div style={{ padding: '24px', flexGrow: 1, display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
-                    <h3 style={{ fontSize: '21px', fontWeight: '700', color: '#1e3a8a', margin: '0 0 10px 0' }}>{card.title}</h3>
+                    {card.slug ? (
+                      <Link href={`/services/${card.slug}`} style={{ textDecoration: 'none' }}>
+                        <h3 style={{ fontSize: '21px', fontWeight: '700', color: '#1e3a8a', margin: '0 0 10px 0' }}>{card.title}</h3>
+                      </Link>
+                    ) : (
+                      <h3 style={{ fontSize: '21px', fontWeight: '700', color: '#1e3a8a', margin: '0 0 10px 0' }}>{card.title}</h3>
+                    )}
                     <p style={{ fontSize: '14px', color: '#475569', lineHeight: '1.6', margin: '0 0 20px 0', flexGrow: 1 }}>{card.desc}</p>
                     <div style={{ display: 'flex', alignItems: 'baseline', gap: '4px', marginBottom: '20px', borderTop: '1px solid #f1f5f9', paddingTop: '16px' }}>
                       <span style={{ fontSize: '14px', color: '#64748b' }}>от</span>
@@ -351,7 +424,7 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
       <section style={{ backgroundColor: '#1e3a8a', color: '#fff', width: '100%' }}>
         <div className="blue-form-container">
           <div className="blue-form-text" style={{ flex: 1 }}>
-            <h3 style={{ fontSize: '24px', fontWeight: '700', color: '#fff', margin: 0 }}>Узнайте точную стоимость за 5 минут</h3>
+            <p style={{ fontSize: '24px', fontWeight: '700', color: '#fff', margin: 0 }}>Узнайте точную стоимость за 5 минут</p>
             <p style={{ fontSize: '14px', color: '#93c5fd', margin: '6px 0 0 0', fontWeight: '400', lineHeight: '1.4' }}>Оставьте заявку на бесплатный замер. Приедем в удобное время, посчитаем смету и сохраним скидку.</p>
           </div>
           
@@ -520,6 +593,58 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
         </section>
       )}
 
+      {/* FAQ АККОРДЕОН — отображается при наличии данных в district fallbacks */}
+      {content.faq && Array.isArray(content.faq) && content.faq.length > 0 && (
+        <section className="section-padding" style={{ backgroundColor: '#fff', borderTop: '1px solid #e2e8f0', borderBottom: '1px solid #e2e8f0' }}>
+          <div style={{ maxWidth: '1240px', margin: '0 auto', padding: '0 20px' }}>
+            <div style={{ textAlign: 'left', marginBottom: '40px' }}>
+              <span style={{ fontSize: '13px', color: '#2563eb', fontWeight: '600', textTransform: 'uppercase', display: 'block', marginBottom: '6px' }}>Частые вопросы</span>
+              <h2 className="section-title" style={{ fontSize: '32px', fontWeight: '700', color: '#1e3a8a', margin: 0 }}>Ответы на вопросы жильцов вашего района</h2>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', maxWidth: '860px' }}>
+              {(content.faq as Array<{ q: string; a: string }>).map((item, idx) => (
+                <div
+                  key={idx}
+                  style={{
+                    border: '1px solid #e2e8f0',
+                    borderRadius: '16px',
+                    overflow: 'hidden',
+                    backgroundColor: openFaqIndex === idx ? '#f8fafc' : '#fff',
+                    transition: 'background-color 0.2s ease',
+                  }}
+                >
+                  <button
+                    onClick={() => setOpenFaqIndex(openFaqIndex === idx ? null : idx)}
+                    style={{
+                      width: '100%',
+                      padding: '20px 24px',
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      background: 'none',
+                      border: 'none',
+                      cursor: 'pointer',
+                      textAlign: 'left',
+                      gap: '16px',
+                    }}
+                  >
+                    <span style={{ fontSize: '16px', fontWeight: '600', color: '#1e3a8a', lineHeight: '1.4' }}>{item.q}</span>
+                    <span style={{ flexShrink: 0, fontSize: '22px', color: '#2563eb', fontWeight: '300', lineHeight: 1 }}>
+                      {openFaqIndex === idx ? '−' : '+'}
+                    </span>
+                  </button>
+                  {openFaqIndex === idx && (
+                    <div style={{ padding: '0 24px 20px 24px' }}>
+                      <p style={{ fontSize: '15px', color: '#475569', lineHeight: '1.75', margin: 0 }}>{item.a}</p>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* ЧЕСТНЫЙ ПОДХОД */}
       <section className="section-padding" style={{ backgroundColor: '#fff', borderTop: '1px solid #e2e8f0', borderBottom: '1px solid #e2e8f0' }}>
         <div style={{ maxWidth: '1240px', margin: '0 auto', padding: '0 20px' }}>
@@ -555,7 +680,7 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
                   style={{ objectFit: 'cover', borderRadius: '50%', border: '6px solid #eff6ff', boxShadow: '0 10px 25px -5px rgba(0,0,0,0.05)' }} 
                 />
               </div>
-              <h4 style={{ fontSize: '18px', fontWeight: '600', color: '#0f172a', margin: '0 0 4px 0', padding: 0 }}>Оксана Ковалева</h4>
+              <p style={{ fontSize: '18px', fontWeight: '600', color: '#0f172a', margin: '0 0 4px 0', padding: 0 }}>Оксана Ковалева</p>
               <p style={{ fontSize: '13px', color: '#64748b', margin: '0 0 24px 0', padding: 0 }}>Ведущий менеджер</p>
             </div>
             <div style={{ textAlign: 'left' }}>
@@ -700,7 +825,7 @@ export default function HomeClientPage({ initialData, articlesData }: HomeClient
                 </div>
                 <div style={{ padding: '20px', flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', textAlign: 'center' }}>
                   <h3 style={{ fontSize: '16px', fontWeight: '700', color: '#1e3a8a', margin: '0 0 16px 0' }}>{service.title}</h3>
-                  <button onClick={() => openForm(`Интерес к услуге: ${service.title}`)} className="ui-btn" style={{ width: '100%', backgroundColor: '#2563eb', color: '#fff', border: 'none', padding: '12px 0', borderRadius: '8px', fontSize: '14px', fontWeight: '500', cursor: 'pointer' }}>Перейти</button>
+                  <Link href={`/services/${service.slug}`} className="ui-btn" style={{ width: '100%', backgroundColor: '#2563eb', color: '#fff', border: 'none', padding: '12px 0', borderRadius: '8px', fontSize: '14px', fontWeight: '500', cursor: 'pointer', textDecoration: 'none', display: 'block', textAlign: 'center' }}>Перейти</Link>
                 </div>
               </div>
             ))}

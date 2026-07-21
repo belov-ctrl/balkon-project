@@ -1,7 +1,15 @@
+import { Metadata } from 'next';
 import HomeClientPage from '@/components/HomeClientPage';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
+
+export const metadata: Metadata = {
+  robots: {
+    index: true,
+    follow: true,
+  },
+};
 
 // 1. Запрос данных для блоков главной страницы
 async function getMainPageData() {

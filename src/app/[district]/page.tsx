@@ -1,8 +1,22 @@
 import { Metadata } from 'next';
 import HomeClientPage from '@/components/HomeClientPage';
+import { DISTRICT_FALLBACKS } from '@/data/districtFallbacks';
+import { getDeterministicImage } from '@/lib/heroImage';
 
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+// Конвертирует plain-text (абзацы через \n\n) в массив Strapi-блоков для BlocksRenderer
+function textToStrapiBlocks(text: string) {
+  return text
+    .split('\n\n')
+    .map(p => p.trim())
+    .filter(Boolean)
+    .map(paragraph => ({
+      type: 'paragraph' as const,
+      children: [{ type: 'text' as const, text: paragraph }],
+    }));
+}
+
+// ISR: страницы кэшируются на 5 минут, затем регенерируются в фоне при следующем запросе
+export const revalidate = 300;
 
 // ИСПРАВЛЕНО: Добавлены перекрестные алиасы (-j- и -th-, kuj и kuy) для 100% совпадения с роутером и футером
 const russianGeoMap: Record<string, { landing: string }> = {
@@ -16,7 +30,7 @@ const russianGeoMap: Record<string, { landing: string }> = {
   'amurskij-2': { landing: 'в Амуре-2' },
   'pervokirpichnyj': { landing: 'в Первокирпичном' },
   'gorodok-neftyanikov': { landing: 'в Городке Нефтяников' },
-  'port-artur': { landing: 'в Порт-Артурe' },
+  'port-artur': { landing: 'в Порт-Артуре' },
   'solnechnyj': { landing: 'в Солнечном' },
   'ryabinovka': { landing: 'в Рябиновке' },
   'linejnyj': { landing: 'в Линейном' },
@@ -91,13 +105,12 @@ const russianGeoMap: Record<string, { landing: string }> = {
 };
 
 interface Props {
-  params: any;
+  params: Promise<{ district: string }>;
 }
 
-async function getCleanDistrict(params: any): Promise<string> {
-  const resolved = await params;
-  const raw = resolved?.district || resolved?.slug || '';
-  return String(raw).toLowerCase().trim();
+async function getCleanDistrict(params: Promise<{ district: string }>): Promise<string> {
+  const { district } = await params;
+  return String(district || '').toLowerCase().trim();
 }
 
 // Запрос списка живых статей из Strapi для вывода внизу контента
@@ -129,10 +142,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       alternates: {
         canonical: `https://balkonreshenie.ru/${district}`,
       },
-      // 🌟 ЗАЩИТА ОТ ИНДЕКСАЦИИ: Закрываем районы от поисковиков
+      // Индексация районных посадочных страниц для Яндекса и Google
       robots: {
-        index: false,
-        follow: false,
+        index: true,
+        follow: true,
       }
     };
   } catch (error) {
@@ -142,10 +155,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       alternates: {
         canonical: `https://balkonreshenie.ru/${district}`,
       },
-      // 🌟 ЗАЩИТА ОТ ИНДЕКСАЦИИ (для фоллбека)
       robots: {
-        index: false,
-        follow: false,
+        index: true,
+        follow: true,
       }
     };
   }
@@ -154,8 +166,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function DistrictPage({ params }: Props) {
   const district = await getCleanDistrict(params);
   const geo = russianGeoMap[district] || { landing: 'в вашем районе' };
+  const districtFallback = DISTRICT_FALLBACKS[district];
 
-  let mergedData = {};
+  let mergedData: Record<string, unknown> = {};
   let articlesData: any[] = [];
 
   try {
@@ -180,18 +193,40 @@ export default async function DistrictPage({ params }: Props) {
 
     const finalRussianGeo = pageData.landingName || geo.landing;
 
+    // Локальный пул картинок (public/images/hero/) в ПРИОРИТЕТЕ над Strapi.
+    // Strapi-картинка используется только если для района нет фоллбэка (редкий случай).
+    const districtHeroBg = districtFallback
+      ? getDeterministicImage(district, districtFallback.imageType)
+      : (pageData.heroBackground || mainData.heroBackground);
+
     mergedData = {
       ...mainData,
       heroBadge: `📍 Профессиональный монтаж окон ${finalRussianGeo}`,
-      heroTitle: pageData.heroTitle || mainData.heroTitle || `Остекление и отделка балконов под ключ`,
-      heroTitleHighlight: pageData.heroTitleHighlight || mainData.heroTitleHighlight || finalRussianGeo,
-      heroDesc: pageData.heroDesc || `Качественные оконные системы и благоустройство лоджий ${finalRussianGeo} напрямую от завода. Бесплатный выезд замерщика сегодня. Гарантия 5 лет!`,
-      heroBackground: pageData.heroBackground || mainData.heroBackground,
-      seoText: pageData.seoText || mainData.seoText
+      heroTitle: pageData.heroTitle || districtFallback?.heroTitle || mainData.heroTitle || `Остекление и отделка балконов под ключ`,
+      heroTitleHighlight: pageData.heroTitleHighlight || districtFallback?.heroTitleHighlight || mainData.heroTitleHighlight || finalRussianGeo,
+      heroDesc: pageData.heroDesc || districtFallback?.heroDesc || `Качественные оконные системы и благоустройство лоджий ${finalRussianGeo} напрямую от завода. Бесплатный выезд замерщика сегодня. Гарантия 5 лет!`,
+      heroBackground: districtHeroBg,
+      // Приоритет: локальный пул hero-картинок → запасной Strapi → main-page
+      seoText: pageData.seoText || (districtFallback?.seoText ? textToStrapiBlocks(districtFallback.seoText) : mainData.seoText),
+      faq: districtFallback?.faq,
+      _geoLabel: finalRussianGeo,
     };
 
   } catch (error) {
     console.error(`🚨 Сбой склейки страниц для коллекции pages [${district}]:`, error);
+    // Если Strapi недоступен — показываем хотя бы district-fallback
+    if (districtFallback) {
+      mergedData = {
+        heroBadge: `📍 Профессиональный монтаж окон ${geo.landing}`,
+        heroTitle: districtFallback.heroTitle,
+        heroTitleHighlight: districtFallback.heroTitleHighlight,
+        heroDesc: districtFallback.heroDesc,
+        heroBackground: getDeterministicImage(district, districtFallback.imageType),
+        seoText: textToStrapiBlocks(districtFallback.seoText),
+        faq: districtFallback.faq,
+        _geoLabel: geo.landing,
+      };
+    }
   }
 
   return <HomeClientPage initialData={mergedData} articlesData={articlesData} />;

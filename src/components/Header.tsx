@@ -14,28 +14,68 @@ const navigationMenu = [
   {
     id: 'balkony',
     title: 'Балконы и лоджии',
-    items: ['Прямой балкон', 'Г-образный балкон', 'П-образный балкон', 'Эркерный балкон', 'Лоджия 3 метра', 'Лоджия 6 метров', 'Крыша на балкон', 'Выносной балкон']
+    items: [
+      { name: 'Прямой балкон', slug: 'pryamoy-balkon' },
+      { name: 'Г-образный балкон', slug: 'g-obraznyj-balkon' },
+      { name: 'П-образный балкон', slug: 'p-obraznyj-balkon' },
+      { name: 'Эркерный балкон', slug: 'erkernyj-balkon' },
+      { name: 'Лоджия 3 метра', slug: 'lodzhiya-3-metra' },
+      { name: 'Лоджия 6 метров', slug: 'lodzhiya-6-metrov' },
+      { name: 'Крыша на балкон', slug: 'krysha-na-balkon' },
+      { name: 'Выносной балкон', slug: 'vynosnoj-balkon' },
+    ],
   },
   {
     id: 'glazing',
     title: 'Варианты остекления',
-    items: ['Теплое остекление (ПВХ)', 'Холодное остекление (AL)', 'Панорамное остекление', 'Французские окна', 'Раздвижные системы', 'Безрамное остекление']
+    items: [
+      { name: 'Теплое остекление (ПВХ)', slug: 'teploe-osteklenie-pvh' },
+      { name: 'Холодное остекление (AL)', slug: 'holodnoe-osteklenie-al' },
+      { name: 'Панорамное остекление', slug: 'panoramnoe-osteklenie' },
+      { name: 'Французские окна', slug: 'francuzskie-okna' },
+      { name: 'Раздвижные системы', slug: 'razdvizhnye-sistemy' },
+      { name: 'Безрамное остекление', slug: 'bezramnoe-osteklenie' },
+    ],
   },
   {
     id: 'insulation',
     title: 'Утепление',
-    items: ['Комплексное утепление', 'Утепление Пеноплэксом', 'Утепление Пенофолом', 'Зимнее совмещение с комнатой']
+    items: [
+      { name: 'Комплексное утепление', slug: 'kompleksnoe-uteplenie' },
+      { name: 'Утепление Пеноплэксом', slug: 'uteplenie-penopleksom' },
+      { name: 'Утепление Пенофолом', slug: 'uteplenie-penofolom' },
+      { name: 'Зимнее совмещение с комнатой', slug: 'zimnee-sovmeshchenie-s-komnatoy' },
+    ],
   },
   {
     id: 'finishing',
     title: 'Отделка',
-    items: ['Внутренняя отделка', 'Обшивка евровагонкой', 'Отделка ПВХ панелями', 'Внешний сайдинг парапета', 'Укладка пола и ламината', 'Встроенная мебель и шкафы']
+    items: [
+      { name: 'Внутренняя отделка', slug: 'vnutrennyaya-otdelka' },
+      { name: 'Обшивка евровагонкой', slug: 'obshivka-evrovagonkoy' },
+      { name: 'Отделка ПВХ панелями', slug: 'otdelka-pvh-panelyami' },
+      { name: 'Внешний сайдинг парапета', slug: 'vneshnij-sajding-parapeta' },
+      { name: 'Укладка пола и ламината', slug: 'ukladka-pola-i-laminata' },
+      { name: 'Встроенная мебель и шкафы', slug: 'vstroennaya-mebel-i-shkafy' },
+    ],
   },
   {
     id: 'layouts',
     title: 'По планировкам',
-    items: ['Замена остекления в новостройке', 'Остекление в Хрущевке', 'Остекление в Сталинке', 'Остекление в Коттедже', 'Панорамное', 'Французское', 'Безрамное', 'Теплое', 'Холодное', 'С выносом по полу', 'Вынос по подоконнику']
-  }
+    items: [
+      { name: 'Замена остекления в новостройке', slug: 'zamena-ostekleniya-v-novostrojke' },
+      { name: 'Остекление в Хрущевке', slug: 'osteklenie-v-hhrushchevke' },
+      { name: 'Остекление в Сталинке', slug: 'osteklenie-v-stalinke' },
+      { name: 'Остекление в Коттедже', slug: 'osteklenie-v-kottedzhe' },
+      { name: 'Панорамное', slug: 'panoramnoe-osteklenie' },
+      { name: 'Французское', slug: 'francuzskoe-osteklenie' },
+      { name: 'Безрамное', slug: 'bezramnoe-osteklenie' },
+      { name: 'Теплое', slug: 'teploe-osteklenie-pvh' },
+      { name: 'Холодное', slug: 'holodnoe-osteklenie-al' },
+      { name: 'С выносом по полу', slug: 's-vynosom-po-polu' },
+      { name: 'Вынос по подоконнику', slug: 'vynos-po-podokonniku' },
+    ],
+  },
 ];
 
 export default function Header() {
@@ -190,15 +230,15 @@ export default function Header() {
               {openDropdown === menu.id && (
                 <div className="desktop-dropdown-box">
                   {menu.items.map((subItem) => (
-                    <div 
-                      key={subItem} 
-                      onClick={() => triggerForm(`План страницы: ${subItem}`)}
+                    <Link
+                      key={subItem.slug}
+                      href={`/services/${subItem.slug}`}
                       className="dropdown-item-link"
-                      style={{ fontSize: '13.5px', color: '#475569', padding: '8px 12px', transition: 'all 0.15s', whiteSpace: 'nowrap' }}
-                      role="button"
+                      onClick={() => setOpenDropdown(null)}
+                      style={{ fontSize: '13.5px', color: '#475569', padding: '8px 12px', transition: 'all 0.15s', whiteSpace: 'nowrap', textDecoration: 'none', display: 'block' }}
                     >
-                      📄 {subItem}
-                    </div>
+                      📄 {subItem.name}
+                    </Link>
                   ))}
                 </div>
               )}
@@ -251,14 +291,14 @@ export default function Header() {
               {mobileOpenSection === menu.id && (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', paddingLeft: '12px', marginTop: '4px', borderLeft: '2px solid #e2e8f0' }}>
                   {menu.items.map((subItem) => (
-                    <div 
-                      key={subItem} 
-                      onClick={() => triggerForm(`План страницы: ${subItem}`)}
-                      style={{ fontSize: '14px', color: '#475569', padding: '8px 0', cursor: 'pointer' }}
-                      role="button"
+                    <Link
+                      key={subItem.slug}
+                      href={`/services/${subItem.slug}`}
+                      onClick={() => { setIsMobileMenuOpen(false); setMobileOpenOpenSection(null); }}
+                      style={{ fontSize: '14px', color: '#475569', padding: '8px 0', textDecoration: 'none', display: 'block' }}
                     >
-                      📄 {subItem}
-                    </div>
+                      📄 {subItem.name}
+                    </Link>
                   ))}
                 </div>
               )}

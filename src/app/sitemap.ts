@@ -1,33 +1,17 @@
 import { MetadataRoute } from 'next';
+import { DISTRICT_FALLBACKS } from '@/data/districtFallbacks';
+import { SERVICE_SLUGS } from '@/app/services/[slug]/page';
 
-// 1. Указываем реальный боевой домен компании для индексации в Яндексе и Google
-const BASE_URL = 'https://balkonreshenie.ru'; 
+const BASE_URL = 'https://balkonreshenie.ru';
 
-// 2. Наш список районов (оставляем тут, чтобы не потерять, но в карту пока не отдаем)
-const districtsSlugs = [
-  'bolshaya-ostrovka', '11-j-mikrorajon', 'amurskij', 'pribrezhnyj', 'kosmos', 
-  '3-j-mikrorajon', 'amurskij-2', 'pervokirpichnyj', 'gorodok-neftyanikov', 'port-artur', 
-  'solnechnyj', 'ryabinovka', 'linejnyj', 'zelyonaya-dolina', 'nikolaevka', 'novaya-stanica',
-  'kuybyshevskij', 'topolinyj', '5-th-mikrorajon', 'levoberezhye', 'privokzalnyj', 
-  'komsomolskij-gorodok', '4-th-mikrorajon', 'parkovyj-mikrorajon', 'zaozyornyj', 'zahlamino', 
-  'moskovka', 'volzhskij', 'karyer', 'yasnaya-polyana', 'severnyj', 'aleksandrovskaya-usadba',
-  'gorodok-vodnikov', '12-j-mikrorajon', 'polyot', '6-th-mikrorajon', 'kirovsk', 
-  'staryj-kirovsk', 'leninsk', 'chkalovskij', '2-j-mikrorajon', 'bolshie-polya', 
-  'yubilejnyj', 'bulatovo', 'zagorodnyj', 'vhodnoj', 'cheryomushki', 'beregovoj',
-  'rybachij', 'omskij-kristall', 'biofabrika', 'aviagorodok', 'kordnyj', 
-  '1-j-mikrorajon', 'chukreevka', 'vostochnyj', 'cheredovyj', 'stepnoj', 
-  'dalnij', 'armejskij', 'ostashkovo', 'svetlyj', 'cheryomuhovskoe', 'krutaya-gorka'
-];
-
-// 3. Безопасный автоматический сбор адресов статей из Strapi v5
 async function getBlogSlugs() {
   try {
-    const res = await fetch('https://balkonreshenie.ru/api/articles?fields[0]=slug', {
-      next: { revalidate: 3600 } // Обновляем кэш карты раз в час, чтобы беречь процессор 1 CPU
+    const res = await fetch(`${BASE_URL}/api/articles?fields[0]=slug`, {
+      next: { revalidate: 3600 },
     });
     if (!res.ok) return [];
     const json = await res.json();
-    return json.data?.map((item: any) => item.attributes?.slug || item.slug) || [];
+    return json.data?.map((item: { attributes?: { slug?: string }; slug?: string }) => item.attributes?.slug || item.slug) || [];
   } catch (error) {
     console.error('Ошибка сбора слагов блога для карты сайта:', error);
     return [];
@@ -35,41 +19,44 @@ async function getBlogSlugs() {
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  // Главные статические разделы
-  const mainRoutes = [
+  const now = new Date();
+
+  const mainRoutes: MetadataRoute.Sitemap = [
     {
-      url: BASE_URL,
-      lastModified: new Date(),
-      changeFrequency: 'daily' as const,
+      url: `${BASE_URL}/`,
+      lastModified: now,
+      changeFrequency: 'daily',
       priority: 1.0,
     },
     {
-      url: `${BASE_URL}/blog`, // ИСПРАВЛЕНО: привели регистр BASE_URL к общему стандарту
-      lastModified: new Date(),
-      changeFrequency: 'daily' as const,
+      url: `${BASE_URL}/blog`,
+      lastModified: now,
+      changeFrequency: 'daily',
       priority: 0.9,
-    }
+    },
   ];
 
-  // ВРЕМЕННО ОТКЛЮЧЕНО: Генерацию страниц локаций пропускаем, чтобы роботы их не сканировали
-  /*
-  const districtRoutes = districtsSlugs.map((slug) => ({
+  const serviceRoutes: MetadataRoute.Sitemap = SERVICE_SLUGS.map((slug) => ({
+    url: `${BASE_URL}/services/${slug}`,
+    lastModified: now,
+    changeFrequency: 'weekly',
+    priority: 0.85,
+  }));
+
+  const districtRoutes: MetadataRoute.Sitemap = Object.keys(DISTRICT_FALLBACKS).map((slug) => ({
     url: `${BASE_URL}/${slug}`,
-    lastModified: new Date(),
-    changeFrequency: 'weekly' as const,
+    lastModified: now,
+    changeFrequency: 'weekly',
     priority: 0.8,
   }));
-  */
 
-  // Динамические страницы статей блога
   const blogSlugs = await getBlogSlugs();
-  const blogRoutes = blogSlugs.map((slug: string) => ({
+  const blogRoutes: MetadataRoute.Sitemap = blogSlugs.map((slug: string) => ({
     url: `${BASE_URL}/blog/${slug}`,
-    lastModified: new Date(),
-    changeFrequency: 'weekly' as const,
+    lastModified: now,
+    changeFrequency: 'weekly',
     priority: 0.7,
   }));
 
-  // 🌟 ИСПРАВЛЕНО: Исключили districtRoutes из финального экспорта карты сайта
-  return [...mainRoutes, ...blogRoutes];
+  return [...mainRoutes, ...serviceRoutes, ...districtRoutes, ...blogRoutes];
 }
