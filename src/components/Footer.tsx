@@ -25,7 +25,7 @@ export default function Footer() {
           <div>
             <h4 style={{ color: '#fff', fontSize: '15px', fontWeight: '600', marginBottom: '16px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Контакты</h4>
             <p style={{ fontSize: '18px', margin: '0 0 10px 0', color: '#fff', fontWeight: '600' }}>
-              <a href="tel:+73812288230" style={{ color: '#fff', textDecoration: 'none' }}>+7 (3812) 28-82-30</a>
+              <a href="tel:+79081068352" style={{ color: '#fff', textDecoration: 'none' }}>+7 (908) 106-83-52</a>
             </p>
             <p style={{ fontSize: '14px', margin: '0 0 10px 0' }}>
               <a href="mailto:industrieocon55@mail.ru" style={{ color: '#38bdf8', textDecoration: 'none' }}>industrieocon55@mail.ru</a>

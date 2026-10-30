@@ -228,7 +228,7 @@ export default function ContactsMap() {
             <strong>ул. Гусарова, д. 26</strong>
           </p>
 
-          <a href="tel:+73812288230" style={{ fontWeight: '700', color: '#0f172a', textDecoration: 'none', fontSize: '19px', marginBottom: '4px', display: 'block' }}>+7 (3812) 28-82-30</a>
+          <a href="tel:+79081068352" style={{ fontWeight: '700', color: '#0f172a', textDecoration: 'none', fontSize: '19px', marginBottom: '4px', display: 'block' }}>+7 (908) 106-83-52</a>
           <p style={{ fontSize: '13px', color: '#64748b', margin: '0 0 24px 0', padding: 0 }}>Ведущий менеджер</p>
         </div>
 

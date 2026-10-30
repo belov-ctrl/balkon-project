@@ -183,8 +183,8 @@ export default function Header() {
           
           <div style={{ textAlign: 'right' }}>
             {/* ИСПРАВЛЕНО: Синхронизирован рабочий телефон компании */}
-            <a href="tel:+73812288230" style={{ fontSize: '20px', fontWeight: '700', color: '#1e293b', textDecoration: 'none', transition: 'color 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.color = '#2563eb'} onMouseLeave={(e) => e.currentTarget.style.color = '#1e293b'}>
-              +7 (3812) 28-82-30
+            <a href="tel:+79081068352" style={{ fontSize: '20px', fontWeight: '700', color: '#1e293b', textDecoration: 'none', transition: 'color 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.color = '#2563eb'} onMouseLeave={(e) => e.currentTarget.style.color = '#1e293b'}>
+              +7 (908) 106-83-52
             </a>
             <div style={{ fontSize: '10px', color: '#22c55e', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '4px', marginTop: '2px' }}>
               <span className="status-light"></span> ОНЛАЙН
@@ -200,7 +200,7 @@ export default function Header() {
         {/* Бургер и телефон (ПОКАЗЫВАЕТСЯ ТОЛЬКО НА МОБИЛКАХ) */}
         <div className="hamburger-container" style={{ alignItems: 'center', gap: '16px' }}>
           {/* ИСПРАВЛЕНО: Синхронизирован рабочий телефон компании */}
-          <a href="tel:+73812288230" style={{ fontSize: '15px', fontWeight: '700', color: '#1e3a8a', textDecoration: 'none' }}>+7 (3812) 28-82-30</a>
+          <a href="tel:+79081068352" style={{ fontSize: '15px', fontWeight: '700', color: '#1e3a8a', textDecoration: 'none' }}>+7 (908) 106-83-52</a>
           <button 
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '4px', display: 'flex', flexDirection: 'column', gap: '5px', zIndex: 101010 }}
